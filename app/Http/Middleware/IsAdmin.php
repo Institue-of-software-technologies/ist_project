@@ -6,28 +6,38 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+
 class IsAdmin
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth :: check())
-        {
-            // return redirect('/login');
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
+
+            // Check if the user has 'super-admin' or 'admin' role
+            if ($user->hasRole(['super-admin', 'admin'])) {
+                return $next($request);
+            }
+
+            // Check if the user has 'alumni' role and redirect accordingly
+            if ($user->hasRole('alumni')) {
+                return redirect()->route('alumni_dashboard');
+            }
+
+            // If the user does not have the required role, deny access
+            abort(403, "User does not have permission");
         }
-        {
-        /** @var App\Models\User */
-        $user = Auth::user();
-        if ($user->hasRole(['super-admin', 'admin',])) {
-            // Redirect to a specific route if the user is not an admin
-            return $next($request);
-        }
-        abort(403 ,"User does not have permission");
-    }
+
+        // If the user is not authenticated, deny access
         abort(401);
     }
 }

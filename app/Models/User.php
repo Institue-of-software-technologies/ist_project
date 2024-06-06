@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    protected function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
 }

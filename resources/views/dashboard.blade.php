@@ -31,6 +31,7 @@
                 <div class="p-6 bg-white sm:px-20">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- Users Management -->
+                        @can('view user')
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Manage Users</h3>
                             <p class="mt-2 text-gray-600">Create, edit, and delete user accounts.</p>
@@ -38,7 +39,9 @@
                                 Go to Users
                             </a>
                         </div>
+                        @endcan
                         <!-- Roles Management -->
+                        @can('view role')
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Manage Roles</h3>
                             <p class="mt-2 text-gray-600">Create, edit, and delete user roles.</p>
@@ -46,19 +49,21 @@
                                 Go to Roles
                             </a>
                         </div>
-
+                        @endcan
                         <!-- Permissions Management -->
+                        @can('view permission')
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Manage Permissions</h3>
                             <p class="mt-2 text-gray-600">Create, edit, and delete user permissions.</p>
-                            <a href="{{ url('users') }}" class="inline-flex items-center px-6 py-3 bg-green-500 text-white text-sm font-medium rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition ease-in-out duration-150">
+                            <a href="{{ url('permissions') }}" class="inline-flex items-center px-6 py-3 bg-green-500 text-white text-sm font-medium rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition ease-in-out duration-150">
                                 Go to Permissions
                             </a>
                         </div>
+                        @endcan
                         <!-- Jobs Management -->
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Manage Jobs</h3>
-                            <p class="mt-2 text-gray-600">Post and edit job opportunities for alumni.</p>
+                            <p class="mt-2 text-gray-600">View and apply job opportunities for alumni.</p>
                             <a href="{{ url('jobs') }}" class="inline-flex items-center px-6 py-3 bg-blue-500 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150">
                                 Go to Jobs
                             </a>
