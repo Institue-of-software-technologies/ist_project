@@ -109,6 +109,6 @@ class RoleController extends Controller implements HasMiddleware
         $role = Role::findOrFail($roleId);
         $role->syncPermissions($request->permission);
 
-        return redirect()->back()->with('status', 'Permissions added to role');
+        return redirect('roles')->with('status', 'Permissions added to role');
     }
 }
