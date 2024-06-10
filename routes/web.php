@@ -8,6 +8,7 @@ use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\AlumniProfileController;
 
 Route::get('/', function () {
     return view('login');
@@ -18,10 +19,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/alumni_dashboard', [AlumniController::class, 'index'])->name('alumni_dashboard');
-     Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
-
+    Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
+    Route::get('/alumni/profile',[AlumniProfileController::class, 'create'])->name('alumni.profile.create');
+    Route::post('/alumni/profile', [AlumniProfileController::class,'store'])->name('alumni.profile.store');
+    Route::get('/alumni/profile/index', [AlumniProfileController::class, 'index'])->name('alumni.profile.index');
+    Route::get('/alumni/profile/{id}/edit', [AlumniProfileController::class, 'edit'])->name('alumni.profile.edit');
+    Route::put('alumni/profile/{id}/update', [AlumniProfileController::class, 'update'])->name('alumni.profile.update');
 });
-
 
 Route::middleware(['isAdmin'])->group(function () {
 Route::get('/dashboard', function () {
