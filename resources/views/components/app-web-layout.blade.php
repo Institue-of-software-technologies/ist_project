@@ -8,14 +8,7 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-    <header>
-        {{-- Header content slot --}}
-        {{ $header ?? '' }}
-    </header>
-    <main class="container mx-auto px-4">
-        {{-- Main content slot --}}
-        {{ $slot }}
-    </main>
+
     {{-- 
     <footer>
         @include('layouts.footer')

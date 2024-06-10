@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Job::class);
     }
+
+    public function alumniProfile()
+    {
+    return $this->hasOne(AlumniProfile::class);
+    }
 }
