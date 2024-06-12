@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Job extends Model
 {
+    use SoftDeletes;
     use HasFactory;
 
     protected $fillable = [
@@ -21,7 +23,8 @@ class Job extends Model
         'job_type', 
         'experience_level', 
         'education_level', 
-        'skills'
+        'skills',
+        'deleted_at',
     ];
 
     public function user()

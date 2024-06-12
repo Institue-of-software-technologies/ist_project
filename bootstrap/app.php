@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use App\Http\Middleware\IsAdmin;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,        
-            'isAdmin' => \App\Http\Middleware\IsAdmin::class,
+            'isAdmin' => IsAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
