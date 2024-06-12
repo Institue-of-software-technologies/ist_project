@@ -14,15 +14,18 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::middleware('auth')->group(function () {
+Route::patch('/jobs/{id}/restore', [JobController::class, 'restore'])->name('role-permissions.job.restore');
+
+
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/alumni_dashboard', [AlumniController::class, 'index'])->name('alumni_dashboard');
     Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
+    Route::get('/alumni/profile/index', [AlumniProfileController::class, 'index'])->name('alumni.profile.index');
     Route::get('/alumni/profile',[AlumniProfileController::class, 'create'])->name('alumni.profile.create');
     Route::post('/alumni/profile', [AlumniProfileController::class,'store'])->name('alumni.profile.store');
-    Route::get('/alumni/profile/index', [AlumniProfileController::class, 'index'])->name('alumni.profile.index');
     Route::get('/alumni/profile/{id}/edit', [AlumniProfileController::class, 'edit'])->name('alumni.profile.edit');
     Route::put('alumni/profile/{id}/update', [AlumniProfileController::class, 'update'])->name('alumni.profile.update');
 });
@@ -45,10 +48,13 @@ Route::middleware(['isAdmin'])->group( function() {
 
     Route::resource('users', UserController::class);
     Route::get('users/{userId}/delete', [App\Http\Controllers\UserController::class, 'destroy']);
-    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    // Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('jobs', JobController::class);
     Route::get('/jobs', [JobController::class, 'index'])->name('role-permission.job.index');
     Route::delete('jobs/{jobId}', [JobController::class, 'destroy'])->name('role-permission.job.destroy');
+
+    Route::get('jobs/{job}', [JobController::class, 'show'])->name('role-permission.job.show');
+
 });
 
 

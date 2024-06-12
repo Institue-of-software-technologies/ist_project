@@ -30,7 +30,7 @@ class AlumniProfileController extends Controller
         {
             $request->validate([
                 'full_name' => 'required',
-                'email' => 'nullable|email|max:15|unique:alumni_profiles',
+                'email' => 'nullable|email|max:20|unique:alumni_profiles',
                 'degree' => 'nullable|string',
                 'graduation_year' => 'required|integer',
                 'extra_course' => 'nullable|string',

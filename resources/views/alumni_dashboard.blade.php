@@ -33,13 +33,13 @@
                         </div>
 
                         <!-- Alumni Profile Management -->
-                        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                        {{-- <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Alumni Profile</h3>
                             <p class="mt-2 text-gray-600">Create your alumni profile.</p>
                             <a href="{{ url('alumni/profile') }}" class="inline-flex items-center px-6 py-3 mt-16 bg-blue-500 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150">
                                 Go to Profile
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
