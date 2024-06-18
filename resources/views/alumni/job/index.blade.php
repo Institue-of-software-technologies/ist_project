@@ -1,7 +1,4 @@
-<!-- resources/views/alumni/jobs/index.blade.php -->
-
 <x-app-layout>
-
     <div class="py-12">
         <div class="mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -21,7 +18,7 @@
                     @if ($jobs->isEmpty())
                         <p class="text-gray-600">No job opportunities available at the moment.</p>
                     @else
-                        <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
+                        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
                             @foreach ($jobs as $job)
                                 <div class="bg-gradient-to-r from-gray-300 to-gray-400 shadow-md rounded-lg p-5 border border-blue-200">
                                     <h1 class="text-4xl font-bold text-gray-900 text-center">{{ $job->title }}</h1>

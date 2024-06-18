@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -14,12 +13,13 @@ class UserController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view user', only:['index']),
-            new Middleware('permission:delete user', only:['destroy']),
-            new Middleware('permission:edit user', only:['update', 'edit']),
-            new Middleware('permission:create user', only:['create','store']),
+            new Middleware('permission:view user', only: ['index']),
+            new Middleware('permission:delete user', only: ['destroy']),
+            new Middleware('permission:edit user', only: ['update', 'edit']),
+            new Middleware('permission:create user', only: ['create', 'store']),
         ];
     }
+
     public function index()
     {
         $users = User::get();
@@ -28,7 +28,7 @@ class UserController extends Controller implements HasMiddleware
 
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
         return view('role-permission.user.create', ['roles' => $roles]);
     }
 
@@ -37,25 +37,35 @@ class UserController extends Controller implements HasMiddleware
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
-            'password' => 'required|string|confirmed|min:8|max:20',
+            'password' => [
+                'required',
+                'string',
+                'confirmed',
+                'min:8',
+                'max:20',
+                'regex:/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/'
+            ],
             'roles' => 'required'
+        ], [
+            'password.regex' => 'The password must be between 8 and 20 characters long and include at least one uppercase letter and
+one special character.'
         ]);
 
         $user = User::create([
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'password' => Hash::make($request->password),
-                    ]);
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
         $user->syncRoles($request->roles);
 
-        return redirect('/users')->with('status','User created successfully with roles');
+        return redirect('/users')->with('status', 'User created successfully with roles');
     }
 
     public function edit(User $user)
     {
-        $roles = Role::pluck('name','name')->all();
-        $userRoles = $user->roles->pluck('name','name')->all();
+        $roles = Role::pluck('name', 'name')->all();
+        $userRoles = $user->roles->pluck('name', 'name')->all();
         return view('role-permission.user.edit', [
             'user' => $user,
             'roles' => $roles,
@@ -67,8 +77,18 @@ class UserController extends Controller implements HasMiddleware
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'password' => 'nullable|string|min:8|max:20',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'password' => [
+                'nullable',
+                'string',
+                'min:8',
+                'max:20',
+                'regex:/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/'
+            ],
             'roles' => 'required'
+        ], [
+            'password.regex' => 'The password must be between 8 and 20 characters long and include at least one uppercase letter and
+one special character.'
         ]);
 
         $data = [
@@ -76,16 +96,14 @@ class UserController extends Controller implements HasMiddleware
             'email' => $request->email,
         ];
 
-        if(!empty($request->password)){
-            $data += [
-                'password' => Hash::make($request->password),
-            ];
+        if (!empty($request->password)) {
+            $data['password'] = Hash::make($request->password);
         }
 
         $user->update($data);
         $user->syncRoles($request->roles);
 
-        return redirect('/users')->with('status','User Updated Successfully with roles');
+        return redirect('/users')->with('status', 'User Updated Successfully with roles');
     }
 
     public function destroy($userId)
@@ -93,6 +111,6 @@ class UserController extends Controller implements HasMiddleware
         $user = User::findOrFail($userId);
         $user->delete();
 
-        return redirect('/users')->with('status','User Delete Successfully');
+        return redirect('/users')->with('status', 'User Deleted Successfully');
     }
 }
