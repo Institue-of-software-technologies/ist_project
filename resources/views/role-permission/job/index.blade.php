@@ -19,7 +19,7 @@
                     </h4>
                     @can('create job')
                         <a href="{{ url('jobs/create') }}"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Job</a>
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add Job</a>
                     @endcan
                 </div>
 
@@ -27,17 +27,13 @@
                     @foreach ($jobs as $job)
                         <div class="bg-white shadow-md rounded-lg overflow-hidden">
                             <a href="{{ url('jobs/' . $job->id) }}"
-                                class="block flex items-center p-4 transition duration-300 ease-in-out hover:bg-blue-300">
-                                <!-- Job Image -->
-                                {{-- <div class="w-20 h-20 mr-4">
-                                    <img src="{{ $job->image_url ?? 'default-image-url.png' }}" alt="Job Image" class="w-full h-full object-cover">
-                                </div> --}}
+                                class="block flex items-center p-4 transition duration-300 ease-in-out hover:bg-red-500 hover:text-white">
                                 <!-- Job Details -->
                                 <div class="flex-grow">
                                     <h5 class="text-3xl font-bold">{{ $job->title }}</h5>
-                                    <p class="text-2xl text-gray-600">{{ $job->company_name }}</p>
-                                    <p class="text-2xl text-gray-600">{{ $job->location }}</p>
-                                    <p class="text-2xl text-gray-600">{{ $job->job_type }} </p>
+                                    <p class="text-2xl">{{ $job->company_name }}</p>
+                                    <p class="text-2xl">{{ $job->location }}</p>
+                                    <p class="text-2xl">{{ $job->job_type }} </p>
                                 </div>
                             </a>
                             <!-- Actions -->
@@ -54,18 +50,13 @@
                         @foreach ($trashedJobs as $job)
                             <div class="bg-white shadow-md rounded-lg overflow-hidden">
                                 <a href="{{ url('jobs/' . $job->id) }}" class="block flex items-center p-4">
-                                    <!-- Job Image -->
-                                    <div class="w-20 h-20 mr-4">
-                                        <img src="{{ $job->image_url ?? 'default-image-url.png' }}" alt="Job Image"
-                                            class="w-full h-full object-cover">
-                                    </div>
                                     <!-- Job Details -->
                                     <div class="flex-grow">
                                         <h5 class="text-xl font-bold">{{ $job->title }}</h5>
-                                        <p class="text-sm text-gray-600">{{ $job->company_name }}</p>
-                                        <p class="text-sm text-gray-600">{{ $job->location }}</p>
-                                        <p class="text-sm text-gray-600">{{ ucfirst($job->job_type) }} Deadline:
-                                            {{ \Carbon\Carbon::parse($job->deadline)->format('D, M jS Y') }}</p>
+                                        <p class="text-sm text-gray-900">{{ $job->company_name }}</p>
+                                        <p class="text-sm text-gray-900">{{ $job->location }}</p>
+                                        <p class="text-sm text-gray-900">{{ ucfirst($job->job_type) }} Deadline:
+                                            {{ \Carbon\Carbon::parse($job->created_at)->format('D, M jS Y') }}</p>
                                     </div>
                                 </a>
                                 <!-- Actions -->
@@ -76,7 +67,7 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit"
-                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Restore</button>
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Restore</button>
                                         </form>
                                     @endcan
                                 </div>

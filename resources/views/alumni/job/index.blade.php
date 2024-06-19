@@ -20,7 +20,7 @@
                     @else
                         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
                             @foreach ($jobs as $job)
-                                <div class="bg-gradient-to-r from-gray-300 to-gray-400 shadow-md rounded-lg p-5 border border-blue-200">
+                                <div class="bg-gradient-to-r from-gray-300 to-gray-400 shadow-md rounded-lg p-5 border border-red-200">
                                     <h1 class="text-4xl font-bold text-gray-900 text-center">{{ $job->title }}</h1>
                                     
                                     <p class="mt-2 text-gray-900 text-3xl"><strong>Company:</strong> {{ $job->company_name }}</p>
@@ -28,7 +28,7 @@
                                     <p class="mt-2 text-gray-900 text-3xl"><strong>Job Type:</strong> {{ $job->job_type }}</p>
                                     <p class="mt-2 text-gray-600">Posted on: {{ $job->created_at->format('M d, Y') }}</p>
 
-                                    <button onclick="toggleDetails({{ $job->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">View More Details</button>
+                                    <button onclick="toggleDetails({{ $job->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4">View More Details</button>
                                     
                                     <!-- Hidden Details Section -->
                                     <div id="details-{{ $job->id }}" class="hidden mt-4">
@@ -90,7 +90,7 @@
                                             </ul>
                                         </section>
 
-                                        <a href="#" class="inline-flex items-center px-6 py-3 mt-4 bg-blue-500 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150">
+                                        <a href="#" class="inline-flex items-center px-6 py-3 mt-4 bg-red-500 text-white text-sm font-medium rounded-lg shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition ease-in-out duration-150">
                                             Apply
                                         </a>
                                     </div>

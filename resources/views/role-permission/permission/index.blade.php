@@ -15,7 +15,7 @@
                 <div class="card mt-3 bg-white shadow-md rounded-lg overflow-hidden">
                     <div class="card-header bg-gray-100 p-4 border-b border-gray-200">
                         <h4 class="text-lg font-semibold">Permissions
-                            <a href="{{ url('permissions/create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">Add Permission</a>
+                            <a href="{{ url('permissions/create') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded float-right">Add Permission</a>
                         </h4>
                     </div>
                     <div class="card-body p-4">
