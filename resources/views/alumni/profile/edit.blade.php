@@ -102,10 +102,10 @@
                         <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" id="prevBtn" onclick="prevStep()" style="display: none;">
                             {{ __('Previous') }}
                         </button>
-                        <button type="button" class="bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="nextBtn" onclick="nextStep()">
+                        <button type="button" class="bg-red-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" id="nextBtn" onclick="nextStep()">
                             {{ __('Next') }}
                         </button>
-                        <button type="submit" class="w-64 bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hidden" id="submitBtn">
+                        <button type="submit" class="w-64 bg-red-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 hidden" id="submitBtn">
                             {{ __('Update Profile') }}
                         </button>
                     </div>
@@ -125,7 +125,7 @@
             border-radius: 4px;
         }
         .step-indicator.active {
-            background-color: #4f46e5; /* Indigo-600 */
+            background-color: #f51212; /* Indigo-600 */
         }
     </style>
 

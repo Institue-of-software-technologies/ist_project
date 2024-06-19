@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="mt-8">
-                        <a href="" class="inline-flex items-center px-6 py-3 bg-blue-500 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150">
+                        <a href="" class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
                             Create Admin Profile
                         </a>
                     </div>
@@ -35,7 +35,7 @@
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Manage Users</h3>
                             <p class="mt-2 text-gray-600">Create, edit, and delete user accounts.</p>
-                            <a href="{{ url('users') }}" class="inline-flex items-center px-6 py-3 bg-yellow-400 text-white text-sm font-medium rounded-lg shadow hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition ease-in-out duration-150">
+                            <a href="{{ url('users') }}" class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
                                 Go to Users
                             </a>
                         </div>
@@ -45,7 +45,7 @@
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Manage Roles</h3>
                             <p class="mt-2 text-gray-600">Create, edit, and delete user roles.</p>
-                            <a href="{{ url('roles') }}" class="inline-flex items-center px-6 py-3 bg-blue-500 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150">
+                            <a href="{{ url('roles') }}" class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
                                 Go to Roles
                             </a>
                         </div>
@@ -55,7 +55,7 @@
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Manage Permissions</h3>
                             <p class="mt-2 text-gray-600">Create, edit, and delete user permissions.</p>
-                            <a href="{{ url('permissions') }}" class="inline-flex items-center px-6 py-3 bg-green-500 text-white text-sm font-medium rounded-lg shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition ease-in-out duration-150">
+                            <a href="{{ url('permissions') }}" class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition ease-in-out duration-150">
                                 Go to Permissions
                             </a>
                         </div>
@@ -64,7 +64,7 @@
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Manage Jobs</h3>
                             <p class="mt-2 text-gray-600">View and apply job opportunities for alumni.</p>
-                            <a href="{{ url('jobs') }}" class="inline-flex items-center px-6 py-3 bg-blue-500 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150">
+                            <a href="{{ url('jobs') }}" class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
                                 Go to Jobs
                             </a>
                         </div>
@@ -73,7 +73,7 @@
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Manage Profiles</h3>
                             <p class="mt-2 text-gray-600">View and edit user profiles.</p>
-                            <a href="{{ url('profiles') }}" class="inline-flex items-center px-6 py-3 mt-8 bg-blue-500 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150">
+                            <a href="{{ url('profiles') }}" class="inline-flex items-center px-6 py-3 mt-8 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
                                 Go to Profiles
                             </a>
                         </div>

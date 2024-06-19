@@ -6,7 +6,7 @@
                           {{ session('status') }}
                     </div>
                 @endif            
-            <div class="profile-header bg-gradient-to-r from-blue-500 to-blue-700 py-6 text-center text-white">              
+            <div class="profile-header bg-gradient-to-r from-red-500 to-red-700 py-6 text-center text-white">              
                 <h1 class="text-4xl font-bold mb-2">{{ __('Profile') }}</h1>
                 <p class="text-xl">{{ __('Welcome,') }} {{ Auth::user()->name }}</p>
             </div>
@@ -41,7 +41,7 @@
                         <p><strong class="text-gray-700">{{ __('Phone:') }}</strong> {{ $profile->phone }}</p>
                         <p>
                             <strong class="text-gray-700">{{ __('LinkedIn Profile ') }}</strong> 
-                            <a href="{{ $profile->linkedin_profile }}" target="_blank" class="text-blue-600 hover:text-blue-800 inline-block">
+                            <a href="{{ $profile->linkedin_profile }}" target="_blank" class="text-red-600 hover:text-red-800 inline-block">
                                 <i class="fab fa-linkedin fa-2xl"></i>
                             </a>
                         </p>
@@ -56,11 +56,11 @@
                     </div>
                     <div class="mt-8 text-center">
                         <a href="{{ url('alumni/profile/' . $profile->id . '/edit') }}"
-                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300">{{ __('Edit Profile') }}</a>
+                            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300">{{ __('Edit Profile') }}</a>
                     </div>
                 @else
                     <p class="text-gray-700">{{ __('You have not created a profile yet.') }} <a href="{{ route('profile.create') }}"
-                            class="text-blue-600 hover:text-blue-800 font-bold">{{ __('Create Profile') }}</a></p>
+                            class="text-red-600 hover:text-red-800 font-bold">{{ __('Create Profile') }}</a></p>
                 @endif
             </div>
         </div>

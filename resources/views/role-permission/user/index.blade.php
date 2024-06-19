@@ -18,7 +18,7 @@
                         <h4 class="text-lg font-semibold flex justify-between items-center">
                             Users
                             @can('create user')
-                                <a href="{{ url('users/create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add User</a>
+                                <a href="{{ url('users/create') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add User</a>
                             @endcan
                         </h4>
                     </div>
@@ -43,7 +43,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 @if (!empty($user->getRoleNames()))
                                                     @foreach ($user->getRoleNames() as $rolename)
-                                                        <span class="bg-blue-600 text-white text-xs font-bold mr-2 px-2.5 py-0.5 rounded">{{ $rolename }}</span>
+                                                        <span class="bg-red-600 text-white text-xs font-bold mr-2 px-2.5 py-0.5 rounded">{{ $rolename }}</span>
                                                     @endforeach
                                                 @endif
                                             </td>

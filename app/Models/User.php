@@ -26,6 +26,7 @@ MustVerifyEmail
         'name',
         'email',
         'password',
+        'activation_token',
     ];
 
     /**

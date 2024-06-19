@@ -22,7 +22,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
                             @foreach ($jobs as $job)
                                 <div
-                                    class="bg-gradient-to-r from-gray-300 to-gray-400 shadow-md rounded-lg p-5 border border-blue-200">
+                                    class="bg-gradient-to-r from-gray-300 to-gray-400 shadow-md rounded-lg p-5 border border-red-200">
                                     <h1 class="text-4xl font-bold text-gray-900 text-center">{{ $job->title }}</h1>
 
                                     
@@ -107,7 +107,7 @@
                                     <p class="mt-2 text-gray-600">Posted on: {{ $job->created_at->format('M d, Y') }}
                                     </p>
                                     <a href="#"
-                                        class="inline-flex items-center px-6 py-3 mt-4 bg-blue-500 text-white text-sm font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150">
+                                        class="inline-flex items-center px-6 py-3 mt-4 bg-red-500 text-white text-sm font-medium rounded-lg shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition ease-in-out duration-150">
                                         Apply
                                     </a>
                                 </div>

@@ -65,7 +65,7 @@
                             <div class="mb-4">
                                 <label for="roles" class="block text-gray-700">Roles</label>
                                 <select name="roles[]"
-                                    class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50"
                                     multiple>
                                     <option value="">Select Role</option>
                                     @foreach ($roles as $role)
@@ -75,7 +75,7 @@
                             </div>
                             <div class="mb-4">
                                 <button type="submit"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save</button>
+                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Save</button>
                             </div>
                         </form>
                     </div>

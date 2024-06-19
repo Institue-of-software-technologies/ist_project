@@ -24,7 +24,7 @@ class IsAdmin
             $user = Auth::user();
 
             // Check if the user has 'super-admin' or 'admin' role
-            if ($user->hasRole(['super-admin', 'admin'])) {
+            if ($user->hasRole(['super-user', 'admin'])) {
                 return $next($request);
             }
 
