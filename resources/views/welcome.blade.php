@@ -12,7 +12,7 @@
         <h1 class="text-5xl font-bold text-gray-800 mb-6">Welcome to the Application</h1>
         <div class="flex justify-center items-center">
             <!-- <a href="{{ route('register') }}" class="text-blue-600 hover:text-blue-800 mr-4">Register</a> -->
-            <a href="{{ route('/login') }}" class="text-blue-600 hover:text-blue-800 text-3xl">Login</a>
+            <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-800 text-3xl">Login</a>
         </div>
     </div>
 </body>

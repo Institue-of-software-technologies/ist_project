@@ -50,7 +50,7 @@
                         <label for="skills" class="block text-gray-700 font-bold mb-2">Skills</label>
                         <textarea name="skills" class="form-textarea w-full" rows="3" required>{{ $job->skills }}</textarea>
                     </div>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update Job</button>
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Update Job</button>
                 </form>
             </div>
         </div>

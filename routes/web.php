@@ -10,11 +10,13 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AlumniProfileController;
 
 Route::get('/', function () {
-    return view('login');
+    return view('welcome');
 });
 
 Route::patch('/jobs/{id}/restore', [JobController::class, 'restore'])->name('role-permissions.job.restore');
 
+Route::get('activate-account/{token}', [UserController::class, 'activateAccount'])->name('activate-account');
+Route::post('activate-account/{token}', [UserController::class, 'setPassword'])->name('set-password');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -33,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['isAdmin'])->group(function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 });
 
 
