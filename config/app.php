@@ -6,9 +6,14 @@ use Spatie\Permission\PermissionServiceProvider;
 return [
 
     'providers' => ServiceProvider::defaultProviders()->merge ([
-    // ...
+
     Spatie\Permission\PermissionServiceProvider::class,
+    Maatwebsite\Excel\ExcelServiceProvider::class,
     ])->toArray(),
+
+    'aliases' => [
+    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Name

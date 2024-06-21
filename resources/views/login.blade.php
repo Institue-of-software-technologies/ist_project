@@ -2,6 +2,11 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    @if (session('status'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -11,11 +16,12 @@
                 {{ session('status') }}
             </div>
         @endif
+
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
-                autofocus autocomplete="username" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -37,7 +43,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
+            @if (\Illuminate\Support\Facades\Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
@@ -51,8 +57,8 @@
 
         {{-- <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register') }}">
-                {{ __('Don\'t have an account? Register') }}
-            </a>
+        {{ __('Don\'t have an account? Register') }}
+        </a>
         </div> --}}
     </form>
 </x-guest-layout>

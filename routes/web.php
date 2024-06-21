@@ -38,7 +38,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 });
 
-
+Route::post('/import-users', [UserController::class, 'import'])->name('import.users');
 
 
 Route::middleware(['isAdmin'])->group( function() {

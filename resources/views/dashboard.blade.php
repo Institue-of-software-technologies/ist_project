@@ -16,7 +16,7 @@
 
                     <div class="mt-6 text-gray-700">
                         <p class="mt-2 text-sm text-gray-600">
-                            You are logged in as <strong>{{ Auth::user()->name }}</strong>.
+                            You are logged in as <strong>{{ \Illuminate\Support\Facades\Auth::user()->name }}</strong>.
                         </p>
                     </div>
 
