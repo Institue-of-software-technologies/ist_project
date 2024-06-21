@@ -1,5 +1,7 @@
 <?php
 
+use App\Imports\UsersImport;
+
 return [
 
     /*
@@ -28,8 +30,9 @@ return [
     |
     */
 
-    'disks' => [
 
+
+    'disks' => [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

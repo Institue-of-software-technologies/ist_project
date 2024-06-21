@@ -3,12 +3,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Notifications\AccountActivation;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller implements HasMiddleware
 {
@@ -21,6 +24,30 @@ class UserController extends Controller implements HasMiddleware
             new Middleware('permission:create user', only: ['create', 'store']),
         ];
     }
+
+    // import function 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xls,xlsx,csv|max:2048',
+        ]);
+
+        if ($request->hasFile('file')) {
+            try {
+                $file = $request->file('file');
+                Excel::import(new UsersImport, $file);
+                return redirect()->route('users.index')->with('status', 'Users Imported and Email sent successfully');
+            } catch (\Exception $e) {
+                Log::error('Error importing file: ' . $e->getMessage(), ['exception' => $e]);
+                return redirect()->back()->withErrors(['file' => 'Error importing file. Please try again.']);
+            }
+        } else {
+            return redirect()->back()->withErrors(['file' => 'No file uploaded.']);
+        }
+    }
+
+
+
 
     public function activateAccount($token)
     {
@@ -61,7 +88,7 @@ class UserController extends Controller implements HasMiddleware
         $user->save();
 
         // Redirect to the login page with a success message
-        return redirect('login')->with('success', 'Account activated. You can now log in');
+        return redirect('login')->with('status', 'Account activated. You can now log in');
     }
 
     public function index()
