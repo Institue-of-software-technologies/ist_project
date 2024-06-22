@@ -8,7 +8,7 @@
                 @endif            
             <div class="profile-header bg-gradient-to-r from-red-500 to-red-700 py-6 text-center text-white">              
                 <h1 class="text-4xl font-bold mb-2">{{ __('Profile') }}</h1>
-                <p class="text-xl">{{ __('Welcome,') }} {{ Auth::user()->name }}</p>
+                <p class="text-xl">{{ __('Welcome,') }} {{ \Illuminate\Support\Facades\Auth::user()->name }}</p>
             </div>
             <div class="profile-body text-center p-8">
                 @if ($profile)
