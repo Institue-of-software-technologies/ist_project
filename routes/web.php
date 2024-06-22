@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AlumniController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AlumniProfileController;
 
@@ -22,26 +23,37 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/alumni_dashboard', [AlumniController::class, 'index'])->middleware(['auth',
-    'verified'])->name('alumni_dashboard');
+    Route::get('/alumni_dashboard', [AlumniController::class, 'index'])->middleware([
+        'auth',
+        'verified'
+    ])->name('alumni_dashboard');
     Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
+
+    Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+    Route::delete('projects/{jobId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+    Route::put('projects/{id}/update', [ProjectController::class, 'update'])->name('projects.update');
+
+    
     Route::get('/alumni/profile/index', [AlumniProfileController::class, 'index'])->name('alumni.profile.index');
-    Route::get('/alumni/profile',[AlumniProfileController::class, 'create'])->name('alumni.profile.create');
-    Route::post('/alumni/profile', [AlumniProfileController::class,'store'])->name('alumni.profile.store');
+    Route::get('/alumni/profile', [AlumniProfileController::class, 'create'])->name('alumni.profile.create');
+    Route::post('/alumni/profile', [AlumniProfileController::class, 'store'])->name('alumni.profile.store');
     Route::get('/alumni/profile/{id}/edit', [AlumniProfileController::class, 'edit'])->name('alumni.profile.edit');
     Route::put('alumni/profile/{id}/update', [AlumniProfileController::class, 'update'])->name('alumni.profile.update');
 });
 
 Route::middleware(['isAdmin'])->group(function () {
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
 });
 
 Route::post('/import-users', [UserController::class, 'import'])->name('import.users');
 
 
-Route::middleware(['isAdmin'])->group( function() {
+Route::middleware(['isAdmin'])->group(function () {
 
     Route::resource('permissions', PermissionController::class);
     Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destroy']);
@@ -63,4 +75,4 @@ Route::middleware(['isAdmin'])->group( function() {
 });
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
