@@ -67,13 +67,13 @@
 
                                                     <div class="p-4 flex items-center justify-end space-x-2">
                                 @can('edit job')
-                                    <a href="{{ url('jobs/' . $job->id . '/edit') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                                    <a href="{{ url('jobs/' . $job->id . '/edit') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-edit"></i></a>
                                 @endcan
                                 @can('delete job')
                                     <form action="{{ route('role-permission.job.destroy', $job->id) }}" method="POST" class="inline-block">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-trash"></i></button>
                                     </form>
                                 @endcan
                             </div>

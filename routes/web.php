@@ -19,14 +19,16 @@ Route::patch('/jobs/{id}/restore', [JobController::class, 'restore'])->name('rol
 Route::get('activate-account/{token}', [UserController::class, 'activateAccount'])->name('activate-account');
 Route::post('activate-account/{token}', [UserController::class, 'setPassword'])->name('set-password');
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/alumni_dashboard', [AlumniController::class, 'index'])->middleware([
+    'auth',
+    'verified'
+    ])->name('alumni_dashboard');
+});
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/alumni_dashboard', [AlumniController::class, 'index'])->middleware([
-        'auth',
-        'verified'
-    ])->name('alumni_dashboard');
     Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
@@ -44,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('alumni/profile/{id}/update', [AlumniProfileController::class, 'update'])->name('alumni.profile.update');
 });
 
-Route::middleware(['isAdmin'])->group(function () {
+Route::middleware(['isAdmin', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');

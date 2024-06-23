@@ -15,7 +15,7 @@
                 <div class="card mt-3 bg-white shadow-md rounded-lg overflow-hidden">
                     <div class="card-header bg-gray-100 p-4 border-b border-gray-200">
                         <h4 class="text-lg font-semibold">Permissions
-                            <a href="{{ url('permissions/create') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded float-right">Add Permission</a>
+                            <a href="{{ url('permissions/create') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded float-right"><i class="fas fa-add"></i> Add Permission</a>
                         </h4>
                     </div>
                     <div class="card-body p-4">
@@ -34,11 +34,11 @@
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $permission->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @can('edit permission')
-                                        <a href="{{ url('permissions/'.$permission->id.'/edit') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                                        <a href="{{ url('permissions/'.$permission->id.'/edit') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-edit"></i></a>
                                         @endcan
 
                                         @can('delete permission')
-                                        <a href="{{ url('permissions/'.$permission->id.'/delete') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a>
+                                        <a href="{{ url('permissions/'.$permission->id.'/delete') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-trash"></i></a>
                                         @endcan
                                     </td>
                                 </tr>

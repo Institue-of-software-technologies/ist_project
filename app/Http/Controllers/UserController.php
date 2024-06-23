@@ -85,6 +85,7 @@ class UserController extends Controller implements HasMiddleware
         // Update the user's password
         $user->password = Hash::make($request->password);
         $user->activation_token = null;
+        $user->email_verified_at = now();
         $user->save();
 
         // Redirect to the login page with a success message

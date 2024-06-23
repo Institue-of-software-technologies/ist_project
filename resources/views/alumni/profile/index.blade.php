@@ -56,7 +56,7 @@
                     </div>
                     <div class="mt-8 text-center">
                         <a href="{{ url('alumni/profile/' . $profile->id . '/edit') }}"
-                            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300">{{ __('Edit Profile') }}</a>
+                            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300"><i class="fas fa-edit m-4"></i></a>
                     </div>
                 @else
                     <p class="text-gray-700">{{ __('You have not created a profile yet.') }} <a href="{{ route('profile.create') }}"

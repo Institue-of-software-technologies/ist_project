@@ -37,10 +37,10 @@
                     <div class="mb-4">
                         <label for="file" class="block text-sm font-medium text-gray-700">Upload Multiple
                             Users</label>
-                        <input type="file" name="file" id="file" class="mt-1 block w-72 border border-gray-700">
+                        <input type="file" name="file" id="file" class="mt-1 block w-72 border shadow-lg ">
                     </div>
                     <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Upload</button>
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-upload"></i> Upload</button>
                 </form>
                 <div class="card mt-3 bg-white shadow-md rounded-lg overflow-hidden">
 
@@ -50,7 +50,7 @@
                             Users
                             @can('create user')
                                 <a href="{{ url('users/create') }}"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add User</a>
+                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-add"></i> Add User</a>
                             @endcan
                         </h4>
                     </div>
@@ -93,11 +93,11 @@
                                             <td class="px-6 py-4 whitespace-nowrap flex items-center space-x-2">
                                                 @can('edit user')
                                                     <a href="{{ url('users/' . $user->id . '/edit') }}"
-                                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-edit"></i></a>
                                                 @endcan
                                                 @can('delete user')
                                                     <a href="{{ url('users/' . $user->id . '/delete') }}"
-                                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a>
+                                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-trash"></i></a>
                                                 @endcan
                                             </td>
                                         </tr>
