@@ -23,8 +23,9 @@
                     @foreach ($projects as $project)
                         <div
                             class="bg-white shadow-md rounded-lg p-5 border border-gray-200 transition-transform hover:scale-105">
-                            <h3 class="text-lg font-semibold text-gray-800">{{ $project->title }}</h3>
-                            <p class="mt-2 text-gray-600">{{ $project->description }}</p>
+                            <h3 class="text-3xl font-semibold text-gray-800">{{ $project->title }}</h3>
+                            <p class="mt-2 text-xl text-gray-600">{{ $project->description }}</p>
+                            <p class="text-2xl text-red-500">Posted {{$project->created_at->diffForHumans() }}</p>
                             <a href="{{ $project->link }}" target="_blank"
                                 class="text-blue-500 text-2xl p-5 shadow shadow-red-300 rounded-xl border-red-300 mt-2 block transition-transform hover:scale-105">
                                 View Project
@@ -37,7 +38,7 @@
                             <div class="mt-4 flex space-x-4">
                                 <a href="{{ route('projects.edit', $project->id) }}"
                                     class="inline-flex items-center px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-lg shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition ease-in-out duration-150">
-                                    Edit
+                                        <i class="fas fa-edit mr-2"></i>
                                 </a>
                                 <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
                                     onsubmit="return confirm('Are you sure you want to delete this project?');">
@@ -45,7 +46,7 @@
                                     @method('DELETE')
                                     <button type="submit"
                                         class="inline-flex items-center px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition ease-in-out duration-150">
-                                        Delete
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
                             </div>

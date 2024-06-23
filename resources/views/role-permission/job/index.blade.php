@@ -19,7 +19,7 @@
                     </h4>
                     @can('create job')
                         <a href="{{ url('jobs/create') }}"
-                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add Job</a>
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-add"></i> Add Jobs</a>
                     @endcan
                 </div>
 
