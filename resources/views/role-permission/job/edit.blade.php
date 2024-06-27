@@ -1,8 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        @include('role-permission.nav-links')
-    </x-slot>
-
     <div class="container mx-auto mt-2 px-4">
         <div class="max-w-7xl mx-auto bg-white rounded-lg overflow-hidden shadow-md">
             <div class="p-6">

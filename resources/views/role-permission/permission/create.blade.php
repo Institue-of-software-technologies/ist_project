@@ -1,8 +1,5 @@
 <!-- resources/views/permissions/index.blade.php -->
 <x-app-layout title="Permissions">
-    <x-slot name="header">
-        @include('role-permission.nav-links')
-    </x-slot>
     <div class="container mt-2 mx-auto px-4">
         <div class="row">
             <div class="col-md-12">

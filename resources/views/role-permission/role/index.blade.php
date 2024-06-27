@@ -1,7 +1,4 @@
 <x-app-layout >
-    <x-slot name="header">
-        @include('role-permission.nav-links')
-    </x-slot>
     <div class="container max-w-7xl mt-2 mx-auto px-4">
         <div class="row">
             <div class="col-md-12">

@@ -1,7 +1,4 @@
 <x-app-layout>
-     <x-slot name="header">
-        @include('role-permission.nav-links')
-    </x-slot>
     <!-- resources/views/users/edit.blade.php -->
 <div class="container mx-auto mt-5">
     <div class="flex flex-col">
