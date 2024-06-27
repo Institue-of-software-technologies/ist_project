@@ -3,8 +3,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -14,6 +12,7 @@ class JobController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:view job', only: ['index']),
+            new Middleware('permission:view alumni job', only:['view']),
             new Middleware('permission:delete job', only: ['destroy']),
             new Middleware('permission:edit job', only: ['update', 'edit']),
             new Middleware('permission:create job', only: ['create', 'store']),
@@ -24,6 +23,11 @@ class JobController extends Controller implements HasMiddleware
     {
         $job = Job::findOrFail($id);
         return view('role-permission.job.show', compact('job'));
+    }
+    public function view($id)
+    {
+    $job = Job::findOrFail($id);
+    return view('alumni.job.viewjob', compact('job'));
     }
 
     public function index()

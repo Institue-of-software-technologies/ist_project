@@ -1,8 +1,9 @@
 <x-app-layout>
-    <x-slot name="header">
-        @include('role-permission.nav-links')
-    </x-slot>
-
+        <style>
+        .transition {
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+    </style>
     <div class="container mx-auto mt-2 px-4">
         <div class="row">
             <div class="col-md-12">
@@ -23,21 +24,23 @@
                     @endcan
                 </div>
 
-                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                     @foreach ($jobs as $job)
-                        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <div class="bg-white shadow-md rounded-lg overflow-hidden transition transition transform hover:bg-red-100 hover:-translate-y-1">
                             <a href="{{ url('jobs/' . $job->id) }}"
-                                class="block flex items-center p-4 transition duration-300 ease-in-out hover:bg-red-500 hover:text-white">
+                                class="block flex items-center p-4">
                                 <!-- Job Details -->
                                 <div class="flex-grow">
-                                    <h5 class="text-3xl font-bold">{{ $job->title }}</h5>
-                                    <p class="text-2xl">{{ $job->company_name }}</p>
-                                    <p class="text-2xl">{{ $job->location }}</p>
-                                    <p class="text-2xl">{{ $job->job_type }} </p>
+                                    <h5 class="text-2xl font-extrabold text-red-500">{{ $job->title }}</h5>
+                                    <p class="text-2xl text-red-400">{{ $job->company_name }}</p>
+                                    <div class="grid grid-cols-3  justify-between underline underline-offset-4">
+                                        <span class="">{{ $job->location }}</span>
+                                        <span class="">{{ $job->job_type }} </span>
+                                        <span class="">{{ $job->salary }}</span>
+                                        <span class="">{{ $job->created_at->diffForHumans() }} </span>
+                                    </div>
                                 </div>
                             </a>
-                            <!-- Actions -->
-
                         </div>
                     @endforeach
                 </div>
@@ -48,7 +51,7 @@
                     </h4>
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach ($trashedJobs as $job)
-                            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                            <div class="bg-white shadow-md rounded-lg overflow-hidden transition duration-300 ease-in-out hover:bg-red-100 hover:text-dark-900">
                                 <a href="{{ url('jobs/' . $job->id) }}" class="block flex items-center p-4">
                                     <!-- Job Details -->
                                     <div class="flex-grow">
