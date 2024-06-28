@@ -27,7 +27,7 @@
                 <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                     @foreach ($jobs as $job)
                         <div class="bg-white shadow-lg rounded-lg overflow-hidden transition transform hover:bg-red-100 hover:-translate-y-3">
-                            <a href="{{ url('alumni/jobs/' . $job->id) }}" class="block flex items-center p-4">
+                            <a href="{{ url('alumni/jobs/' . $job->id) }}" class="flex items-center p-4">
                                 <!-- Job Details -->
                                 <div class="flex-grow">
                                     <h5 class="text-2xl font-extrabold text-red-500">{{ $job->title }}</h5>
@@ -50,7 +50,7 @@
                                                 <path d="M7 1.75V2.33333M7 11.6667V12.25M12.25 7H11.6667M2.33333 7H1.75M10.7123 10.7123L10.2998 10.2998M3.70017 3.70017L3.28769 3.28769M10.7123 3.28772L10.2999 3.7002M3.7002 10.2999L3.28772 10.7123M9.33333 7C9.33333 8.28866 8.28866 9.33333 7 9.33333C5.71134 9.33333 4.66667 8.28866 4.66667 7C4.66667 5.71134 5.71134 4.66667 7 4.66667C8.28866 4.66667 9.33333 5.71134 9.33333 7Z" stroke="#389660" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                             </svg>
                                         </span>
-                                        <span class="">{{ $job->created_at->diffForHumans() }}</span>
+                                        <span class="">Posted {{ $job->created_at->diffForHumans() }}</span>
                                     </div>
                                 </div>
                             </a>

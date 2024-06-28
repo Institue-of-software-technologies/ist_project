@@ -87,7 +87,7 @@
                                 @can('edit project')
                                 <a href="{{ route('projects.edit', $project->id) }}"
                                     class="inline-flex items-center px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-lg shadow hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition ease-in-out duration-150">
-                                    <i class="fas fa-edit mr-2"></i>Edit
+                                    <i class="fas fa-edit text-xl"></i>
                                 </a>
                                 @endcan
                                 @can('delete project')
@@ -97,7 +97,7 @@
                                     @method('DELETE')
                                     <button type="submit"
                                         class="inline-flex items-center px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition ease-in-out duration-150">
-                                        <i class="fas fa-trash mr-3"></i> Delete
+                                        <i class="fas fa-trash text-xl"></i>
                                     </button>
                                 </form>
                                 @endcan

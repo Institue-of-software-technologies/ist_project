@@ -1,5 +1,5 @@
 <x-app-layout>
-        <style>
+    <style>
         .transition {
             transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
@@ -20,15 +20,16 @@
                     </h4>
                     @can('create job')
                         <a href="{{ url('jobs/create') }}"
-                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-add"></i> Add Jobs</a>
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i
+                                class="fas fa-add"></i> Add Jobs</a>
                     @endcan
                 </div>
 
                 <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                     @foreach ($jobs as $job)
-                        <div class="bg-white shadow-md rounded-lg overflow-hidden transition transition transform hover:bg-red-100 hover:-translate-y-1">
-                            <a href="{{ url('jobs/' . $job->id) }}"
-                                class="block flex items-center p-4">
+                        <div
+                            class="bg-white shadow-md rounded-lg overflow-hidden transition transform hover:bg-red-100 hover:-translate-y-1">
+                            <a href="{{ url('jobs/' . $job->id) }}" class="flex items-center p-4">
                                 <!-- Job Details -->
                                 <div class="flex-grow">
                                     <h5 class="text-2xl font-extrabold text-red-500">{{ $job->title }}</h5>
@@ -51,8 +52,9 @@
                     </h4>
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach ($trashedJobs as $job)
-                            <div class="bg-white shadow-md rounded-lg overflow-hidden transition duration-300 ease-in-out hover:bg-red-100 hover:text-dark-900">
-                                <a href="{{ url('jobs/' . $job->id) }}" class="block flex items-center p-4">
+                            <div
+                                class="bg-white shadow-md rounded-lg overflow-hidden transition duration-300 ease-in-out hover:bg-red-100 hover:text-dark-900">
+                                <a href="{{ url('jobs/' . $job->id) }}" class="flex items-center p-4">
                                     <!-- Job Details -->
                                     <div class="flex-grow">
                                         <h5 class="text-xl font-bold">{{ $job->title }}</h5>
@@ -64,15 +66,17 @@
                                 </a>
                                 <!-- Actions -->
                                 <div class="p-4 flex items-center justify-end space-x-2">
-                                    @can('restore job')
-                                        <form action="{{ route('role-permissions.job.restore', $job->id) }}" method="POST"
-                                            class="inline-block">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit"
-                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Restore</button>
-                                        </form>
-                                    @endcan
+                                    @if (!empty($jobs))
+                                        @can('restore job')
+                                            <form action="{{ route('role-permissions.job.restore', $job->id) }}"
+                                                method="POST" class="inline-block">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit"
+                                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Restore</button>
+                                            </form>
+                                        @endcan
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
