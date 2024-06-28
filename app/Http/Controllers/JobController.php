@@ -12,7 +12,7 @@ class JobController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:view job', only: ['index']),
-            new Middleware('permission:view alumni job', only:['view']),
+            new Middleware('permission:view alumni job', only: ['view']),
             new Middleware('permission:delete job', only: ['destroy']),
             new Middleware('permission:edit job', only: ['update', 'edit']),
             new Middleware('permission:create job', only: ['create', 'store']),
@@ -26,8 +26,8 @@ class JobController extends Controller implements HasMiddleware
     }
     public function view($id)
     {
-    $job = Job::findOrFail($id);
-    return view('alumni.job.viewjob', compact('job'));
+        $job = Job::findOrFail($id);
+        return view('alumni.job.viewjob', compact('job'));
     }
 
     public function index()

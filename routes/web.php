@@ -62,7 +62,7 @@ Route::group(['middleware' => ['role:super-user|admin']], function() {
     // Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::resource('jobs', JobController::class);
     Route::get('/jobs', [JobController::class, 'index'])->name('role-permission.job.index');
-    Route::delete('jobs/{jobId}', [JobController::class, 'destroy'])->name('role-permission.job.destroy');
+    Route::get('jobs/{jobId}/delete', [JobController::class, 'destroy'])->name('role-permission.job.destroy');
 
     Route::get('jobs/{job}', [JobController::class, 'show'])->name('role-permission.job.show');
 

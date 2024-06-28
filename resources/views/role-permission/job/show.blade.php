@@ -49,6 +49,19 @@
                                 @endforeach
                             </ul>
                         </section>
+
+                        <div class="float-right">
+                            @can('edit job')
+                                <a href="{{ url('jobs/' . $job->id . '/edit') }}">
+                                    <i class="fas fa-edit text-xl p-3 rounded-lg bg-green-500 text-white"></i>
+                                </a>
+                            @endcan
+                            @can('delete job')
+                                <a href="{{url('jobs/'.$job->id.'/delete')}}">
+                                    <i class="fas fa-trash text-xl p-3 rounded-lg bg-red-500 text-white"></i>
+                                </a>
+                            @endcan
+                        </div>
                     </div>
                 </div>
             </div>
