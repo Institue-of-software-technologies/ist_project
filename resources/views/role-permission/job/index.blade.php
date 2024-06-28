@@ -37,9 +37,9 @@
                                     <div class="grid grid-cols-3  justify-between underline underline-offset-4">
                                         <span class="">{{ $job->location }}</span>
                                         <span class="">{{ $job->job_type }} </span>
-                                        <span class="">{{ $job->salary }}</span>
-                                        <span class="">{{ $job->created_at->diffForHumans() }} </span>
+                                        <span class="">Salary : {{ $job->salary }}</span>
                                     </div>
+                                    <span class="">Posted {{ $job->created_at->diffForHumans() }} </span>
                                 </div>
                             </a>
                         </div>
