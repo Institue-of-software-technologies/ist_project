@@ -44,7 +44,7 @@
                     <div class="mb-4">
                         <label for="full_name" class="required block text-sm font-medium text-gray-700">{{ __('Full Name') }}</label>
                         <input id="full_name" type="text" placeholder="Enter Your Full Name" name="full_name" value="{{ old('full_name') }}" autocomplete="full_name" autofocus
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('full_name') border-red-500 @enderror">
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('full_name') border-red-500 @enderror">
                         @error('full_name')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -52,7 +52,7 @@
                     <div class="mb-4">
                         <label for="email" class="required block text-sm font-medium text-gray-700">{{ __('Email Address') }}</label>
                         <input id="email" type="email" placeholder="Enter Your Email" name="email" value="{{ old('email') }}" autocomplete="email"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('email') border-red-500 @enderror">
+                            class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('email') border-red-500 @enderror">
                         @error('email')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -61,7 +61,7 @@
                     <div class="mb-4">
                         <label for="profile_photo" class="required block text-sm font-medium text-gray-700">{{ __('Profile Image') }}</label>
                         <input id="profile_photo" type="file" name="profile_photo"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('profile_photo') border-red-500 @enderror">
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('profile_photo') border-red-500 @enderror">
                         @error('profile_photo')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -74,7 +74,7 @@
                     <div class="mb-4">
                         <label for="degree" class="required block text-sm font-medium text-gray-700">{{ __('Degree') }}</label>
                         <input id="degree" type="text" placeholder="Enter Your Degree" name="degree" value="{{ old('degree') }}"  autocomplete="degree"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('degree') border-red-500 @enderror">
+                            class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('degree') border-red-500 @enderror">
                         @error('degree')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -82,7 +82,7 @@
                     <div class="mb-4">
                         <label for="graduation_year" class="required block text-sm font-medium text-gray-700">{{ __('Graduation Year') }}</label>
                         <input id="graduation_year" type="text" placeholder="Enter Your Graduation Year" name="graduation_year" value="{{ old('graduation_year') }}" autocomplete="graduation_year"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('graduation_year') border-red-500 @enderror">
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('graduation_year') border-red-500 @enderror">
                         @error('graduation_year')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -90,7 +90,7 @@
                     <div class="mb-4">
                         <label for="extra_course" class="optional block text-sm font-medium text-gray-700">{{ __('Extra Course') }}</label>
                         <input id="extra_course" type="text" placeholder="Enter Your Extra Course" name="extra_course" value="{{ old('extra_course') }}" optional autocomplete="extra_course"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm @error('extra_course') border-red-500 @enderror">
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm @error('extra_course') border-red-500 @enderror">
                         @error('extra_course')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -103,7 +103,7 @@
                     <div class="mb-4">
                         <label for="current_job_title" class="required block text-sm font-medium text-gray-700">{{ __('Current Job Title') }}</label>
                         <input id="current_job_title" type="text" placeholder="Enter Your Current Job Title" name="current_job_title" value="{{ old('current_job_title') }}"  autocomplete="current_job_title"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('current_job_title') border-red-500 @enderror">
+                            class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('current_job_title') border-red-500 @enderror">
                         @error('current_job_title')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -112,7 +112,7 @@
                     <div class="mb-4">
                         <label for="current_employer" class="required block text-sm font-medium text-gray-700">{{ __('Current Employer') }}</label>
                         <input id="current_employer" type="text" placeholder="Enter Your Current Employer" name="current_employer" value="{{ old('current_employer') }}" autocomplete="current_employer"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('current_employer') border-red-500 @enderror">
+                            class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('current_employer') border-red-500 @enderror">
                         @error('current_employer')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -121,7 +121,7 @@
                     <div class="mb-4">
                         <label for="skills" class="required block text-sm font-medium text-gray-700">{{ __('Skills') }}</label>
                         <input id="skills" type="text" placeholder="Enter Your Skills" name="skills" value="{{ old('skills') }}"  autocomplete="skills"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('skills') border-red-500 @enderror">
+                            class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('skills') border-red-500 @enderror">
                         @error('skills')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -135,7 +135,7 @@
                     <div class="mb-4">
                         <label for="linkedin_profile" class="required block text-sm font-medium text-gray-700">{{ __('LinkedIn Profile') }}</label>
                         <input id="linkedin_profile" type="text" placeholder="Enter Your LinkedIn Profile" name="linkedin_profile" value="{{ old('linkedin_profile') }}" autocomplete="linkedin_profile"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('linkedin_profile') border-red-500 @enderror">
+                            class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('linkedin_profile') border-red-500 @enderror">
                         @error('linkedin_profile')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -144,7 +144,7 @@
                     <div class="mb-4">
                         <label for="phone" class="required block text-sm font-medium text-gray-700">{{ __('Phone Number') }}</label>
                         <input id="phone" type="text" placeholder="Enter Your Phone Number" name="phone" value="{{ old('phone') }}" required autocomplete="phone"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('phone') border-red-500 @enderror">
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('phone') border-red-500 @enderror">
                         @error('phone')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -153,7 +153,7 @@
                     <div class="mb-4">
                         <label for="social_media_links" class="block text-sm font-medium text-gray-700">{{ __('Instagram') }}</label>
                         <input id="social_media_links" type="text" placeholder="Enter Your Social Media @" name="social_media_links" value="{{ old('social_media_links') }}"  autocomplete="social_media_links"
-                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm @error('social_media_links') border-red-500 @enderror">
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm @error('social_media_links') border-red-500 @enderror">
                         @error('social_media_links')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
