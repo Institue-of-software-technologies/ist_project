@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+            <div class="bg-gray-200 overflow-hidden shadow-xl sm:rounded-lg p-6">
                 <div class="mb-4">
                     <h1 class="text-2xl font-bold text-gray-900 text-center">Your Published Projects</h1>
                 </div>
@@ -16,17 +16,17 @@
                 <div class=" grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
                     @foreach ($projects as $project)
                         <div
-                            class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
-                            <h3 class="text-5xl font-semibold text-gray-800">{{ $project->title }}</h3>
+                            class="bg-gray-200 shadow-md rounded-lg p-5 border border-gray-800">
+                            <h3 class="text-3xl lg:text-5xl font-semibold text-gray-800">{{ $project->title }}</h3>
                             <p class="mt-2 text-xl text-gray-900">
-                                <strong class="text-3xl">Problem Statement:</strong> <br>
+                                <strong class="text-xl lg:text-3xl">Problem Statement:</strong> <br>
                                 {{ $project->problem_statement }}</p>                                
                             <p class="mt-2 text-xl text-gray-900">
-                                <strong class="text-3xl">Solution Proposed:</strong> <br>
+                                <strong class="text-xl lg:text-3xl">Solution Proposed:</strong> <br>
                                 {{ $project->solution_proposed }}</p>
 
                                     <section class="mb-4">
-                                        <h3 class="text-3xl font-bold">Education</h3>
+                                        <h3 class="text-xl lg:text-3xl font-bold">Education</h3>
                                         <ul class="list-disc list-inside text-gray-750">
                                             @foreach (explode("\n", $project->description) as $point)
                                                 <li class="mb-2 text-2xl">{{ $point}}</li>
@@ -35,45 +35,45 @@
                                     </section>
 
                             {{-- <p class="mt-2 text-xl text-gray-900">
-                                <strong class="text-3xl">Description:</strong> <br>
+                                <strong class="text-xl lg:text-3xl">Description:</strong> <br>
                                 {{ $project->description }}</p> --}}
                             <p class="mt-2 text-xl text-gray-900">
-                                <strong class="text-3xl">Tools <i class="fa-solid fa-toolbox"></i> :</strong> <br>
+                                <strong class="text-xl lg:text-3xl">Tools <i class="fa-solid fa-toolbox"></i> :</strong> <br>
                                 {{ $project->tools_used }}</p>
                             <p class="mt-2 text-xl text-gray-900">
-                                <strong class="text-3xl">Programming Language:</strong> <br>
+                                <strong class="text-xl lg:text-3xl">Programming Language:</strong> <br>
                                 {{ $project->programming_language }}</p>
                             <p class="mt-2 text-xl text-gray-900">
-                                <strong class="text-3xl">GitHub Repository:</strong> <br>
+                                <strong class="text-xl lg:text-3xl">GitHub Repository:</strong> <br>
                                 <a
                                     href="{{ $project->github_repository }}" target="_blank"
-                                    class="text-3xl"><i class="fa-brands fa-github"></i></a></p>
+                                    class="text-xl lg:text-3xl"><i class="fa-brands fa-github"></i></a></p>
                             @if ($project->powerpoint)
                                 <p class="mt-2 text-xl text-gray-900">
-                                    <strong class="text-3xl">PowerPoint Presentation:</strong></p>
+                                    <strong class="text-xl lg:text-3xl">PowerPoint Presentation:</strong></p>
                                 <a href="{{ asset('storage/' . $project->powerpoint) }}" target="_blank"
                                     class="text-blue-500">Download PowerPoint</a>
                             @endif                                    
 
                             @if ($project->flowchart_diagram)
-                            <div class="shadow-lg shadow-red-100 rounded-lg p-1 mt-5">
-                                <p class="mt-2 text-3xl text-gray-900"><strong>Flowchart Diagram:</strong></p>
+                            <div class="shadow-2xl shadow-gray-700 rounded-xl p-1 mt-8">
+                                <p class="mt-2 text-xl lg:text-3xl text-gray-900"><strong>Flowchart Diagram:</strong></p>
                                 <img src="{{ asset('storage/' . $project->flowchart_diagram) }}" alt="Flowchart diagram"
-                                    class="mt-2 w-full h-auto">
+                                    class="mt-2 w-full h-auto rounded-xl">
                                     </div>
                             @endif
                             @if ($project->database_diagram)
-                            <div class="shadow-lg shadow-red-100 rounded-lg p-1 mt-5">
-                                <p class="mt-2 text-6xl text-gray-900"><strong><i class="fa-solid fa-database"></i> Diagram:</strong></p>
+                            <div class="shadow-2xl shadow-gray-700 rounded-xl p-1 mt-8">
+                                <p class="mt-2 text-2xl lg:text-4xl text-gray-900"><strong><i class="fa-solid fa-database"></i> Diagram:</strong></p>
                                 <img src="{{ asset('storage/' . $project->database_diagram) }}" alt="Database diagram"
-                                    class="mt-2 w-full h-auto">
+                                    class="mt-2 w-full h-auto rounded-xl">
                             </div>
                             @endif
 
-                             <div class="shadow-lg shadow-red-100 rounded-lg p-1 mt-5">
-                                <label class="block text-gray-700 text-6xl font-bold mb-2" for="video_url"><i class="fa-solid fa-video"></i></label>
+                             <div class="shadow-2xl shadow-gray-700 rounded-xl p-1 mt-8">
+                                <label class="block text-gray-700 text-2xl lg:text-4xl font-bold mb-2" for="video_url"><i class="fa-solid fa-video"></i></label>
                                 @if (isset($project) && $project->video_url)
-                                    <video class="w-full h-auto mt-2" autoplay muted>
+                                    <video class="w-full h-auto mt-2 rounded-xl" autoplay muted>
                                         <source src="{{ asset('storage/' . $project->video_url) }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>

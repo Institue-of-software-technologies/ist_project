@@ -14,7 +14,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased bg-gray-400">
     <div class="min-h-screen ">
         @include('layouts.navigation')
 
@@ -28,7 +28,7 @@
         @endif
 
         <!-- Page Content -->
-        <main class=""> <!-- Add a top margin here -->
+        <main class=" "> <!-- Add a top margin here -->
             {{ $slot }}
         </main>
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,30 @@ class ProjectController extends Controller implements HasMiddleware
         new Middleware('permission:publish project', only: ['create', 'store']),
         ];
         }
+
+
+    public function viewAlumniProjects($alumniId)
+    {
+        // Fetch the alumni user with the 'alumni' role and their projects
+        $alumni = User::role('alumni')->with('projects')->findOrFail($alumniId);
+        return view('alumni.projects.index', compact('alumni'));
+    }
+
+    public function showProject($projectId)
+    {
+        // Fetch the project with the user who created it
+        $project = Project::with('user')->findOrFail($projectId);
+        return view('alumni.projects.show', compact('project'));
+    }
+
+    public function listAlumni()
+    {
+        // Fetch all users with the 'alumni' role
+        $alumnis = User::role('alumni')->get();
+        return view('alumni.index', compact('alumnis'));
+    }
+
+
     public function index()
     {
         $projects = Project::where('user_id', auth()->id())->get();

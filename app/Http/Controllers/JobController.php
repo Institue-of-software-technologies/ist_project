@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\User;
+use App\Notifications\JobPostedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -32,7 +34,7 @@ class JobController extends Controller implements HasMiddleware
 
     public function index()
     {
-        $jobs = Job::all();
+        $jobs = Job::orderBy('created_at', 'desc')->get();
         $trashedJobs = Job::onlyTrashed()->get();
         return view('role-permission.job.index', compact('jobs', 'trashedJobs'));
     }
@@ -44,7 +46,8 @@ class JobController extends Controller implements HasMiddleware
 
     public function alumniIndex()
     {
-        $jobs = Job::all();
+        // $jobs = Job::all();
+        $jobs = Job::orderBy('created_at', 'desc')->get();        
         return view('alumni.job.index', compact('jobs'));
     }
 
@@ -62,7 +65,7 @@ class JobController extends Controller implements HasMiddleware
             'skills' => 'required',
         ]);
 
-        Job::create([
+        $job = Job::create([
             'title' => $request->title,
             'description' => $request->description,
             'location' => $request->location,
@@ -74,6 +77,13 @@ class JobController extends Controller implements HasMiddleware
             'skills' => $request->skills,
             'user_id' => auth()->id(),
         ]);
+
+        $alumni = User::role('alumni')->get();
+
+        foreach ($alumni as $alumnus)
+        {
+            $alumnus->notify(new JobPostedNotification($job));
+        } 
 
         return redirect()->route('role-permission.job.index')->with('status', 'Job Created Successfully');
     }
