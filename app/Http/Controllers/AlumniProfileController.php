@@ -11,15 +11,27 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class AlumniProfileController extends Controller implements HasMiddleware
 {
-        public static function middleware(): array
-        {
+    public static function middleware(): array
+    {
         return [
-        new Middleware('permission:view profile', only: ['index']),
-        new Middleware('permission:delete profile', only: ['destroy']),
-        new Middleware('permission:edit profile', only: ['update', 'edit']),
-        new Middleware('permission:create profile', only: ['create', 'store']),
+            new Middleware('permission:view profile', only: ['index']),
+            new Middleware('permission:delete profile', only: ['destroy']),
+            new Middleware('permission:edit profile', only: ['update', 'edit']),
+            new Middleware('permission:create profile', only: ['create', 'store']),
         ];
-        }
+    }
+
+    public function view()
+    {
+        $profiles = AlumniProfile::all();
+        return view('profiles.index', compact('profiles'));
+    }
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $profiles = AlumniProfile::where('full_name', 'LIKE', "%{$searchTerm}%")->get();
+        return view('profiles.index', compact('profiles'));
+    }
     public function index()
     {
         $alumni = Auth::user();

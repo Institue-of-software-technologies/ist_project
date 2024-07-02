@@ -6,7 +6,7 @@
         </h2>
     </x-slot> --}}
     @role('super-user|admin')
-        <div class="py-12">
+        <div class="lg:py-12">
             <div class="max-w-7x mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div
@@ -101,7 +101,7 @@
     {{-- alumni routes --}}
 
     @role('alumni')
-        <div class="max-w-7x mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7x lg:py-12 mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 sm:px-20 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 border-b border-gray-200">
                     <div class="mt-8 text-2xl font-bold text-gray-900">
@@ -163,6 +163,58 @@
                                 Go to Profile
                             </a>
                         </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endrole
+
+    @role('employer')
+        <div class="max-w-7x lg:py-12 mx-auto my-auto  sm:px-6 lg:px-8 ">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6 sm:px-20 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 border-b border-gray-200">
+                    <div class="mt-8 text-2xl font-bold text-gray-900">
+                        Welcome to Your Employer Dashboard!
+                    </div>
+
+                    <div class="mt-6 text-gray-700">
+                        <p class="mt-2 text-sm text-gray-600">
+                            You are logged in as <strong>{{ \Illuminate\Support\Facades\Auth::user()->name }}</strong>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Additional sections for Alumni -->
+                <div class="p-6 bg-white sm:px-20">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Jobs Management -->
+                        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">Create Jobs</h3>
+                            <p class="mt-2 text-gray-600">Create job opportunities for alumni.</p>
+                            <a href="{{ url('jobs/create') }}"
+                                class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
+                                Go to Jobs
+                            </a>
+                        </div>
+
+                        {{-- view alumni projects --}}
+                                <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200 ">
+                                    <h3 class="text-lg font-semibold text-gray-800">View Alumni Projects</h3>
+                                    <p class="mt-2 text-gray-600">Find potential employees</p>
+                                    <a href="{{ url('/alumni') }}"
+                                        class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
+                                        Go to Projects
+                                    </a>
+                                </div>
+                        {{-- view alumni profiles --}}
+                        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">View Alumni Profiles</h3>
+                            <p class="mt-2 text-gray-600">See the Profiles</p>
+                            <a href="{{ url('profiles/index') }}"
+                                class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
+                                Go to Profiles
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
