@@ -2,9 +2,12 @@
     <div class=" flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
             <div class="profile-header bg-gradient-to-r from-red-500 to-red-700 py-6 text-center text-white">
+                <a class="bg-red-500 hover:bg-red-700 text-white font-bold my-auto px-4 rounded float-right"
+                    href="{{ route('dashboard') }}">Back</a>
                 <h1 class="text-4xl font-bold mb-2">{{ __('Alumni Profiles') }}</h1>
                 <form action="{{ route('profiles.search') }}" method="GET" class="mt-4">
-                    <input type="text" name="search" class="py-2 px-4 text-gray-900 font-semibold border rounded-lg w-1/2"
+                    <input type="text" name="search"
+                        class="py-2 px-4 text-gray-900 font-semibold border rounded-lg w-1/2"
                         placeholder="Search by name">
                     <button type="submit"
                         class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">Search</button>
@@ -46,11 +49,11 @@
                                             <i class="fab fa-linkedin fa-2xl"></i>
                                         </a>
                                     </p>
-                                    <div class="mt-4 text-center">
+                                    {{-- <div class="mt-4 text-center">
                                         <a href="{{ url('alumni/profile/index/' . $profile->id) }}"
                                             class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">View
                                             Profile</a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         @endforeach

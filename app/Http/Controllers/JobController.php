@@ -18,9 +18,16 @@ class JobController extends Controller implements HasMiddleware
             new Middleware('permission:delete job', only: ['destroy']),
             new Middleware('permission:edit job', only: ['update', 'edit']),
             new Middleware('permission:create job', only: ['create', 'store']),
+            new Middleware('permission:restore job',only: ['index'])
         ];
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('find');
+        $jobs = Job::where('title', 'LIKE', "%{$searchTerm}%")->get();
+        return view('role-permission.job.index', compact('jobs'));
+    }    
     public function show($id)
     {
         $job = Job::findOrFail($id);
@@ -47,13 +54,13 @@ class JobController extends Controller implements HasMiddleware
     public function alumniIndex()
     {
         // $jobs = Job::all();
-        $jobs = Job::orderBy('created_at', 'desc')->get();        
+        $jobs = Job::orderBy('created_at', 'desc')->get();
         return view('alumni.job.index', compact('jobs'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'location' => 'required',
@@ -63,27 +70,22 @@ class JobController extends Controller implements HasMiddleware
             'experience_level' => 'required',
             'education_level' => 'required',
             'skills' => 'required',
+            'company_logo' => 'nullable|file|mimes:jpg,jpeg,png,avif',
         ]);
 
-        $job = Job::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'location' => $request->location,
-            'salary' => $request->salary,
-            'company_name' => $request->company_name,
-            'job_type' => $request->job_type,
-            'experience_level' => $request->experience_level,
-            'education_level' => $request->education_level,
-            'skills' => $request->skills,
-            'user_id' => auth()->id(),
-        ]);
+        if ($request->hasFile('company_logo')) {
+            $data['company_logo'] = $request->file('company_logo')->store('company_logo', 'public');
+        }
 
+
+        $job = new Job($data);
+        $job->user_id = auth()->id();
+        $job->save();
         $alumni = User::role('alumni')->get();
 
-        foreach ($alumni as $alumnus)
-        {
+        foreach ($alumni as $alumnus) {
             $alumnus->notify(new JobPostedNotification($job));
-        } 
+        }
 
         return redirect()->route('role-permission.job.index')->with('status', 'Job Created Successfully');
     }
@@ -95,7 +97,7 @@ class JobController extends Controller implements HasMiddleware
 
     public function update(Request $request, Job $job)
     {
-        $request->validate([
+        $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
             'location' => 'required',
@@ -105,9 +107,14 @@ class JobController extends Controller implements HasMiddleware
             'experience_level' => 'required',
             'education_level' => 'required',
             'skills' => 'required',
+            'company_logo' => 'nullable|file|mimes:jpg,jpeg,png,avif',
         ]);
 
-        $job->update($request->all());
+        if ($request->hasFile('company_logo')) {
+            $data['company_logo'] = $request->file('company_logo')->store('company_logo', 'public');
+        }
+
+        $job->update($data);
 
         return redirect()->route('role-permission.job.index')->with('status', 'Job Updated Successfully');
     }

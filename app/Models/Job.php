@@ -25,6 +25,7 @@ class Job extends Model
         'education_level', 
         'skills',
         'deleted_at',
+        'company_logo',
     ];
 
     public function user()

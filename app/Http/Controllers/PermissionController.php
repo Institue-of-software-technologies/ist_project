@@ -9,22 +9,20 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class PermissionController extends Controller implements HasMiddleware
 {
-
-    
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view permission', only:['index']),
-            new Middleware('permission:delete permission', only:['destroy']),
-            new Middleware('permission:edit permission', only:['update', 'edit']),
-            new Middleware('permission:create permission', only:['create','store']),
+            new Middleware('permission:view permission', only: ['index']),
+            new Middleware('permission:delete permission', only: ['destroy']),
+            new Middleware('permission:edit permission', only: ['update', 'edit']),
+            new Middleware('permission:create permission', only: ['create', 'store']),
         ];
     }
 
     public function index()
     {
         $permissions = Permission::get();
-        return view('role-permission.permission.index'  , [
+        return view('role-permission.permission.index', [
             'permissions' => $permissions
         ]);
     }
@@ -48,7 +46,7 @@ class PermissionController extends Controller implements HasMiddleware
             'name' => $request->name
         ]);
 
-        return redirect('permissions')->with('status','Permission Created Successfully');
+        return redirect('permissions')->with('status', 'Permission Created Successfully');
     }
 
     public function edit(Permission $permission)
@@ -62,7 +60,7 @@ class PermissionController extends Controller implements HasMiddleware
             'name' => [
                 'required',
                 'string',
-                'unique:permissions,name,'.$permission->id
+                'unique:permissions,name,' . $permission->id
             ]
         ]);
 
@@ -70,14 +68,13 @@ class PermissionController extends Controller implements HasMiddleware
             'name' => $request->name
         ]);
 
-        return redirect('permissions')->with('status','Permission Updated Successfully');
+        return redirect('permissions')->with('status', 'Permission Updated Successfully');
     }
 
     public function destroy($permissionId)
     {
         $permission = Permission::find($permissionId);
         $permission->delete();
-        return redirect('permissions')->with('status','Permission Deleted Successfully');
+        return redirect('permissions')->with('status', 'Permission Deleted Successfully');
     }
 }
-

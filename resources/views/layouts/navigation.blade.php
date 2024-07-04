@@ -40,6 +40,8 @@
                         </x-nav-link>
                     @endcan
                 </div>
+
+                @can('view notification')
                 <!-- Notification Icon -->
                 <div class="relative p-5 lg:ml-20 ml-24 sm:order-2">
                     <button @click="notifOpen = !notifOpen" class="flex items-center text-gray-900">
@@ -71,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-
+@endcan
             </div>
 
 
