@@ -9,12 +9,29 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AlumniProfileController;
+use App\Http\Controllers\JobApplicationController;
+use App\Models\JobApplication;
 
 Route::get('/', function () {
     return view('login');
 });
 
 Route::patch('/jobs/{id}/restore', [JobController::class, 'restore'])->name('role-permissions.job.restore');
+Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
+// job applications
+
+Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('job-applications.store');
+Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('job-applications.index');
+
+
+// alumni list
+Route::get('/job-application/list', [JobApplicationController::class, 'listApplicant'])->name('job-application.list');
+
+// applications
+Route::get('/job-application/{applicationId}', [JobApplicationController::class, 'showApplication'])->name('job-application.application');
+
+// show alumni applications
+Route::get('/job-application/{id}/applist', [JobApplicationController::class, 'showApplicationList'])->name('job-application.applist');
 
 Route::get('activate-account/{token}', [UserController::class, 'activateAccount'])->name('activate-account');
 Route::post('activate-account/{token}', [UserController::class, 'setPassword'])->name('set-password');

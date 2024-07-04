@@ -38,7 +38,7 @@ class JobPostedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('A new Job has been posted Please Login to view the job.' .$this->job->title)
+                    ->line('A new Job has been posted Please Login to view the job. ' .$this->job->title)
                     ->action('Login', url('login'))
                     ->line('Thank you for using our application!');
     }

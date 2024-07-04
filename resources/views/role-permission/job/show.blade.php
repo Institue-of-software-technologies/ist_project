@@ -7,16 +7,26 @@
         @endif
 
         <!-- Job Details Section -->
-        <div class="mt-3 p-5 flex justify-between items-center shadow-lg shadow-gray-300">
-            <h4 class="text-lg font-semibold">Job Details</h4>
+        <div class="mx-auto">
+            @if ($job->company_logo)
+                <div class="flex justify-center  mt-8">
+                    <div class="rounded-xl p-1">
+                        <img src="{{ asset('storage/' . $job->company_logo) }}" alt="Company Logo"
+                            class="w-auto h-auto lg:w-52 lg:h-36 rounded-xl mx-auto">
+                    </div>
+                </div>
+            @endif
         </div>
 
         <div class="gap-4">
+
             <div>
                 <div class="bg-white mx-auto border border-lg border-gray-500 rounded-lg overflow-hidden mt-4 p-4">
+                    <a class="bg-red-500 hover:bg-red-700 text-white font-bold my-auto px-4 rounded float-right"
+                        href="{{ route('role-permission.job.index') }}">Back</a>
                     <div class="p-4 border-b border-gray-200">
-                        <h5 class="text-xl font-bold">{{ $job->title }}</h5>
-                        <p class="text-sm text-gray-600">{{ $job->company_name }}</p>
+                        <h5 class="text-2xl font-bold">{{ $job->title }}</h5>
+                        <p class="text-xl text-gray-600">{{ $job->company_name }}</p>
                     </div>
 
                     <!-- Job Details -->
@@ -57,7 +67,7 @@
                                 </a>
                             @endcan
                             @can('delete job')
-                                <a href="{{url('jobs/'.$job->id.'/delete')}}">
+                                <a href="{{ url('jobs/' . $job->id . '/delete') }}">
                                     <i class="fas fa-trash text-xl p-3 rounded-lg bg-red-500 text-white"></i>
                                 </a>
                             @endcan

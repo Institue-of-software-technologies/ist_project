@@ -3,12 +3,19 @@
         <div class="max-w-7xl mx-auto bg-white rounded-lg overflow-hidden shadow-md">
             <div class="p-6">
                 <h1 class="text-2xl font-semibold mb-4">Edit Job</h1>
-                <form action="{{ route('jobs.update', $job->id) }}" method="POST">
+                <form action="{{ route('jobs.update', $job->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="mb-4">
                         <label for="title" class="block text-gray-700 font-bold mb-2">Title</label>
                         <input type="text" name="title" class="form-input w-full" value="{{ $job->title }}" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="company_logo">Company Logo</label>
+                        <input type="file" name="company_logo" id="company_logo" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        @if ($job->company_logo)
+                            <img src="{{ asset('storage/' . $job->company_logo) }}" alt="Company logo" class="mt-2 w-full h-auto">
+                        @endif
                     </div>
                     <div class="mb-4">
                         <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
@@ -46,7 +53,7 @@
                         <label for="skills" class="block text-gray-700 font-bold mb-2">Skills</label>
                         <textarea name="skills" class="form-textarea w-full" rows="3" required>{{ $job->skills }}</textarea>
                     </div>
-                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-edit"></i></button>
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-edit"></i> Update Job</button>
                 </form>
             </div>
         </div>

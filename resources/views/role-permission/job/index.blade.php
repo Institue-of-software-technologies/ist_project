@@ -18,6 +18,13 @@
                     <h4 class="text-lg font-semibold">
                         Jobs
                     </h4>
+                    <form action="{{ route('jobs.search') }}" method="GET" class="mt-4">
+                        <input type="text" name="find"
+                            class="py-2 px-4 text-gray-900 font-semibold border rounded-lg w-52"
+                            placeholder="Search by Title">
+                        <button type="submit"
+                            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">Search</button>
+                    </form>
                     @can('create job')
                         <a href="{{ url('jobs/create') }}"
                             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i
@@ -25,35 +32,59 @@
                     @endcan
                 </div>
 
-                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-                    @foreach ($jobs as $job)
-                        <div
-                            class="bg-gray-200 shadow-md rounded-lg overflow-hidden transition transform hover:bg-red-100 hover:-translate-y-1">
-                            <a href="{{ url('jobs/' . $job->id) }}" class="flex items-center p-4">
-                                <!-- Job Details -->
-                                <div class="flex-grow">
-                                    <h5 class="text-2xl font-extrabold text-red-500">{{ $job->title }}</h5>
-                                    <p class="text-2xl text-red-400">{{ $job->company_name }}</p>
-                                    <div class="grid grid-cols-3  justify-between underline underline-offset-4">
-                                        <span class="">{{ $job->location }}</span>
-                                        <span class="">{{ $job->job_type }} </span>
-                                        <span class="">Salary : {{ $job->salary }}</span>
-                                    </div>
-                                    <span class="">Posted {{ $job->created_at->diffForHumans() }} </span>
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
+                @if ($jobs->isEmpty())
+                    <div
+                        class="flex items-center ml-20 justify-center p-6 bg-red-100 border border-solid border-red-600 text-red-700 text-center font-bold rounded-lg shadow-lg">
+                        <p class="text-xl">{{ __('No Jobs found.') }}</p>
+                    </div>
+                @else
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        @foreach ($jobs as $job)
+                            <div
+                                class="bg-white shadow-md rounded-lg overflow-hidden transition transform hover:bg-gray-300 hover:-translate-y-1">
 
-                <div class="mt-6">
+                                <a href="{{ url('jobs/' . $job->id) }}" class="flex items-center p-4">
+                                    <!-- Job Details -->
+                                    <div class="flex-grow">
+                                        <h1 class="float-right text-xl flex">{{ $job->job_type }} </h1>
+                                        @if ($job->company_logo)
+                                            <div class="flex justify-center mt-8">
+                                                <div class="rounded-xl p-1">
+                                                    <img src="{{ asset('storage/' . $job->company_logo) }}"
+                                                        alt="Company Logo"
+                                                        class="w-32 h-32 lg:w-32 lg:h-32 rounded-xl mx-auto">
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <h1 class="text-2xl font-extrabold text-red-500 text-center">{{ $job->title }}
+                                        </h1>
+                                        <hr>
+                                        <hr>
+                                        <hr>
+                                        <hr>
+                                        <h1 class="text-xl text-center text-red-400">{{ $job->company_name }}</h1>
+                                        <h1 class="text-center"><i class="fas fa-location-dot"></i> {{ $job->location }}
+                                        </h1>
+                                        <div class="grid grid-cols-2">
+                                            <span><i class="fas fa-dollar-sign"></i>{{ $job->salary }}</span>
+                                            <h3 class="border border-solid rounded-xl border-gray-900 text-center">
+                                                Posted {{ $job->created_at->diffForHumans() }}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                @endif
+            </div>
+
+            {{-- <div class="mt-6">
                     <h4 class="text-lg font-semibold">
                         Trashed Jobs
                     </h4>
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach ($trashedJobs as $job)
-                            <div
-                                class="bg-white shadow-md rounded-lg overflow-hidden transition duration-300 ease-in-out hover:bg-red-100 hover:text-dark-900">
+                            <div class="bg-white shadow-md rounded-lg overflow-hidden transition duration-300 ease-in-out hover:bg-red-100 hover:text-dark-900">
                                 <a href="{{ url('jobs/' . $job->id) }}" class="flex items-center p-4">
                                     <!-- Job Details -->
                                     <div class="flex-grow">
@@ -81,9 +112,9 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
 
-            </div>
         </div>
+    </div>
     </div>
 </x-app-layout>
