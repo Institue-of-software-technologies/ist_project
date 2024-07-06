@@ -3,10 +3,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use App\Models\User;
-use App\Notifications\JobPostedNotification;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
+use App\Models\AlumniProfile;
+use Illuminate\Support\Facades\Auth;
+use App\Notifications\JobPostedNotification;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
 class JobController extends Controller implements HasMiddleware
 {
@@ -18,7 +20,7 @@ class JobController extends Controller implements HasMiddleware
             new Middleware('permission:delete job', only: ['destroy']),
             new Middleware('permission:edit job', only: ['update', 'edit']),
             new Middleware('permission:create job', only: ['create', 'store']),
-            new Middleware('permission:restore job',only: ['index'])
+            new Middleware('permission:restore job', only: ['index'])
         ];
     }
 
@@ -27,7 +29,15 @@ class JobController extends Controller implements HasMiddleware
         $searchTerm = $request->input('find');
         $jobs = Job::where('title', 'LIKE', "%{$searchTerm}%")->get();
         return view('role-permission.job.index', compact('jobs'));
-    }    
+    }
+
+    public function Alumnisearch(Request $request)
+    {
+        $searchTerm = $request->input('lookup');
+        $jobs = Job::where('title', 'LIKE', "%{$searchTerm}%")->get();
+        return view('alumni.job.index', compact('jobs'));
+    }
+
     public function show($id)
     {
         $job = Job::findOrFail($id);
@@ -51,12 +61,72 @@ class JobController extends Controller implements HasMiddleware
         return view('role-permission.job.create');
     }
 
+    // public function alumniIndex()
+    // {
+    //     // $jobs = Job::all();
+    //     $jobs = Job::orderBy('created_at', 'desc')->get();
+    //     return view('alumni.job.index', compact('jobs'));
+    // }
     public function alumniIndex()
     {
-        // $jobs = Job::all();
-        $jobs = Job::orderBy('created_at', 'desc')->get();
+        $user = Auth::user();
+        $profile = AlumniProfile::where('user_id', $user->id)->first();
+
+        $skills = explode(',', $profile->skills);
+        $jobs = Job::where(function ($query) use ($skills) {
+            foreach ($skills as $skill) {
+                $query->orWhere('skills', 'LIKE', "%{$skill}%");
+            }
+        })->get();
+
         return view('alumni.job.index', compact('jobs'));
     }
+
+
+    // public function store(Request $request)
+    // {
+    //     $data = $request->validate([
+    //         'title' => 'required',
+    //         'description' => 'required',
+    //         'location' => 'required',
+    //         'salary' => 'numeric',
+    //         'company_name' => 'required',
+    //         'job_type' => 'required|in:full-time,part-time,contract',
+    //         'experience_level' => 'required',
+    //         'education_level' => 'required',
+    //         'skills' => 'required',
+    //         'company_logo' => 'nullable|file|mimes:jpg,jpeg,png,avif',
+    //     ]);
+
+    //     if ($request->hasFile('company_logo')) {
+    //         $data['company_logo'] = $request->file('company_logo')->store('company_logo', 'public');
+    //     }
+
+    //     $job = new Job($data);
+    //     $job->user_id = auth()->id();
+    //     $job->save();
+
+    //     $jobSkills = explode(',', $job->skills);
+
+    //     // Find alumni with matching skills
+    //     $alumni = User::role('alumni')->get()->filter(function ($alumnus) use ($jobSkills) {
+    //         $profile = $alumnus->alumniProfile;
+
+    //         if ($profile) {
+    //             $alumniSkills = explode(',', $profile->skills);
+    //             return !empty(array_intersect($jobSkills, $alumniSkills));
+    //         }
+
+    //         return false;
+    //     });
+
+    //     // Send notifications to matching alumni
+    //     $alumni->each(function ($alumnus) use ($job) {
+    //         $alumnus->notify(new JobPostedNotification($job));
+    //     });
+
+    //     return redirect()->route('role-permission.job.index')->with('status', 'Job Created Successfully');
+    // }
 
     public function store(Request $request)
     {

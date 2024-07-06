@@ -13,8 +13,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable,HasRoles;
+    use HasFactory, Notifiable;
+    use HasRoles;
     use SoftDeletes;
+
+    public function hasRole($role)
+    {
+        return $this->roles->contains('name', $role);
+    }
     
     // protected $dates = ['deleted_at'];
     /**
