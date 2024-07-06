@@ -40,7 +40,7 @@ class AlumniProfileController extends Controller implements HasMiddleware
         if (!$profile) {
             return redirect()->route('alumni.profile.create')->with('status', 'Please Create your profile first');
         }
-        return view('alumni.profile.index', compact('profile'));
+        return view('alumni.profile.view', compact('profile'));
     }
 
     public function create()
@@ -75,7 +75,7 @@ class AlumniProfileController extends Controller implements HasMiddleware
         }
         $profile->save();
 
-        return redirect()->route('alumni.profile.index')->with('status', 'Profile Created Successfully');
+        return redirect()->route('alumni.profile.view')->with('status', 'Profile Created Successfully');
     }
 
     public function edit($id)
@@ -112,7 +112,7 @@ class AlumniProfileController extends Controller implements HasMiddleware
 
         $profile->update($request->except('profile_photo'));
 
-        return redirect()->route('alumni.profile.index', $profile->id)->with('status', 'Profile updated Successfully');
+        return redirect()->route('alumni.profile.view', $profile->id)->with('status', 'Profile updated Successfully');
     }
 
 }

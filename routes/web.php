@@ -18,6 +18,8 @@ Route::get('/', function () {
 
 Route::patch('/jobs/{id}/restore', [JobController::class, 'restore'])->name('role-permissions.job.restore');
 Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
+Route::get('/jobs/search', [JobController::class, 'Alumnisearch'])->name('jobs.search');
+
 // job applications
 
 Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('job-applications.store');
@@ -39,6 +41,15 @@ Route::post('activate-account/{token}', [UserController::class, 'setPassword'])-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// check if the user has created profile
+Route::middleware(['auth', 'check.alumni.profile'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.jobs');
+    // other alumni routes...
+});
 
 
 // alumni routes
@@ -62,7 +73,7 @@ Route::get('/projects/{project}', [ProjectController::class, 'showProject'])->na
 
 
 // profile routes
-Route::get('/alumni/profile/index', [AlumniProfileController::class, 'index'])->name('alumni.profile.index');
+Route::get('/alumni/profile/view', [AlumniProfileController::class, 'index'])->name('alumni.profile.view');
 Route::get('/alumni/profile', [AlumniProfileController::class, 'create'])->name('alumni.profile.create');
 Route::post('/alumni/profile', [AlumniProfileController::class, 'store'])->name('alumni.profile.store');
 Route::get('/alumni/profile/{id}/edit', [AlumniProfileController::class, 'edit'])->name('alumni.profile.edit');

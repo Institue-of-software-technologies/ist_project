@@ -22,7 +22,7 @@
                     </div>
                     <div>
                     <form action="{{ route('jobs.search') }}" method="GET" class="mt-4">
-                        <input type="text" name="find"
+                        <input type="text" name="lookup"
                             class="py-2 px-4 text-gray-900 font-semibold border rounded-lg w-1/2"
                             placeholder="Search by name">
                         <button type="submit"
