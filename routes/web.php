@@ -43,13 +43,15 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // check if the user has created profile
-Route::middleware(['auth','verified', 'check.alumni.profile'])->group(function () {
+Route::middleware(['auth', 'check.alumni.profile'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
     Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.jobs');
     // other alumni routes...
 });
+
+
 
 
 // alumni routes
@@ -94,7 +96,7 @@ Route::post('/import-users', [UserController::class, 'import'])->name('import.us
 
 // Route::middleware(['isAdmin'])->group(function () {
 
-Route::group(['middleware' => ['role:super-user|admin|employer']], function () {
+Route::group(['middleware' => ['role:super-user|employer']], function () {
     Route::resource('permissions', PermissionController::class);
     Route::get('permissions/{permissionId}/delete', [App\Http\Controllers\PermissionController::class, 'destroy']);
 

@@ -5,7 +5,7 @@
             {{ __('Admin Dashboard') }}
         </h2>
     </x-slot> --}}
-    @role('super-user|admin')
+    @role('super-user')
         <div class="lg:py-12">
             <div class="max-w-7x mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -33,52 +33,53 @@
                     <div class="p-6 bg-white sm:px-20">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             <!-- Users Management -->
-                            {{-- @can('view user') --}}
-                            <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
-                                <h3 class="text-lg font-semibold text-gray-800">Manage Users</h3>
-                                <p class="mt-2 text-gray-600">Create, edit, and delete user accounts.</p>
-                                <a href="{{ url('users') }}"
-                                    class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
-                                    Go to Users
-                                </a>
-                            </div>
-                            {{-- @endcan --}}
+                            @can('view user')
+                                <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800">Manage Users</h3>
+                                    <p class="mt-2 text-gray-600">Create, edit, and delete user accounts.</p>
+                                    <a href="{{ url('users') }}"
+                                        class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
+                                        Go to Users
+                                    </a>
+                                </div>
+                            @endcan
 
                             <!-- Roles Management -->
-                            {{-- @can('view role') --}}
-                            <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
-                                <h3 class="text-lg font-semibold text-gray-800">Manage Roles</h3>
-                                <p class="mt-2 text-gray-600">Create, edit, and delete user roles.</p>
-                                <a href="{{ url('roles') }}"
-                                    class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
-                                    Go to Roles
-                                </a>
-                            </div>
-                            {{-- @endcan --}}
+                            @can('view role')
+                                <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800">Manage Roles</h3>
+                                    <p class="mt-2 text-gray-600">Create, edit, and delete user roles.</p>
+                                    <a href="{{ url('roles') }}"
+                                        class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
+                                        Go to Roles
+                                    </a>
+                                </div>
+                            @endcan
 
                             <!-- Permissions Management -->
-                            {{-- @can('view permission') --}}
-                            <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
-                                <h3 class="text-lg font-semibold text-gray-800">Manage Permissions</h3>
-                                <p class="mt-2 text-gray-600">Create, edit, and delete user permissions.</p>
-                                <a href="{{ url('permissions') }}"
-                                    class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition ease-in-out duration-150">
-                                    Go to Permissions
-                                </a>
-                            </div>
-                            {{-- @endcan --}}
+                            @can('view permission')
+                                <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800">Manage Permissions</h3>
+                                    <p class="mt-2 text-gray-600">Create, edit, and delete user permissions.</p>
+                                    <a href="{{ url('permissions') }}"
+                                        class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition ease-in-out duration-150">
+                                        Go to Permissions
+                                    </a>
+                                </div>
+                            @endcan
 
 
                             <!-- Jobs Management -->
-                            <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
-                                <h3 class="text-lg font-semibold text-gray-800">Manage Jobs</h3>
-                                <p class="mt-2 text-gray-600">View and apply job opportunities for alumni.</p>
-                                <a href="{{ url('jobs') }}"
-                                    class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
-                                    Go to Jobs
-                                </a>
-                            </div>
-
+                            @can('view job')
+                                <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-800">Manage Jobs</h3>
+                                    <p class="mt-2 text-gray-600">View and apply job opportunities for alumni.</p>
+                                    <a href="{{ url('jobs') }}"
+                                        class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
+                                        Go to Jobs
+                                    </a>
+                                </div>
+                            @endcan
                             <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                                 <h3 class="text-lg font-semibold text-gray-800">Your Appplications</h3>
                                 <p class="mt-2 text-gray-600">View your own applications you applied in different companies.
@@ -88,18 +89,6 @@
                                     View application
                                 </a>
                             </div>
-                            <!-- Profile Management -->
-                            {{-- <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
-                                <h3 class="text-lg font-semibold text-gray-800">Manage Profiles</h3>
-                                <p class="mt-2 text-gray-600">View and edit user profiles.</p>
-                                <a href="{{ url('alumni/profile/index') }}"
-                                    class="inline-flex items-center px-6 py-3 mt-8 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
-                                    Go to Profiles
-                                </a>
-                            </div> --}}
-
-
-
 
                         </div>
                     </div>
@@ -173,14 +162,15 @@
                             </a>
                         </div>
 
-                        <!-- Alumni Profile Management -->
-                        {{-- <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
-                            <h3 class="text-lg font-semibold text-gray-800">Alumni Profile</h3>
-                            <p class="mt-2 text-gray-600">Create your alumni profile.</p>
-                            <a href="{{ url('alumni/profile') }}" class="inline-flex items-center px-6 py-3 mt-16 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
-                                Go to Profile
+                        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">Manage Profiles</h3>
+                            <p class="mt-2 text-gray-600">View and edit user profiles.</p>
+                            <a href="{{ route('alumni.profile.create') }}"
+                                class="inline-flex items-center px-6 py-3 mt-8 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
+                                Go to Profiles
                             </a>
-                        </div> --}}
+                        </div>
+
                     </div>
                 </div>
             </div>

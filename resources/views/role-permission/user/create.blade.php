@@ -4,6 +4,12 @@
         <div class="flex flex-col">
             <div class="w-full">
 
+                @if (session('status'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                        role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 @if ($errors->any())
                     <ul class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4">
                         @foreach ($errors->all() as $error)
@@ -23,7 +29,7 @@
                         <form action="{{ url('users') }}" method="POST">
                             @csrf
 
-                            
+
                             <div>
                                 <x-input-label for="name" :value="__('Name')" />
                                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"

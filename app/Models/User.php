@@ -17,10 +17,10 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasRoles;
     use SoftDeletes;
 
-    public function hasRole($role)
-    {
-        return $this->roles->contains('name', $role);
-    }
+    // public function hasRole($role)
+    // {
+    //     return $this->roles->contains('id', $role);
+    // }
     
     // protected $dates = ['deleted_at'];
     /**

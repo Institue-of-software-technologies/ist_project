@@ -49,6 +49,16 @@
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
+
+                    {{-- location --}}
+                    <div class="mb-4">
+                        <label for="location" class="required block text-sm font-medium text-gray-700">{{ __('Location') }}</label>
+                        <input id="location" type="text" placeholder="Enter Your Location" name="location" value="{{ old('location') }}" autocomplete="location"
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('location') border-red-500 @enderror">
+                        @error('location')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
                     <div class="mb-4">
                         <label for="email" class="required block text-sm font-medium text-gray-700">{{ __('Email Address') }}</label>
                         <input id="email" type="email" placeholder="Enter Your Email" name="email" value="{{ old('email') }}" autocomplete="email"
