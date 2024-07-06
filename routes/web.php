@@ -43,10 +43,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // check if the user has created profile
-Route::middleware(['auth', 'check.alumni.profile'])->group(function () {
+Route::middleware(['auth','verified', 'check.alumni.profile'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    })->name('dashboard');
     Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.jobs');
     // other alumni routes...
 });

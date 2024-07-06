@@ -83,51 +83,6 @@ class JobController extends Controller implements HasMiddleware
     }
 
 
-    // public function store(Request $request)
-    // {
-    //     $data = $request->validate([
-    //         'title' => 'required',
-    //         'description' => 'required',
-    //         'location' => 'required',
-    //         'salary' => 'numeric',
-    //         'company_name' => 'required',
-    //         'job_type' => 'required|in:full-time,part-time,contract',
-    //         'experience_level' => 'required',
-    //         'education_level' => 'required',
-    //         'skills' => 'required',
-    //         'company_logo' => 'nullable|file|mimes:jpg,jpeg,png,avif',
-    //     ]);
-
-    //     if ($request->hasFile('company_logo')) {
-    //         $data['company_logo'] = $request->file('company_logo')->store('company_logo', 'public');
-    //     }
-
-    //     $job = new Job($data);
-    //     $job->user_id = auth()->id();
-    //     $job->save();
-
-    //     $jobSkills = explode(',', $job->skills);
-
-    //     // Find alumni with matching skills
-    //     $alumni = User::role('alumni')->get()->filter(function ($alumnus) use ($jobSkills) {
-    //         $profile = $alumnus->alumniProfile;
-
-    //         if ($profile) {
-    //             $alumniSkills = explode(',', $profile->skills);
-    //             return !empty(array_intersect($jobSkills, $alumniSkills));
-    //         }
-
-    //         return false;
-    //     });
-
-    //     // Send notifications to matching alumni
-    //     $alumni->each(function ($alumnus) use ($job) {
-    //         $alumnus->notify(new JobPostedNotification($job));
-    //     });
-
-    //     return redirect()->route('role-permission.job.index')->with('status', 'Job Created Successfully');
-    // }
-
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -147,46 +102,30 @@ class JobController extends Controller implements HasMiddleware
             $data['company_logo'] = $request->file('company_logo')->store('company_logo', 'public');
         }
 
-
         $job = new Job($data);
         $job->user_id = auth()->id();
         $job->save();
-        $alumni = User::role('alumni')->get();
 
-        foreach ($alumni as $alumnus) {
+        $jobSkills = explode(',', $job->skills);
+
+        // Find alumni with matching skills
+        $alumni = User::role('alumni')->get()->filter(function ($alumnus) use ($jobSkills) {
+            $profile = $alumnus->alumniProfile;
+
+            if ($profile) {
+                $alumniSkills = explode(',', $profile->skills);
+                return !empty(array_intersect($jobSkills, $alumniSkills));
+            }
+
+            return false;
+        });
+
+        // Send notifications to matching alumni
+        $alumni->each(function ($alumnus) use ($job) {
             $alumnus->notify(new JobPostedNotification($job));
-        }
+        });
 
         return redirect()->route('role-permission.job.index')->with('status', 'Job Created Successfully');
-    }
-
-    public function edit(Job $job)
-    {
-        return view('role-permission.job.edit', compact('job'));
-    }
-
-    public function update(Request $request, Job $job)
-    {
-        $data = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'location' => 'required',
-            'salary' => 'nullable|numeric',
-            'company_name' => 'required',
-            'job_type' => 'required|in:full-time,part-time,contract',
-            'experience_level' => 'required',
-            'education_level' => 'required',
-            'skills' => 'required',
-            'company_logo' => 'nullable|file|mimes:jpg,jpeg,png,avif',
-        ]);
-
-        if ($request->hasFile('company_logo')) {
-            $data['company_logo'] = $request->file('company_logo')->store('company_logo', 'public');
-        }
-
-        $job->update($data);
-
-        return redirect()->route('role-permission.job.index')->with('status', 'Job Updated Successfully');
     }
 
     public function restore($id)
