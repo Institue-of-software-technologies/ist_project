@@ -15,6 +15,7 @@ class AlumniProfileController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:view profile', only: ['index']),
+            new Middleware('permission:view alumni profile',only:['view']),
             new Middleware('permission:delete profile', only: ['destroy']),
             new Middleware('permission:edit profile', only: ['update', 'edit']),
             new Middleware('permission:create profile', only: ['create', 'store']),
@@ -52,7 +53,7 @@ class AlumniProfileController extends Controller implements HasMiddleware
     {
         $request->validate([
             'full_name' => 'required',
-            'email' => 'nullable|email|max:20|unique:alumni_profiles',
+            'email' => 'nullable|email|max:30|unique:alumni_profiles',
             'degree' => 'nullable|string',
             'graduation_year' => 'required|integer',
             'extra_course' => 'nullable|string',
@@ -91,7 +92,7 @@ class AlumniProfileController extends Controller implements HasMiddleware
         $request->validate
         ([
                 'full_name' => 'required',
-                'email' => 'nullable|email|max:255|unique:alumni_profiles,email,' . $profile->id,
+                'email' => 'nullable|email|max:30|unique:alumni_profiles,email,' . $profile->id,
                 'degree' => 'nullable|string',
                 'graduation_year' => 'required|integer',
                 'extra_course' => 'nullable|string',

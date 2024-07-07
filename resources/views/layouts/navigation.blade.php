@@ -10,6 +10,8 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
+                    {{-- super-admin|admin routes --}}
                     <x-nav-link class="text-gray-900" :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -34,46 +36,84 @@
                             {{ __('Jobs') }}
                         </x-nav-link>
                     @endcan
+                    @can('view applications')
+                        <x-nav-link :href="'job-application/list'" :active="request()->routeIs('job-application/list')">
+                            {{ __('Job Applicants') }}
+                        </x-nav-link>
+                    @endcan
+
+
+                    {{-- alumni routes --}}
+                    @can('view profile')
+                        <x-nav-link :href="url('alumni/profile/view')" :active="request()->routeIs('alumni/profile/view')">
+                            {{ __('Profile') }}
+                        </x-nav-link>
+                    @endcan
                     @can('view alumni job')
                         <x-nav-link :href="url('alumni/jobs')" :active="request()->routeIs('alumni/jobs')">
                             {{ __('Jobs') }}
                         </x-nav-link>
                     @endcan
+
+                    @can('view own applications')
+                        <x-nav-link :href="'job-applications/index'" :active="request()->routeIs('job-applications/index')">
+                            {{ __('My Applications') }}
+                        </x-nav-link>
+                    @endcan
+                    {{-- employer routes --}}
+
+                    @can('view alumni profile')
+                        <x-nav-link :href="url('profiles/index')" :active="request()->routeIs('profiles/index')">
+                            {{ __('Alumni Profiles') }}
+                        </x-nav-link>
+                    @endcan
+                    @can('view project')
+                        <x-nav-link :href="url('projects')" :active="request()->routeIs('projects')">
+                            {{ __('Alumni Projects') }}
+                        </x-nav-link>
+                    @endcan
+
+                    @can('publish project')
+                        <x-nav-link :href="'projects/create'" :active="request()->routeIs('projects/create')">
+                            {{ __('Publish Projects') }}
+                        </x-nav-link>
+                    @endcan
+
                 </div>
 
                 @can('view notification')
-                <!-- Notification Icon -->
-                <div class="relative p-5 lg:ml-20 ml-24 sm:order-2">
-                    <button @click="notifOpen = !notifOpen" class="flex items-center text-gray-900">
-                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 17h5l-1.405-1.405C18.585 15.085 18 14.1 18 13V7a6 6 0 00-5-5.916V1a1 1 0 10-2 0v.084A6 6 0 006 7v6c0 1.1-.585 2.085-1.595 2.595L3 17h5m7 0a3.001 3.001 0 01-6 0m6 0H9" />
-                        </svg>
-                        <span
-                            class="absolute top-0 right-0  w-5 h-5 bg-red-600 rounded-full text-lg text-white flex items-center justify-center">
-                            {{ auth()->user()->unreadNotifications->count() }}
-                        </span>
-                    </button>
+                    <!-- Notification Icon -->
+                    <div class="relative p-5 lg:ml-20 ml-24 sm:order-2">
+                        <button @click="notifOpen = !notifOpen" class="flex items-center text-gray-900">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 17h5l-1.405-1.405C18.585 15.085 18 14.1 18 13V7a6 6 0 00-5-5.916V1a1 1 0 10-2 0v.084A6 6 0 006 7v6c0 1.1-.585 2.085-1.595 2.595L3 17h5m7 0a3.001 3.001 0 01-6 0m6 0H9" />
+                            </svg>
+                            <span
+                                class="absolute top-0 right-0  w-5 h-5 bg-red-600 rounded-full text-lg text-white flex items-center justify-center">
+                                {{ auth()->user()->unreadNotifications->count() }}
+                            </span>
+                        </button>
 
-                    <!-- Dropdown Content -->
-                    <div x-show="notifOpen" @click.away="notifOpen = false"
-                        class="origin-top-right absolute right-0 mt-10 lg:w-96 w-72 rounded-md shadow-lg bg-white ring-4 ring-red-400 ring-opacity-20">
-                        <div class="py-1 p-10">
-                            @forelse (auth()->user()->unreadNotifications as $notification)
-                                <x-dropdown-link class="text-4xl font-bold text-red-600"
-                                    href="{{ route('notifications.show', $notification->id) }}">
-                                    {{ $notification->data['message'] }}
-                                </x-dropdown-link>
-                            @empty
-                                <x-dropdown-link>
-                                    No new notifications
-                                </x-dropdown-link>
-                            @endforelse
+                        <!-- Dropdown Content -->
+                        <div x-show="notifOpen" @click.away="notifOpen = false"
+                            class="origin-top-right absolute right-0 mt-10 lg:w-96 w-72 rounded-md shadow-lg bg-white ring-4 ring-red-400 ring-opacity-20">
+                            <div class="py-1 p-10">
+                                @forelse (auth()->user()->unreadNotifications as $notification)
+                                    <x-dropdown-link class="text-4xl font-bold text-red-600"
+                                        href="{{ route('notifications.show', $notification->id) }}">
+                                        {{ $notification->data['message'] }}
+                                    </x-dropdown-link>
+                                @empty
+                                    <x-dropdown-link>
+                                        No new notifications
+                                    </x-dropdown-link>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
-                </div>
-@endcan
+                @endcan
             </div>
 
 
@@ -158,6 +198,49 @@
             @can('view alumni job')
                 <x-responsive-nav-link :href="url('alumni/jobs')" :active="request()->routeIs('alumni/jobs')">
                     {{ __('Jobs') }}
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('view applications')
+                <x-responsive-nav-link :href="'job-application/list'" :active="request()->routeIs('job-application/list')">
+                    {{ __('Job Applicants') }}
+                </x-responsive-nav-link>
+            @endcan
+
+
+            {{-- alumni routes --}}
+            @can('view profile')
+                <x-responsive-nav-link :href="url('alumni/profile/view')" :active="request()->routeIs('alumni/profile/view')">
+                    {{ __('Profile') }}
+                </x-responsive-nav-link>
+            @endcan
+            @can('view alumni job')
+                <x-responsive-nav-link :href="url('alumni/jobs')" :active="request()->routeIs('alumni/jobs')">
+                    {{ __('Jobs') }}
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('view own applications')
+                <x-responsive-nav-link :href="'job-applications/index'" :active="request()->routeIs('job-applications/index')">
+                    {{ __('My Applications') }}
+                </x-responsive-nav-link>
+            @endcan
+            {{-- employer routes --}}
+
+            @can('view alumni profile')
+                <x-responsive-nav-link :href="url('profiles/index')" :active="request()->routeIs('profiles/index')">
+                    {{ __('Alumni Profiles') }}
+                </x-responsive-nav-link>
+            @endcan
+            @can('view project')
+                <x-responsive-nav-link :href="url('projects')" :active="request()->routeIs('projects')">
+                    {{ __('Alumni Projects') }}
+                </x-responsive-nav-link>
+            @endcan
+
+            @can('publish project')
+                <x-responsive-nav-link :href="'projects/create'" :active="request()->routeIs('projects/create')">
+                    {{ __('Publish Projects') }}
                 </x-responsive-nav-link>
             @endcan
         </div>

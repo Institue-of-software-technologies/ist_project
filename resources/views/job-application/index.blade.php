@@ -5,15 +5,21 @@
                 {{ session('status') }}
             </div>
         @endif
+        @if ($applications->isEmpty())
+            <div
+                class="flex items-center ml-20 justify-center p-6 bg-red-100 border border-solid border-red-600 text-red-700 text-center font-bold rounded-lg shadow-lg">
+                <p class="text-xl">{{ __('You Have Not Applied For Any Jobs.') }}</p>
+            </div>
+        @endif
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @foreach ($applications as $application)
                 <div
                     class="bg-white border border-lg border-gray-300 hover:border-gray-500 rounded-lg overflow-hidden mt-4 p-4">
                     <h5 class="text-3xl font-bold text-center">{{ $application->job->title }}</h5>
-                    <p class="text-2xl text-gray-600 text-center">Company: {{ $application->job->company_name }} 
-                                            <img src="{{ asset('storage/' . $application->job->company_logo) }}" alt="Company Logo"
-                        class="w-auto h-auto lg:w-52 lg:h-36 rounded-xl mx-auto">
+                    <p class="text-2xl text-gray-600 text-center">Company: {{ $application->job->company_name }}
+                        <img src="{{ asset('storage/' . $application->job->company_logo) }}" alt="Company Logo"
+                            class="w-auto h-auto lg:w-52 lg:h-36 rounded-xl mx-auto">
                     </p>
                     <p class="text-xl text-gray-600 text-center">Applicant: {{ $application->user->name }}</p>
                     <p class="text-lg text-gray-600 text-center">Experience: {{ $application->experience }} years</p>
@@ -28,13 +34,16 @@
                         <h1>Find Me @</h1>
 
                         @if ($application->user->email)
-                            <a href="mailto:{{ $application->user->email }}"><i class="fas fa-briefcase"></i> {{ $application->user->email }}</a>
+                            <a href="mailto:{{ $application->user->email }}"><i class="fas fa-briefcase"></i>
+                                {{ $application->user->email }}</a>
                         @endif
                         @if ($application->phone)
-                        <a href="tel:{{$application->phone}}" class="text-gray-900"><i class="fas fa-phone"></i> {{ $application->phone }}</a>
+                            <a href="tel:{{ $application->phone }}" class="text-gray-900"><i class="fas fa-phone"></i>
+                                {{ $application->phone }}</a>
                         @endif
                         @if ($application->linkedin)
-                        <a href="{{ $application->linkedin }}" target="_blank" class="hover:text-red-600"><i class="fab fa-linkedin"></i> LinkedIn Profile</a>
+                            <a href="{{ $application->linkedin }}" target="_blank" class="hover:text-red-600"><i
+                                    class="fab fa-linkedin"></i> LinkedIn Profile</a>
                         @endif
                     </div>
                     <div class="mt-3">

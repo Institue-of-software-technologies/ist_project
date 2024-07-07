@@ -9,7 +9,7 @@
                         role="alert">
                         {{ session('status') }}
                     </div>
-                @endif
+                @endif  
                 @if ($errors->any())
                     <ul class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4">
                         @foreach ($errors->all() as $error)
