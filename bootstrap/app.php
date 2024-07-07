@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'check.alumni.profile' => \App\Http\Middleware\CheckAlumniProfile::class,
+            'track.job.view' => \App\Http\Middleware\TrackJobView::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
