@@ -32,4 +32,54 @@ class Job extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function views()
+    {
+        return $this->hasMany(JobView::class);
+    }
+
+    /**
+     * Get the applications for the job.
+     */
+    public function applications()
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
+    /**
+     * Calculate total views for the job.
+     */
+    public function totalViews()
+    {
+        return $this->views->count();
+    }
+
+    /**
+     * Calculate unique views for the job.
+     */
+    public function uniqueViews()
+    {
+        return $this->views->unique('user_id')->count();
+    }
+
+    /**
+     * Calculate number of applications for the job.
+     */
+    public function applicationCount()
+    {
+        return $this->applications->count();
+    }
+
+    /**
+     * Calculate application rate (%) for the job.
+     */
+    public function applicationRate()
+    {
+        $totalViews = $this->totalViews();
+        if ($totalViews > 0) {
+            return ($this->applicationCount() / $totalViews) * 100;
+        } else {
+            return 0;
+        }
+    }
 }

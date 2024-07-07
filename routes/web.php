@@ -37,7 +37,7 @@ Route::middleware(['auth', 'check.alumni.profile'])->group(function () {
 });
 // Alumni routes
 Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
-Route::get('/alumni/jobs/{job}', [JobController::class, 'view'])->name('alumni.job.viewjob');
+Route::get('/alumni/jobs/{job}', [JobController::class, 'view']) ->middleware('track.job.view')->name('alumni.job.viewjob');
 
 // Projects
 Route::resource('projects', ProjectController::class);
