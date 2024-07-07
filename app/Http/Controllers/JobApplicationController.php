@@ -6,10 +6,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\JobApplication;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class JobApplicationController extends Controller
+class JobApplicationController extends Controller implements HasMiddleware
 {
 
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:view own applications', only: ['index']),
+            new Middleware('permission:view applications',only: ['listApplicant']),
+        ];
+    }
     public function listApplicant()
     {
         // Fetch all users with the 'alumni' role

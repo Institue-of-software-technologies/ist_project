@@ -38,7 +38,7 @@ class JobPostedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('A new Job has been posted Please Login to view the job. ' .$this->job->title)
+                    ->line('A new Job matching your skills has posted Please Login to view the job. ' .$this->job->title)
                     ->action('Login', url('login'))
                     ->line('Thank you for using our application!');
     }
@@ -51,8 +51,9 @@ class JobPostedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'A new job has been posted: ' . $this->job->title,
+            'message' => 'A JOB MATCHING YOUR SKILLS HAS BEEN POSTED: ' . $this->job->title,
             'job_id' => $this->job->id,
+            'company_logo' => $this->job->company_logo,
             'route' => route('alumni.job.index')
         ];
     }

@@ -12,7 +12,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-gray-300 border-b border-gray-200">
                     <h3 class="text-3xl font-semibold text-gray-800">Alumni List</h3>
-                    <p class="mt-2 text-lg text-gray-900">Click on an alumni to view their projects:</p>
+                    <p class="mt-2 text-lg text-gray-900">Click on an alumni to view their Applications:</p>
 
                     <ul class="mt-4 space-y-4">
                         @foreach ($alumnis as $alumni)

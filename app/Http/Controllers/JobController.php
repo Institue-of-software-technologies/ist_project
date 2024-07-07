@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Notifications\JobPostedNotification;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class JobController extends Controller implements HasMiddleware
 {
@@ -43,6 +45,7 @@ class JobController extends Controller implements HasMiddleware
         $job = Job::findOrFail($id);
         return view('role-permission.job.show', compact('job'));
     }
+
     public function view($id)
     {
         $job = Job::findOrFail($id);
@@ -61,12 +64,6 @@ class JobController extends Controller implements HasMiddleware
         return view('role-permission.job.create');
     }
 
-    // public function alumniIndex()
-    // {
-    //     // $jobs = Job::all();
-    //     $jobs = Job::orderBy('created_at', 'desc')->get();
-    //     return view('alumni.job.index', compact('jobs'));
-    // }
     public function alumniIndex()
     {
         $user = Auth::user();
@@ -81,7 +78,6 @@ class JobController extends Controller implements HasMiddleware
 
         return view('alumni.job.index', compact('jobs'));
     }
-
 
     public function store(Request $request)
     {
@@ -106,9 +102,52 @@ class JobController extends Controller implements HasMiddleware
         $job->user_id = auth()->id();
         $job->save();
 
+        // Notify alumni with matching skills
+        $this->notifyMatchingAlumni($job);
+
+        return redirect()->route('role-permission.job.index')->with('status', 'Job Created Successfully');
+    }
+
+    public function edit($id)
+    {
+        $job = Job::findOrFail($id);
+        return view('role-permission.job.edit', compact('job'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $job = Job::findOrFail($id);
+
+        $data = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'location' => 'required',
+            'salary' => 'numeric',
+            'company_name' => 'required',
+            'job_type' => 'required|in:full-time,part-time,contract',
+            'experience_level' => 'required',
+            'education_level' => 'required',
+            'skills' => 'required',
+            'company_logo' => 'nullable|file|mimes:jpg,jpeg,png,avif',
+        ]);
+
+
+
+        if ($request->hasFile('company_logo')) {
+            $data['company_logo'] = $request->file('company_logo')->store('company_logo', 'public');
+        } else {
+            $data['company_logo'] = $job->company_logo; // Keep the existing logo if not updated
+        }
+
+        $job->update($data);
+
+        return redirect()->route('role-permission.job.index')->with('status', 'Job Updated Successfully');
+    }
+
+    private function notifyMatchingAlumni(Job $job)
+    {
         $jobSkills = explode(',', $job->skills);
 
-        // Find alumni with matching skills
         $alumni = User::role('alumni')->get()->filter(function ($alumnus) use ($jobSkills) {
             $profile = $alumnus->alumniProfile;
 
@@ -120,12 +159,14 @@ class JobController extends Controller implements HasMiddleware
             return false;
         });
 
-        // Send notifications to matching alumni
-        $alumni->each(function ($alumnus) use ($job) {
-            $alumnus->notify(new JobPostedNotification($job));
-        });
+        // Log the number of alumni found
+        Log::info('Number of alumni found with matching skills: ' . $alumni->count());
 
-        return redirect()->route('role-permission.job.index')->with('status', 'Job Created Successfully');
+        // Send notifications to matching alumni
+        foreach ($alumni as $alumnus) {
+            Log::info('Notifying alumnus: ' . $alumnus->email);
+            $alumnus->notify(new JobPostedNotification($job));
+        }
     }
 
     public function restore($id)
