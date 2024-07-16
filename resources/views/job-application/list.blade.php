@@ -16,10 +16,10 @@
 
                     <ul class="mt-4 space-y-4">
                         @foreach ($alumnis as $alumni)
-                            <li>
+                            <div class="transition duration-1000 ease-out transform hover:-translate-y-2">
                                 <a href="{{ route('job-application.applist', ['id' => $alumni->id])  }}"
-                                    class="text-2xl text-red-600 hover:underline">{{ $alumni->name }}</a>
-                            </li>
+                                    class="text-2xl text-red-600">{{ $alumni->name }}</a>
+                            </div>
                         @endforeach
                     </ul>
                 </div>

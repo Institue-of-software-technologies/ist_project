@@ -11,45 +11,52 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 
 class ProjectController extends Controller implements HasMiddleware
 {
-
-        public static function middleware(): array
-        {
+    public static function middleware(): array
+    {
         return [
-        new Middleware('permission:view project', only: ['index']),
-        new Middleware('permission:delete project', only: ['destroy']),
-        new Middleware('permission:edit project', only: ['update', 'edit']),
-        new Middleware('permission:publish project', only: ['create', 'store']),
+            new Middleware('permission:view project', only: ['index', 'show']),
+            new Middleware('permission:view alumni projects',only: ['viewAlumniProjects','showProject']),
+            new Middleware('permission:delete project', only: ['destroy']),
+            new Middleware('permission:edit project', only: ['update', 'edit']),
+            new Middleware('permission:publish project', only: ['create', 'store']),
         ];
-        }
-
+    }
 
     public function viewAlumniProjects($alumniId)
     {
-        // Fetch the alumni user with the 'alumni' role and their projects
-        $alumni = User::role('alumni')->with('projects')->findOrFail($alumniId);
+        // Find the alumni user by their ID and only load public projects
+        $alumni = User::role('alumni')->with([
+            'projects' => function ($query) {
+                $query->where('visibility', 'public');
+            }
+        ])->findOrFail($alumniId);
+
         return view('alumni.projects.index', compact('alumni'));
     }
 
+
     public function showProject($projectId)
     {
-        // Fetch the project with the user who created it
         $project = Project::with('user')->findOrFail($projectId);
         return view('alumni.projects.show', compact('project'));
     }
 
     public function listAlumni()
     {
-        // Fetch all users with the 'alumni' role
         $alumnis = User::role('alumni')->get();
         return view('alumni.index', compact('alumnis'));
     }
-
-
     public function index()
     {
-        $projects = Project::where('user_id', auth()->id())->get();
-        return view('project.index', compact('projects'));
+        $projects = Project::all();
+        return view('project.projectlist', compact('projects'));
     }
+    public function show($id)
+    {
+        $project = Project::findOrFail($id);
+        return view('project.index', compact('project'));
+    }
+
     public function create()
     {
         return view('project.create');
@@ -66,7 +73,7 @@ class ProjectController extends Controller implements HasMiddleware
             'database_diagram' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
             'powerpoint' => 'nullable|file|mimes:ppt,pptx',
             'demo_url' => 'required|url',
-            'video_url' => 'nullable|file|mimes:mp4,mpeg',
+            'video_url' => 'nullable|url',
             'tools_used' => 'required|string|max:255',
             'programming_language' => 'required|string|max:255',
             'github_repository' => 'required|url',
@@ -81,9 +88,6 @@ class ProjectController extends Controller implements HasMiddleware
         }
         if ($request->hasFile('powerpoint')) {
             $data['powerpoint'] = $request->file('powerpoint')->store('powerpoints', 'public');
-        }
-        if ($request->hasFile('video_url')) {
-            $data['video_url'] = $request->file('video_url')->store('videos', 'public');
         }
 
         $project = new Project($data);
@@ -93,7 +97,6 @@ class ProjectController extends Controller implements HasMiddleware
         return redirect()->route('projects.index')->with('status', 'Project Created Successfully');
     }
 
-
     public function edit($id)
     {
         $project = Project::findOrFail($id);
@@ -102,7 +105,6 @@ class ProjectController extends Controller implements HasMiddleware
 
     public function update(Request $request, $id)
     {
-        // Validate the request data
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'problem_statement' => 'required|string',
@@ -112,7 +114,7 @@ class ProjectController extends Controller implements HasMiddleware
             'database_diagram' => 'nullable|file|mimes:jpg,jpeg,png,pdf',
             'powerpoint' => 'nullable|file|mimes:ppt,pptx',
             'demo_url' => 'required|url',
-            'video_url' => 'nullable|file|mimes:mp4,mpeg',
+            'video_url' => 'nullable|url',
             'tools_used' => 'required|string|max:255',
             'programming_language' => 'required|string|max:255',
             'github_repository' => 'required|url',
@@ -120,9 +122,6 @@ class ProjectController extends Controller implements HasMiddleware
         ]);
 
         $project = Project::findOrFail($id);
-
-
-        // Handle file upload
 
         if ($request->hasFile('flowchart_diagram')) {
             $data['flowchart_diagram'] = $request->file('flowchart_diagram')->store('flowchart_diagrams', 'public');
@@ -133,31 +132,20 @@ class ProjectController extends Controller implements HasMiddleware
         if ($request->hasFile('powerpoint')) {
             $data['powerpoint'] = $request->file('powerpoint')->store('powerpoints', 'public');
         }
-        if ($request->hasFile('video_url')) {
-            if ($project->video_url) {
-                Storage::delete($project->video_url);
-            }
-            $data['video_url'] = $request->file('video_url')->store('videos', 'public');
-        }
 
-
-        // Update the project in the database
         $project->update($data);
-        $project->save();
 
-        return redirect()->route('projects.index')->with('success', 'Project updated successfully!');
+        return redirect()->route('projects.index')->with('status', 'Project updated successfully!');
     }
-
 
     public function destroy($projectId)
     {
         $project = Project::find($projectId);
         if ($project) {
             $project->delete();
-            return redirect()->route('project.index')->with('status', 'Project deleted successfully');
+            return redirect()->route('projects.index')->with('status', 'Project deleted successfully');
         }
 
-        return redirect()->route('project.index')->with('status', 'Project not found.');
+        return redirect()->route('projects.index')->with('status', 'Project not found.');
     }
-
 }

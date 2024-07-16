@@ -14,27 +14,29 @@
                     </div>
                 @endif
 
-                <div class="mt-3 flex justify-between items-center">
+                <div class="mt-3 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-between text-center">
                     <h4 class="text-lg font-semibold">
                         Jobs
                     </h4>
-                    <form action="{{ route('jobs.search') }}" method="GET" class="mt-4">
+                    <form action="{{ route('jobs.search') }}" method="GET" class="mb-3 lg:mb-0">
                         <input type="text" name="find"
-                            class="py-2 px-4 text-gray-900 font-semibold border rounded-lg w-52"
+                            class="py-2 px-4 text-gray-900 font-semibold border rounded-lg w-48 lg:w-64"
                             placeholder="Search by Title">
                         <button type="submit"
                             class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">Search</button>
                     </form>
                     @can('create job')
-                        <a href="{{ url('jobs/create') }}"
-                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i
-                                class="fas fa-add"></i> Add Jobs</a>
+                        <button class="">
+                            <a href="{{ url('jobs/create') }}"
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i
+                                    class="fas fa-add"></i> Add Jobs</a>
+                        </button>
                     @endcan
                 </div>
 
                 @if ($jobs->isEmpty())
                     <div
-                        class="flex items-center ml-20 justify-center p-6 bg-red-100 border border-solid border-red-600 text-red-700 text-center font-bold rounded-lg shadow-lg">
+                        class="flex mt-5 items-center ml-20 justify-center p-6 bg-red-100 border border-solid border-red-600 text-red-700 text-center font-bold rounded-lg shadow-lg">
                         <p class="text-xl">{{ __('No Jobs found.') }}</p>
                     </div>
                 @else

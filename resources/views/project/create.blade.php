@@ -76,7 +76,7 @@
 
                         <div class="mb-4">
                             <label class="required block text-dark-700 text-sm font-bold mb-2" for="video_url">Video URL</label>
-                            <input type="file" name="video_url" id="video_url" class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-700 leading-tight focus:outline-none focus:shadow-outline-dark" required>
+                            <input type="url" name="video_url" id="video_url" class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-700 leading-tight focus:outline-none focus:shadow-outline-dark" required>
                         </div>
 
                         <button type="button" class="prev-button inline-flex items-center px-4 py-2 bg-red-800 text-white text-sm font-medium rounded-lg shadow hover:bg-dark-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-800 transition ease-in-out duration-150">Previous</button>
