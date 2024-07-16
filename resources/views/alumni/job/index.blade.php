@@ -45,7 +45,7 @@
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach ($jobs as $job)
                             <div
-                                class="bg-white shadow-lg rounded-lg overflow-hidden transition transform hover:bg-gray-100 hover:-translate-y-3">
+                                class="bg-white shadow-lg rounded-lg overflow-hidden hover:bg-gray-100 transition duration-5000 ease-out transform hover:-translate-y-2">
                                 <a href="{{ url('alumni/jobs/' . $job->id) }}" class="flex items-center p-4">
                                     <!-- Job Details -->
                                     <div class="flex-grow">

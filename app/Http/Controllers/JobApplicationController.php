@@ -15,7 +15,7 @@ class JobApplicationController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view own applications', only: ['index']),
+            new Middleware('permission:view own applications', only: ['index','show']),
             new Middleware('permission:view applications',only: ['listApplicant']),
         ];
     }
@@ -26,12 +26,6 @@ class JobApplicationController extends Controller implements HasMiddleware
         return view('job-application.list', compact('alumnis'));
     }
 
-    // public function showApplication($id)
-    // {
-    //     // Fetch the alumni user with their job applications
-    //     $alumni = User::role('alumni')->with('jobApplications.job')->findOrFail($id);
-    //     return view('job-application.applist', compact('alumni'));
-    // }
     public function showApplicationList($id)
     {
         // Fetch the alumni user with their job applications
@@ -48,18 +42,18 @@ class JobApplicationController extends Controller implements HasMiddleware
 
         return view('job-application.application', compact('application'));
     }
-    // // public function viewAlumniApplications($applicationId)
-    // // {
-    // //     // Fetch the alumni user with the 'alumni' role and their projects
-    // //     $user = User::role('alumni')->with('jobApplications.job')->findOrFail($applicationId);
-    // //     $applications = $user->jobApplications;
-        
-    // //     return view('job-application.application', compact('applications'));
-    // }
+
     public function index()
     {
         $applications = JobApplication::where('user_id', Auth::id())->get();
         return view('job-application.index', compact('applications'));
+    }
+    public function show($id)
+    {
+        // Retrieve the specific application by id
+        $application = JobApplication::with('job', 'user')->findOrFail($id);
+
+        return view('job-application.show', compact('application'));
     }
     public function store(Request $request)
     {

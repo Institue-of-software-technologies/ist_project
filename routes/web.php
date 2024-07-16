@@ -21,6 +21,7 @@ Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search'
 // Job applications
 Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('job-applications.store');
 Route::get('/job-applications/index', [JobApplicationController::class, 'index'])->name('job-applications.index');
+Route::get('/job-applications/{id}', [JobApplicationController::class, 'show'])->name('job-application.show');
 Route::get('/job-application/list', [JobApplicationController::class, 'listApplicant'])->name('job-application.list');
 Route::get('/job-application/{applicationId}', [JobApplicationController::class, 'showApplication'])->name('job-application.application');
 Route::get('/job-application/{id}/applist', [JobApplicationController::class, 'showApplicationList'])->name('job-application.applist');
@@ -32,15 +33,16 @@ Route::middleware(['auth', 'check.alumni.profile'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
-    Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.jobs');
+    Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
     // other alumni routes...
 });
 // Alumni routes
-Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
 Route::get('/alumni/jobs/{job}', [JobController::class, 'view']) ->middleware('track.job.view')->name('alumni.job.viewjob');
 
 // Projects
 Route::resource('projects', ProjectController::class);
+Route::get('/project', [ProjectController::class, 'index'])->name('project.projectlist');
+Route::get('/projects/{id}/index', [ProjectController::class, 'show'])->name('project.index');
 Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
 Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
 Route::delete('projects/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');

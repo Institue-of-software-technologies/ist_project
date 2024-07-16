@@ -80,50 +80,54 @@
                         </div>
                     </div>
 
-                                   <!-- Job Analytics -->
-                <div class="bg-white max-w-7xl mx-auto shadow-md rounded-lg p-5 mt-10 border border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-800">Job Analytics</h3>
-                    <p class="mt-2 text-gray-600">View analytics for your job postings.</p>
-                    <table class="table-auto w-full mt-4 font-extrabold text-lg">
-                        <thead class="text-red-500">
-                            <tr>
-                                <th class="px-4 py-2">Job Title</th>
-                                <th class="px-4 py-2">Total Views</th>
-                                <th class="px-4 py-2">Unique Views</th>
-                                <th class="px-4 py-2">Applications</th>
-                                <th class="px-4 py-2">Application Rate (%)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            @php
-                                // $jobs = \App\Models\Job::all();
-                                $jobs = \App\Models\Job::with('views', 'applications')->get();
-                            @endphp
-                            @foreach ($jobs as $job)
-                                <tr>
-                                    <td class="border">{{ $job->title }} <div class="mx-auto">
-                                            @if ($job->company_logo)
-                                                <div class="flex justify-center">
-                                                    <div class="rounded-xl p-1">
-                                                        <img src="{{ asset('storage/' . $job->company_logo) }}"
-                                                            alt="Company Logo"
-                                                            class="w-auto h-auto lg:w-20 lg:h-20 rounded-xl m">
-                                                    </div>
+                    <!-- Job Analytics -->
+                    <div class="bg-white max-w-7xl mx-auto shadow-md rounded-lg p-5 mt-10 border border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800">Job Analytics</h3>
+                        <p class="mt-2 text-gray-600">View analytics for your job postings.</p>
+                        <div class="overflow-x-auto">
+                            <table class="table-auto w-full mt-4 font-extrabold text-lg">
+                                <thead class="text-red-500">
+                                    <tr>
+                                        <th class="px-4 py-2">Job Title</th>
+                                        <th class="px-4 py-2">Total Views</th>
+                                        <th class="px-4 py-2">Unique Views</th>
+                                        <th class="px-4 py-2">Applications</th>
+                                        <th class="px-4 py-2">Application Rate (%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    @php
+                                        $jobs = \App\Models\Job::with('views', 'applications')->get();
+                                    @endphp
+                                    @foreach ($jobs as $job)
+                                        <tr>
+                                            <td class="border">
+                                                {{ $job->title }}
+                                                <div class="mx-auto">
+                                                    @if ($job->company_logo)
+                                                        <div class="flex justify-center">
+                                                            <div class="rounded-xl p-1">
+                                                                <img src="{{ asset('storage/' . $job->company_logo) }}"
+                                                                    alt="Company Logo"
+                                                                    class="w-auto h-auto lg:w-20 lg:h-20 rounded-xl m">
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 </div>
-                                            @endif
-                                        </div>
-                                    </td>
-                                    <td class="border px-4 py-2">{{ $job->views->count() }}</td>
-                                    <td class="border px-4 py-2">{{ $job->views->unique('user_id')->count() }}</td>
-                                    <td class="border px-4 py-2">{{ $job->applications->count() }}</td>
-                                    <td class="border px-4 py-2">{{ $job->applicationRate() }}%</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                                            </td>
+                                            <td class="border px-4 py-2">{{ $job->views->count() }}</td>
+                                            <td class="border px-4 py-2">{{ $job->views->unique('user_id')->count() }}</td>
+                                            <td class="border px-4 py-2">{{ $job->applications->count() }}</td>
+                                            <td class="border px-4 py-2">{{ $job->applicationRate() }}%</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                
+
+
                 </div>
             </div>
         </div>
@@ -179,7 +183,7 @@
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Your Projects</h3>
                             <p class="mt-2 text-gray-600">View edit and manage your published projects.</p>
-                            <a href="{{ route('projects.index') }}"
+                            <a href="{{ route('project.projectlist') }}"
                                 class="inline-flex items-center px-6 py-3 mt-16 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
                                 View Projects
                             </a>
@@ -255,44 +259,48 @@
                 <div class="bg-white max-w-7xl mx-auto shadow-md rounded-lg p-5 mt-10 border border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-800">Job Analytics</h3>
                     <p class="mt-2 text-gray-600">View analytics for your job postings.</p>
-                    <table class="table-auto w-full mt-4 font-extrabold text-lg">
-                        <thead class="text-red-500">
-                            <tr>
-                                <th class="px-4 py-2">Job Title</th>
-                                <th class="px-4 py-2">Total Views</th>
-                                <th class="px-4 py-2">Unique Views</th>
-                                <th class="px-4 py-2">Applications</th>
-                                <th class="px-4 py-2">Application Rate (%)</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            @php
-                                // $jobs = \App\Models\Job::all();
-                                $jobs = \App\Models\Job::with('views', 'applications')->get();
-                            @endphp
-                            @foreach ($jobs as $job)
+                    <div class="overflow-x-auto">
+                        <table class="table-auto w-full mt-4 font-extrabold text-lg">
+                            <thead class="text-red-500">
                                 <tr>
-                                    <td class="border">{{ $job->title }} <div class="mx-auto">
-                                            @if ($job->company_logo)
-                                                <div class="flex justify-center">
-                                                    <div class="rounded-xl p-1">
-                                                        <img src="{{ asset('storage/' . $job->company_logo) }}"
-                                                            alt="Company Logo"
-                                                            class="w-auto h-auto lg:w-20 lg:h-20 rounded-xl m">
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </div>
-                                    </td>
-                                    <td class="border px-4 py-2">{{ $job->views->count() }}</td>
-                                    <td class="border px-4 py-2">{{ $job->views->unique('user_id')->count() }}</td>
-                                    <td class="border px-4 py-2">{{ $job->applications->count() }}</td>
-                                    <td class="border px-4 py-2">{{ $job->applicationRate() }}%</td>
+                                    <th class="px-4 py-2">Job Title</th>
+                                    <th class="px-4 py-2">Total Views</th>
+                                    <th class="px-4 py-2">Unique Views</th>
+                                    <th class="px-4 py-2">Applications</th>
+                                    <th class="px-4 py-2">Application Rate (%)</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="text-center">
+                                @php
+                                    $jobs = \App\Models\Job::with('views', 'applications')->get();
+                                @endphp
+                                @foreach ($jobs as $job)
+                                    <tr>
+                                        <td class="border">
+                                            {{ $job->title }}
+                                            <div class="mx-auto">
+                                                @if ($job->company_logo)
+                                                    <div class="flex justify-center">
+                                                        <div class="rounded-xl p-1">
+                                                            <img src="{{ asset('storage/' . $job->company_logo) }}"
+                                                                alt="Company Logo"
+                                                                class="w-auto h-auto lg:w-20 lg:h-20 rounded-xl m">
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <td class="border px-4 py-2">{{ $job->views->count() }}</td>
+                                        <td class="border px-4 py-2">{{ $job->views->unique('user_id')->count() }}</td>
+                                        <td class="border px-4 py-2">{{ $job->applications->count() }}</td>
+                                        <td class="border px-4 py-2">{{ $job->applicationRate() }}%</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
 
 
             </div>
