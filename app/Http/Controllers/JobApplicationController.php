@@ -42,12 +42,15 @@ class JobApplicationController extends Controller implements HasMiddleware
 
         return view('job-application.application', compact('application'));
     }
-
     public function index()
     {
+        // Fetch applications for the authenticated user
         $applications = JobApplication::where('user_id', Auth::id())->get();
+
+        // Pass the applications to the view
         return view('job-application.index', compact('applications'));
     }
+
     public function show($id)
     {
         // Retrieve the specific application by id
