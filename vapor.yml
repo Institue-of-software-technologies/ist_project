@@ -7,10 +7,10 @@ environments:
         cli-memory: 512
         runtime: 'php-8.3:al2'
         build:
-            - 'composer install --no-dev'
+            - 'composer install '
             - 'php artisan event:cache'
           # - 'npm ci && npm run build && rm -rf node_modules'
-          deploy:
-      - 'php artisan migrate'
-      -'php artisan db:seed --class=UserRolePermissionSeeder.php
-'
+#           deploy:
+#       - 'php artisan migrate'
+#       -'php artisan db:seed --class=UserRolePermissionSeeder.php
+# '
