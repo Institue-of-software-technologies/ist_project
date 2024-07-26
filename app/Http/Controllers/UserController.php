@@ -195,4 +195,8 @@ one special character.'
 
         return redirect('/users')->with('status', 'User Deleted Successfully');
     }
+    public function resendActivationEmail($user)
+    {
+        $user->notify(new AccountActivation($user));
+    }
 }

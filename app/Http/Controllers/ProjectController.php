@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller implements HasMiddleware
 {
@@ -15,7 +16,7 @@ class ProjectController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('permission:view project', only: ['index', 'show']),
-            new Middleware('permission:view alumni projects',only: ['viewAlumniProjects','showProject']),
+            new Middleware('permission:view alumni projects', only: ['viewAlumniProjects', 'showProject']),
             new Middleware('permission:delete project', only: ['destroy']),
             new Middleware('permission:edit project', only: ['update', 'edit']),
             new Middleware('permission:publish project', only: ['create', 'store']),
@@ -46,16 +47,15 @@ class ProjectController extends Controller implements HasMiddleware
         $alumnis = User::role('alumni')->get();
         return view('alumni.index', compact('alumnis'));
     }
+
     public function index()
     {
-        $projects = Project::all();
-        return view('project.projectlist', compact('projects'));
+        // Fetch projects associated with the currently authenticated user
+        $projects = Project::where('user_id', Auth::id())->get();
+
+        return view('project.index', compact('projects'));
     }
-    public function show($id)
-    {
-        $project = Project::findOrFail($id);
-        return view('project.index', compact('project'));
-    }
+
 
     public function create()
     {

@@ -1,4 +1,4 @@
- <x-app-layout>
+<x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
@@ -20,9 +20,9 @@
                 @else
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($projects as $project)
-                            <div class="bg-gray-100 shadow-lg  rounded-lg p-5 border border-gray-300 hover:bg-gray-300 transition duration-1000 ease-out transform hover:-translate-y-2">
+                            <div class="bg-gray-100 shadow-lg rounded-lg p-5 border border-gray-300 hover:bg-gray-300 transition duration-1000 ease-out transform hover:-translate-y-2">
                                 <h3 class="text-2xl font-extrabold text-center text-red-600 mb-4">
-                                    <a href="{{ route('project.index', $project->id) }}">{{ $project->title }}</a>
+                                    <a href="{{ route('project.show', ['userId' => $userId, 'projectId' => $project->id]) }}">{{ $project->title }}</a>
                                 </h3>
                                 <p class="text-center font-bold text-gray-900">
                                     {{ Illuminate\Support\Str::limit($project->description, 300) }}

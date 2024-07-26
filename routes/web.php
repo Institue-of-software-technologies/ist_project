@@ -37,12 +37,18 @@ Route::middleware(['auth', 'check.alumni.profile'])->group(function () {
     // other alumni routes...
 });
 // Alumni routes
-Route::get('/alumni/jobs/{job}', [JobController::class, 'view']) ->middleware('track.job.view')->name('alumni.job.viewjob');
+Route::get('/alumni/jobs/{job}', [JobController::class, 'view'])->middleware('track.job.view')->name('alumni.job.viewjob');
 
 // Projects
 Route::resource('projects', ProjectController::class);
-Route::get('/project', [ProjectController::class, 'index'])->name('project.projectlist');
-Route::get('/projects/{id}/index', [ProjectController::class, 'show'])->name('project.index');
+// Route::get('/project', [ProjectController::class, 'show'])->name('project.index');
+// Route::get('/projects/{alumniId}/projectlist', [ProjectController::class, 'index'])->name('project.projectlist');
+// Route to list all projects for a specific alumni
+
+
+Route::get('/project/index', [ProjectController::class, 'index'])->name('project.index');
+
+
 Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
 Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
 Route::delete('projects/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
