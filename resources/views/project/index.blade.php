@@ -68,7 +68,7 @@
                                         @else
                                             <p class="text-red-500">Video URL is not available or invalid.</p>
                                         @endif
-                                    </div>red-500">Video URL is not available or invalid.</p>
+                                    </div>
                                 </div>
 
                                 <p class="mt-10 text-center text-gray-900">

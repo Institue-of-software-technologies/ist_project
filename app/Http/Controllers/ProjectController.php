@@ -15,7 +15,7 @@ class ProjectController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:view project', only: ['index', 'show']),
+            new Middleware('permission:view project', only: ['index']),
             new Middleware('permission:view alumni projects', only: ['viewAlumniProjects', 'showProject']),
             new Middleware('permission:delete project', only: ['destroy']),
             new Middleware('permission:edit project', only: ['update', 'edit']),
