@@ -69,11 +69,11 @@
                             {{ __('Alumni Projects') }}
                         </x-nav-link>
                     @endcan
-                    {{-- @can('view project')
-                        <x-nav-link :href="route('project.projectlist')" :active="request()->routeIs('project.projectlist')">
-                            {{ __('Published Projects') }}
+                    @can('view project')
+                        <x-nav-link :href="route('project.index')" :active="request()->routeIs('project.index')">
+                            {{ __('My Projects') }}
                         </x-nav-link>
-                    @endcan --}}
+                    @endcan
                     @can('publish project')
                         <x-nav-link :href="route('projects.create')" :active="request()->routeIs('projects.create')">
                             {{ __('Publish Projects') }}
@@ -254,11 +254,11 @@
                     {{ __('Alumni Profiles') }}
                 </x-responsive-nav-link>
             @endcan
-            {{-- @can('view project')
-                <x-responsive-nav-link :href="route('project.projectlist')" :active="request()->routeIs('project.projectlist')">
+            @can('view project')
+                <x-responsive-nav-link :href="route('project.index')" :active="request()->routeIs('project.index')">
                     {{ __('Alumni Projects') }}
                 </x-responsive-nav-link>
-            @endcan --}}
+            @endcan
             @can('publish project')
                 <x-responsive-nav-link :href="route('projects.create')" :active="request()->routeIs('projects.create')">
                     {{ __('Publish Projects') }}
