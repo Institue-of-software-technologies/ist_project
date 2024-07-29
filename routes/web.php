@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('login');
 });
 
+
+// application submission
+Route::post('/applications/{id}/send-email', [JobApplicationController::class, 'sendEmail'])->name('applications.sendEmail');
 Route::patch('/jobs/{id}/restore', [JobController::class, 'restore'])->name('role-permissions.job.restore');
 Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
 
