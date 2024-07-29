@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\JobApplication;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
@@ -18,6 +19,18 @@ class JobApplicationController extends Controller implements HasMiddleware
             new Middleware('permission:view own applications', only: ['index','show']),
             new Middleware('permission:view applications',only: ['listApplicant']),
         ];
+    }
+    public function sendEmail($id)
+    {
+        $application = JobApplication::findOrFail($id);
+        $user = $application->user;
+
+        Mail::send('emails.applicationMessage', ['application' => $application], function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('Regarding Your Job Application');
+        });
+
+        return redirect()->back()->with('status', 'Message sent successfully!');
     }
     public function listApplicant()
     {
