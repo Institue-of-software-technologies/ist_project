@@ -53,6 +53,10 @@ class ProjectController extends Controller implements HasMiddleware
         // Fetch projects associated with the currently authenticated user
         $projects = Project::where('user_id', Auth::id())->get();
 
+
+        if (!$projects) {
+            return redirect()->route('project.create')->with('status', 'Please Create your profile first');
+        }
         return view('project.index', compact('projects'));
     }
 

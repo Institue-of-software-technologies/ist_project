@@ -9,7 +9,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AlumniProfileController;
 use App\Http\Controllers\JobApplicationController;
-use App\Models\JobApplication;
+
 
 Route::get('/', function () {
     return view('login');
