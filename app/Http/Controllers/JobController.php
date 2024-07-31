@@ -105,7 +105,7 @@ class JobController extends Controller implements HasMiddleware
         // Notify alumni with matching skills
         $this->notifyMatchingAlumni($job);
 
-        return redirect()->route('role-permission.job.index')->with('status', 'Job Created Successfully');
+        return redirect()->route('role-permission.job.index')->with('success', 'Job Created Successfully');
     }
 
     public function edit($id)
@@ -141,7 +141,7 @@ class JobController extends Controller implements HasMiddleware
 
         $job->update($data);
 
-        return redirect()->route('role-permission.job.index')->with('status', 'Job Updated Successfully');
+        return redirect()->route('role-permission.job.index')->with('success', 'Job Updated Successfully');
     }
 
     private function notifyMatchingAlumni(Job $job)
@@ -175,10 +175,10 @@ class JobController extends Controller implements HasMiddleware
 
         if ($job) {
             $job->restore();
-            return redirect()->route('role-permission.job.index')->with('status', 'Job restored successfully.');
+            return redirect()->route('role-permission.job.index')->with('success', 'Job restored successfully.');
         }
 
-        return redirect()->route('role-permission.job.index')->with('status', 'Job not found.');
+        return redirect()->route('role-permission.job.index')->with('success', 'Job not found.');
     }
 
     public function destroy($jobId)
@@ -186,9 +186,9 @@ class JobController extends Controller implements HasMiddleware
         $job = Job::find($jobId);
         if ($job) {
             $job->delete();
-            return redirect()->route('role-permission.job.index')->with('status', 'Job Deleted Successfully');
+            return redirect()->route('role-permission.job.index')->with('success', 'Job Deleted Successfully');
         }
 
-        return redirect()->route('role-permission.job.index')->with('status', 'Job not found.');
+        return redirect()->route('role-permission.job.index')->with('success', 'Job not found.');
     }
 }

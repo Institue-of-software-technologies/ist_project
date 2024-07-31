@@ -55,7 +55,7 @@ class ProjectController extends Controller implements HasMiddleware
 
 
         if (!$projects) {
-            return redirect()->route('project.create')->with('status', 'Please Create your profile first');
+            return redirect()->route('project.create')->with('success', 'Please Create your profile first');
         }
         return view('project.index', compact('projects'));
     }
@@ -98,7 +98,7 @@ class ProjectController extends Controller implements HasMiddleware
         $project->user_id = auth()->id();
         $project->save();
 
-        return redirect()->route('projects.index')->with('status', 'Project Created Successfully');
+        return redirect()->route('projects.index')->with('success', 'Project Created Successfully');
     }
 
     public function edit($id)
@@ -139,7 +139,7 @@ class ProjectController extends Controller implements HasMiddleware
 
         $project->update($data);
 
-        return redirect()->route('projects.index')->with('status', 'Project updated successfully!');
+        return redirect()->route('projects.index')->with('success', 'Project updated successfully!');
     }
 
     public function destroy($projectId)
@@ -147,9 +147,9 @@ class ProjectController extends Controller implements HasMiddleware
         $project = Project::find($projectId);
         if ($project) {
             $project->delete();
-            return redirect()->route('projects.index')->with('status', 'Project deleted successfully');
+            return redirect()->route('projects.index')->with('success', 'Project deleted successfully');
         }
 
-        return redirect()->route('projects.index')->with('status', 'Project not found.');
+        return redirect()->route('projects.index')->with('success', 'Project not found.');
     }
 }

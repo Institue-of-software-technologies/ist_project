@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "bootstrap": "^5.3.3",
-        "sweetalert2": "^11.12.1"
+        "sweetalert2": "^11.12.1",
+        "toastr": "^2.1.4"
     }
 }

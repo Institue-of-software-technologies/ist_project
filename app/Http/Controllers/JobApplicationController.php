@@ -30,7 +30,7 @@ class JobApplicationController extends Controller implements HasMiddleware
                 ->subject('Regarding Your Job Application');
         });
 
-        return redirect()->back()->with('status', 'Message sent successfully!');
+        return redirect()->back()->with('success', 'Message sent successfully!');
     }
     public function listApplicant()
     {
@@ -102,6 +102,6 @@ class JobApplicationController extends Controller implements HasMiddleware
             'phone' => $request->phone,
         ]);
 
-        return redirect()->back()->with('status', 'Aplication submitted successfully');
+        return redirect()->back()->with('success', 'Aplication submitted successfully');
     }
 }
