@@ -46,7 +46,7 @@ class PermissionController extends Controller implements HasMiddleware
             'name' => $request->name
         ]);
 
-        return redirect('permissions')->with('status', 'Permission Created Successfully');
+        return redirect('permissions')->with('success', 'Permission Created Successfully');
     }
 
     public function edit(Permission $permission)
@@ -68,13 +68,13 @@ class PermissionController extends Controller implements HasMiddleware
             'name' => $request->name
         ]);
 
-        return redirect('permissions')->with('status', 'Permission Updated Successfully');
+        return redirect('permissions')->with('success', 'Permission Updated Successfully');
     }
 
     public function destroy($permissionId)
     {
         $permission = Permission::find($permissionId);
         $permission->delete();
-        return redirect('permissions')->with('status', 'Permission Deleted Successfully');
+        return redirect('permissions')->with('success', 'Permission Deleted Successfully');
     }
 }

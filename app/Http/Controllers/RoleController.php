@@ -52,7 +52,7 @@ class RoleController extends Controller implements HasMiddleware
             'name' => $request->name
         ]);
 
-        return redirect('roles')->with('status', 'Role Created Successfully');
+        return redirect('roles')->with('success', 'Role Created Successfully');
     }
 
     public function edit(Role $role)
@@ -74,14 +74,14 @@ class RoleController extends Controller implements HasMiddleware
             'name' => $request->name
         ]);
 
-        return redirect('roles')->with('status', 'Role Updated Successfully');
+        return redirect('roles')->with('success', 'Role Updated Successfully');
     }
 
     public function destroy($roleId)
     {
         $role = Role::find($roleId);
         $role->delete();
-        return redirect('roles')->with('status', 'Role Deleted Successfully');
+        return redirect('roles')->with('success', 'Role Deleted Successfully');
     }
 
     public function addPermissionToRole($roleId)
@@ -109,6 +109,6 @@ class RoleController extends Controller implements HasMiddleware
         $role = Role::findOrFail($roleId);
         $role->syncPermissions($request->permission);
 
-        return redirect('roles')->with('status', 'Permissions added to role');
+        return redirect('roles')->with('success', 'Permissions added to role');
     }
 }

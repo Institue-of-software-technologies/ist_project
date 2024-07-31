@@ -82,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center">
+            <div class="flex items-center ">
                 <!-- Hamburger -->
                 <div class="sm:hidden md:hidden">
                     <button @click="navOpen = !navOpen"
@@ -161,7 +161,7 @@
                         </div>
                     @endcan
 
-                    <x-dropdown align="right" width="48">
+                    <x-dropdown align="left" width="48">
                         <x-slot name="trigger">
                             <button
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-xl leading-4 font-medium rounded-md text-white bg-gray-900 hover:text-gray-200 focus:outline-none transition ease-in-out duration-150">

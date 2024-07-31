@@ -36,7 +36,7 @@ class UserController extends Controller implements HasMiddleware
             try {
                 $file = $request->file('file');
                 Excel::import(new UsersImport, $file);
-                return redirect()->route('users.index')->with('status', 'Users Imported and Email sent successfully');
+                return redirect()->route('users.index')->with('success', 'Users Imported and Email sent successfully');
             } catch (\Exception $e) {
                 Log::error('Error importing file: ' . $e->getMessage(), ['exception' => $e]);
                 return redirect()->back()->withErrors(['file' => 'Error importing file. Please try again.']);
@@ -89,7 +89,7 @@ class UserController extends Controller implements HasMiddleware
         $user->save();
 
         // Redirect to the login page with a success message
-        return redirect('login')->with('status', 'Account activated. You can now log in');
+        return redirect('login')->with('success', 'Account activated. You can now log in');
     }
 
     public function index()
@@ -138,7 +138,7 @@ one special character.'
 
         $user->syncRoles($request->roles);
 
-        return redirect('/users')->with('status', 'User created with role and email sent successfully');
+        return redirect('/users')->with('success', 'User created with role and email sent successfully');
     }
 
     public function edit(User $user)
@@ -185,7 +185,7 @@ one special character.'
         $user->update($data);
         $user->syncRoles($request->roles);
 
-        return redirect('/users')->with('status', 'User Updated Successfully with roles');
+        return redirect('/users')->with('success', 'User Updated Successfully with roles');
     }
 
     public function destroy($userId)
@@ -193,7 +193,7 @@ one special character.'
         $user = User::findOrFail($userId);
         $user->delete();
 
-        return redirect('/users')->with('status', 'User Deleted Successfully');
+        return redirect('/users')->with('success', 'User Deleted Successfully');
     }
     public function resendActivationEmail($user)
     {
