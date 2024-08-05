@@ -51,7 +51,7 @@
     <div class="container">
         <h1>500 Error - Internal Server Error</h1>
         <p>Sorry, something went wrong on our end. Please try again later.</p>
-        {{-- <a href="/">Return to Homepage</a> --}}
+        <p><a href="{{ url('/dashboard') }}">Go Back To The Dashboard</a></p>
     </div>
 </body>
 </html>

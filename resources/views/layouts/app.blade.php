@@ -18,6 +18,7 @@
 
 <body class="font-sans antialiased bg-gray-300">
     <div class="min-h-screen ">
+        
         @include('layouts.navigation')
 
         <!-- Page Heading -->

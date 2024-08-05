@@ -12,7 +12,7 @@
                 <div class="flex justify-center  mt-8">
                     <div class="rounded-xl p-1">
                         <img src="{{ asset('storage/' . $job->company_logo) }}" alt="Company Logo"
-                            class="w-auto h-auto lg:w-52 lg:h-36 rounded-xl mx-auto">
+                            class="w-52 h-52 lg:w-52 lg:h-36 rounded-xl mx-auto">
                     </div>
                 </div>
             @endif

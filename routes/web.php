@@ -9,10 +9,18 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AlumniProfileController;
 use App\Http\Controllers\JobApplicationController;
-
+use App\Http\Controllers\MessagesController;
 
 Route::get('/', function () {
     return view('login');
+});
+
+//  messaging routes
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
+    Route::get('/messages/create/{receiverId}', [MessagesController::class, 'create'])->name('messages.create');
+    Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
 });
 
 

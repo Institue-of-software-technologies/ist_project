@@ -51,7 +51,7 @@
     <div class="container">
         <h1>404 Error - Not Found</h1>
         <p>Sorry, The Page You're Looking For Could Not Be Found. Please try again later.</p>
-        {{-- <a href="/">Return to Homepage</a> --}}
+        <p><a href="{{ url('/dashboard') }}">Go Back To The Dashboard</a></p>
     </div>
 </body>
 </html>

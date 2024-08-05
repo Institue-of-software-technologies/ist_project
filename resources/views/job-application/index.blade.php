@@ -1,10 +1,5 @@
 <x-app-layout>
     <div class="container mx-auto mt-2 px-4">
-        @if (session('status'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
 
         @if ($applications->isEmpty())
             <div

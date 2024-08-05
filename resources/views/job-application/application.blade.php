@@ -1,11 +1,5 @@
 <x-app-layout>
     <div class="container mx-auto mt-2 px-4">
-        @if (session('status'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
-
         <div class="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-2 gap-4">
 
             <div class="bg-white border border-lg border-gray-300 hover:border-gray-500 rounded-lg overflow-hidden mt-4 p-4">
