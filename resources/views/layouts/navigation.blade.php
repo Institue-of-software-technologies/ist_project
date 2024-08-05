@@ -1,4 +1,4 @@
-<nav x-data="{ navOpen: false, notifOpen: false }" class="bg-white border-b border-gray-400 shadow-lg sticky top-0 z-10">
+<nav x-data="{ navOpen: false, notifOpen: false, msgOpen: false }" class="bg-white border-b border-gray-400 shadow-lg sticky top-0 z-10">
     <!-- Primary Navigation Menu -->
     <div class="mx-auto px-2 py-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -47,6 +47,11 @@
                             {{ __('Profile') }}
                         </x-nav-link>
                     @endcan
+                    @can('view alumni profile')
+                        <x-nav-link :href="route('profiles.index')" :active="request()->routeIs('profiles.index')">
+                            {{ __('Alumni Profiles') }}
+                        </x-nav-link>
+                    @endcan
                     @can('view alumni job')
                         <x-nav-link :href="route('alumni.job.index')" :active="request()->routeIs('alumni.job.index')">
                             {{ __('Jobs') }}
@@ -59,11 +64,6 @@
                     @endcan
 
                     {{-- Employer routes --}}
-                    @can('view alumni profile')
-                        <x-nav-link :href="route('profiles.index')" :active="request()->routeIs('profiles.index')">
-                            {{ __('Alumni Profiles') }}
-                        </x-nav-link>
-                    @endcan
                     @can('view alumni projects')
                         <x-nav-link :href="url('/alumni')" :active="request()->routeIs('projects.index')">
                             {{ __('Alumni Projects') }}
@@ -82,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center ">
+            <div class="flex items-center">
                 <!-- Hamburger -->
                 <div class="sm:hidden md:hidden">
                     <button @click="navOpen = !navOpen"
@@ -105,7 +105,7 @@
                             <i class="fa-solid fa-bell"></i>
                             <span
                                 class="absolute top-0 right-0 w-3 h-3 bg-red-600 rounded-full text-xs text-white flex items-center justify-center">
-                                {{ auth()->user()->unreadNotifications->count() }}
+                                {{ auth()->user()->unreadNotifications->where('type', '!=', 'App\Notifications\NewMessageNotification')->count() }}
                             </span>
                         </button>
 
@@ -113,7 +113,7 @@
                         <div x-show="notifOpen" @click.away="notifOpen = false"
                             class="origin-top-right absolute right-0 mt-10 lg:w-96 w-72 rounded-md shadow-lg bg-white ring-4 ring-red-400 ring-opacity-20">
                             <div class="py-1 p-10">
-                                @forelse (auth()->user()->unreadNotifications as $notification)
+                                @forelse (auth()->user()->unreadNotifications->where('type', '!=', 'App\Notifications\NewMessageNotification') as $notification)
                                     <x-dropdown-link class="text-4xl font-bold text-red-600"
                                         href="{{ route('notifications.show', $notification->id) }}">
                                         {{ $notification->data['message'] }}
@@ -121,6 +121,36 @@
                                 @empty
                                     <x-dropdown-link>
                                         No new notifications
+                                    </x-dropdown-link>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+                @endcan
+
+                <!-- Message Icon -->
+                @can('view message')
+                    <div class="relative p-1 sm:hidden">
+                        <button @click="msgOpen = !msgOpen" class="relative flex items-center text-gray-900 text-2xl">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span
+                                class="absolute top-0 right-0 w-3 h-3 bg-red-600 rounded-full text-xs text-white flex items-center justify-center">
+                                {{ auth()->user()->unreadNotifications->where('type', 'App\Notifications\NewMessageNotification')->count() }}
+                            </span>
+                        </button>
+
+                        <!-- Dropdown Content -->
+                        <div x-show="msgOpen" @click.away="msgOpen = false"
+                            class="origin-top-right absolute right-0 mt-10 lg:w-96 w-72 rounded-md shadow-lg bg-white ring-4 ring-red-400 ring-opacity-20">
+                            <div class="py-1 p-10">
+                                @forelse (auth()->user()->unreadNotifications->where('type', 'App\Notifications\NewMessageNotification') as $notification)
+                                    <x-dropdown-link class="text-4xl font-bold text-red-600"
+                                        href="{{ route('messages.show', $notification->data['message_id']) }}">
+                                        {{ $notification->data['message'] }}
+                                    </x-dropdown-link>
+                                @empty
+                                    <x-dropdown-link>
+                                        No new messages
                                     </x-dropdown-link>
                                 @endforelse
                             </div>
@@ -161,37 +191,22 @@
                         </div>
                     @endcan
 
-                    <x-dropdown align="left" width="48">
-                        <x-slot name="trigger">
+                    {{-- @can('view message') --}}
+                    {{-- @endcan --}}
+
+                    {{-- <x-dropdown align="left" width="48">
+                        <x-slot name="trigger"> --}}
+                    <div class="mr-64">
+                        <form method="POST" action="{{ route('logout') }}" class="inline">
+                            @csrf
                             <button
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-xl leading-4 font-medium rounded-md text-white bg-gray-900 hover:text-gray-200 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ \Illuminate\Support\Facades\Auth::user()->name }}</div>
-                                <div class="ms-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-xl font-medium rounded-md text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition ease-in-out duration-150">
+                                <span>{{ __('Log Out') }}</span>
                             </button>
-                        </x-slot>
-
-                        <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault(); this.closest('form').submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
+                        </form>
+                    </div>
+                    {{-- </x-slot>
+                    </x-dropdown> --}}
                 </div>
             </div>
         </div>
@@ -276,9 +291,9 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
+                {{-- <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
-                </x-responsive-nav-link>
+                </x-responsive-nav-link> --}}
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
