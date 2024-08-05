@@ -77,4 +77,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(JobApplication::class);
     }
+    // app/Models/User.php
+
+    public function getProfilePhotoUrlAttribute()
+    {
+        return $this->profile_photo ? asset('storage/' . $this->profile_photo) : asset('default-profile-photo.png');
+    }
+
 }
