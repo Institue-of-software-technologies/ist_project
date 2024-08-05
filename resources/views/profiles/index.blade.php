@@ -38,8 +38,8 @@
                                         </a>
                                     </p>
                                     <div class="mt-4 text-center">
-                                        <a href="{{ route('messages.create', $profile->user_id) }}" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
-                                            {{ __('Send Message') }}
+                                        <a href="{{ url('/alumni')}}" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
+                                            {{ __('View Projects') }}
                                         </a>
                                     </div>
                                 </div>

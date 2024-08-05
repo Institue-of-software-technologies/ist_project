@@ -102,6 +102,6 @@ class JobApplicationController extends Controller implements HasMiddleware
             'phone' => $request->phone,
         ]);
 
-        return redirect()->back()->with('success', 'Aplication submitted successfully');
+        return redirect()->route('alumni.job.index')->with('success', 'Aplication submitted successfully');
     }
 }

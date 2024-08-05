@@ -15,15 +15,6 @@ Route::get('/', function () {
     return view('login');
 });
 
-//  messaging routes
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
-    Route::get('/messages/create/{receiverId}', [MessagesController::class, 'create'])->name('messages.create');
-    Route::post('/messages', [MessagesController::class, 'store'])->name('messages.store');
-});
-
-
 // application submission
 Route::post('/applications/{id}/send-email', [JobApplicationController::class, 'sendEmail'])->name('applications.sendEmail');
 Route::patch('/jobs/{id}/restore', [JobController::class, 'restore'])->name('role-permissions.job.restore');
@@ -62,9 +53,9 @@ Route::get('/project/index', [ProjectController::class, 'index'])->name('project
 
 Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
 Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-Route::delete('projects/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
-Route::put('projects/{id}/update', [ProjectController::class, 'update'])->name('projects.update');
+// Route::delete('projects/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+// Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+// Route::put('projects/{id}/update', [ProjectController::class, 'update'])->name('projects.update');
 
 // Employer projects displaying
 Route::get('/alumni', [ProjectController::class, 'listAlumni'])->name('alumni.index');

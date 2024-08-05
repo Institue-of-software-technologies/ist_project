@@ -8,6 +8,8 @@
                         <span class="block sm:inline">{{ session('status') }}</span>
                     </div>
                 @endif
+                        <a href="{{ route('projects.create') }}"
+                            class="bg-blue-500 text-white px-4 py-2 rounded mt-4">New Project</a>
 
                 @if ($projects->isEmpty())
                     <div
