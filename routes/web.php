@@ -34,6 +34,7 @@ Route::get('/job-application/list', [JobApplicationController::class, 'listAppli
 Route::get('/job-application/{applicationId}', [JobApplicationController::class, 'showApplication'])->name('job-application.application');
 Route::get('/job-application/{id}/applist', [JobApplicationController::class, 'showApplicationList'])->name('job-application.applist');
 Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
+Route::post('/applications/{applicationId}/mark-as-reviewed', [JobApplicationController::class, 'markAsReviewed'])->name('job-application.mark-as-reviewed');
 
 // application submission
 Route::post('/applications/{id}/send-email', [JobApplicationController::class, 'sendEmail'])->name('applications.sendEmail');

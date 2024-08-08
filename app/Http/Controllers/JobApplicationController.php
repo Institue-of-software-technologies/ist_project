@@ -104,4 +104,12 @@ class JobApplicationController extends Controller implements HasMiddleware
 
         return redirect()->route('alumni.job.index')->with('success', 'Aplication submitted successfully');
     }
+    public function markAsReviewed($applicationId)
+    {
+        $application = JobApplication::findOrFail($applicationId);
+        $application->update(['reviewed' => true]);
+
+        return redirect()->back()->with('success', 'Application marked as reviewed.');
+    }
+
 }
