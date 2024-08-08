@@ -148,14 +148,6 @@
                         </p>
                     </div>
 
-
-                    <div class="mt-8">
-                        <a href="{{ url('/messages') }}"
-                            class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
-                            View Your Messages
-                        </a>
-                    </div>
-
                     <div class="mt-8">
                         <a href="{{ url('alumni/profile/view') }}"
                             class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">

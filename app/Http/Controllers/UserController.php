@@ -6,12 +6,13 @@ use Illuminate\Support\Str;
 use App\Imports\UsersImport;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Notifications\AccountActivation;
+use App\Notifications\AccountDeactivation;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller implements HasMiddleware
 {
@@ -22,10 +23,10 @@ class UserController extends Controller implements HasMiddleware
             new Middleware('permission:delete user', only: ['destroy']),
             new Middleware('permission:edit user', only: ['update', 'edit']),
             new Middleware('permission:create user', only: ['create', 'store']),
+            new Middleware('permission:activateDeactivateUser', only: ['activate' ,'deactivate'])
         ];
     }
 
-    // import function 
     public function import(Request $request)
     {
         $request->validate([
@@ -36,7 +37,7 @@ class UserController extends Controller implements HasMiddleware
             try {
                 $file = $request->file('file');
                 Excel::import(new UsersImport, $file);
-                return redirect()->route('users.index')->with('success', 'Users Imported and Email sent successfully');
+                return redirect()->route('role-permission.user.index')->with('success', 'Users Imported and Email sent successfully');
             } catch (\Exception $e) {
                 Log::error('Error importing file: ' . $e->getMessage(), ['exception' => $e]);
                 return redirect()->back()->withErrors(['file' => 'Error importing file. Please try again.']);
@@ -45,9 +46,6 @@ class UserController extends Controller implements HasMiddleware
             return redirect()->back()->withErrors(['file' => 'No file uploaded.']);
         }
     }
-
-
-
 
     public function activateAccount($token)
     {
@@ -61,34 +59,29 @@ class UserController extends Controller implements HasMiddleware
 
     public function setPassword(Request $request, $token)
     {
-        // Find the user by activation token
         $user = User::where('activation_token', $token)->first();
 
-        // Check if the user exists
         if (!$user) {
             return redirect('/')->with('error', 'Invalid activation token');
         }
 
-        // Validate the password
         $request->validate([
             'password' => [
                 'required',
                 'string',
                 'min:8',
-                'regex:/[A-Z]/', // must contain at least one uppercase letter
-                'regex:/[a-z]/', // must contain at least one lowercase letter
-                'regex:/[0-9]/', // must contain at least one digit
+                'regex:/[A-Z]/',
+                'regex:/[a-z]/',
+                'regex:/[0-9]/',
                 'confirmed',
             ],
         ]);
 
-        // Update the user's password
         $user->password = Hash::make($request->password);
         $user->activation_token = null;
         $user->email_verified_at = now();
         $user->save();
 
-        // Redirect to the login page with a success message
         return redirect('login')->with('success', 'Account activated. You can now log in');
     }
 
@@ -97,7 +90,6 @@ class UserController extends Controller implements HasMiddleware
         $users = User::get();
         return view('role-permission.user.index', ['users' => $users]);
     }
-
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
@@ -121,8 +113,7 @@ class UserController extends Controller implements HasMiddleware
                 'roles' => 'required'
             ],
             [
-                'password.regex' => 'The password must be between 8 and 20 characters long and include at least one uppercase letter and
-one special character.'
+                'password.regex' => 'The password must be between 8 and 20 characters long and include at least one uppercase letter and one special character.'
             ]
         );
 
@@ -131,14 +122,12 @@ one special character.'
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'activation_token' => Str::random(60),
-
         ]);
 
         $user->notify(new AccountActivation($user));
-
         $user->syncRoles($request->roles);
 
-        return redirect('/users')->with('success', 'User created with role and email sent successfully');
+        return redirect()->route('role-permission.user.index')->with('success', 'User created with role and email sent successfully');
     }
 
     public function edit(User $user)
@@ -168,8 +157,7 @@ one special character.'
                 'roles' => 'required'
             ],
             [
-                'password.regex' => 'The password must be between 8 and 20 characters long and include at least one uppercase letter and
-one special character.'
+                'password.regex' => 'The password must be between 8 and 20 characters long and include at least one uppercase letter and one special character.'
             ]
 
         );
@@ -185,7 +173,7 @@ one special character.'
         $user->update($data);
         $user->syncRoles($request->roles);
 
-        return redirect('/users')->with('success', 'User Updated Successfully with roles');
+        return redirect()->route('role-permission.user.index')->with('success', 'User Updated Successfully with roles');
     }
 
     public function destroy($userId)
@@ -193,10 +181,41 @@ one special character.'
         $user = User::findOrFail($userId);
         $user->delete();
 
-        return redirect('/users')->with('success', 'User Deleted Successfully');
+        return redirect()->route('role-permission.user.index')->with('success', 'User Deleted Successfully');
     }
+
     public function resendActivationEmail($user)
     {
         $user->notify(new AccountActivation($user));
     }
+    public function deactivate($userId)
+    {
+        $user = User::find($userId);
+        if ($user) {
+            // Set a flag or status to indicate that the user is deactivated
+            $user->deactivated_at = now();
+            $user->save();
+
+            // Send email notification
+            $user->notify(new AccountDeactivation($user));
+
+            return redirect()->route('role-permission.user.index')->with('success', 'User account deactivated successfully.');
+        }
+
+        return redirect()->route('role-permission.user.index')->with('error', 'User not found.');
+    }
+    public function activate($userId)
+    {
+        $user = User::find($userId);
+        if ($user) {
+            $user->deactivated_at = null;
+            $user->save();
+
+            return redirect()->route('role-permission.user.index')->with('success', 'User account activated successfully.');
+        }
+
+        return redirect()->route('role-permission.user.index')->with('error', 'User not found.');
+    }
+
+
 }

@@ -24,9 +24,11 @@ class AlumniProfileController extends Controller implements HasMiddleware
 
     public function view()
     {
-        $profiles = AlumniProfile::all();
+        $loggedInUserId = auth()->id(); // Get the ID of the currently authenticated user
+        $profiles = AlumniProfile::where('user_id', '!=', $loggedInUserId)->get(); // Exclude the logged-in user
         return view('profiles.index', compact('profiles'));
     }
+
     public function search(Request $request)
     {
         $searchTerm = $request->input('search');

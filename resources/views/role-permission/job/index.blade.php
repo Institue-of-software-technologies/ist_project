@@ -80,23 +80,21 @@
                 @endif
             </div>
 
-            {{-- <div class="mt-6">
+            <div class="mt-6">
                     <h4 class="text-lg font-semibold">
                         Trashed Jobs
                     </h4>
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach ($trashedJobs as $job)
                             <div class="bg-white shadow-md rounded-lg overflow-hidden transition duration-300 ease-in-out hover:bg-red-100 hover:text-dark-900">
-                                <a href="{{ url('jobs/' . $job->id) }}" class="flex items-center p-4">
                                     <!-- Job Details -->
-                                    <div class="flex-grow">
+                                    <div class="flex-grow p-5">
                                         <h5 class="text-xl font-bold">{{ $job->title }}</h5>
                                         <p class="text-sm text-gray-900">{{ $job->company_name }}</p>
                                         <p class="text-sm text-gray-900">{{ $job->location }}</p>
                                         <p class="text-sm text-gray-900">{{ ucfirst($job->job_type) }} Deadline:
                                             {{ \Carbon\Carbon::parse($job->created_at)->format('D, M jS Y') }}</p>
                                     </div>
-                                </a>
                                 <!-- Actions -->
                                 <div class="p-4 flex items-center justify-end space-x-2">
                                     @if (!empty($jobs))
@@ -114,7 +112,7 @@
                             </div>
                         @endforeach
                     </div>
-                </div> --}}
+                </div>
 
         </div>
     </div>

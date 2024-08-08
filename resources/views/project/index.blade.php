@@ -8,8 +8,8 @@
                         <span class="block sm:inline">{{ session('status') }}</span>
                     </div>
                 @endif
-                        <a href="{{ route('projects.create') }}"
-                            class="bg-blue-500 text-white px-4 py-2 rounded mt-4">New Project</a>
+                <a href="{{ route('projects.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">New
+                    Project</a>
 
                 @if ($projects->isEmpty())
                     <div
@@ -24,13 +24,35 @@
                         @foreach ($projects as $project)
                             <div class="bg-gray-200 shadow-md rounded-lg p-5 border border-gray-800 mt-5">
                                 <h3 class="text-3xl lg:text-4xl font-extrabold text-center text-red-600">
-                                    {{ $project->title }}</h3>
+                                    {{ $project->title }}
+                                </h3>
                                 <p class="text-center font-bold text-gray-900">
-                                    {{ Illuminate\Support\Str::limit($project->description, 300) }}</p>
-                                <button @click="openModal = true; currentProject = {{ json_encode($project) }}"
-                                    class="bg-blue-500 text-white px-4 py-2 rounded">
-                                    View More
-                                </button>
+                                    {{ Illuminate\Support\Str::limit($project->description, 250) }}
+                                </p>
+                                <div class="flex flex-col justify-center items-center mt-4 space-x-2">
+                                    <button @click="openModal = true; currentProject = {{ json_encode($project) }}"
+                                        class="bg-blue-500 text-white px-4 py-2 rounded mt-4">
+                                        View More
+                                    </button>
+
+                                    {{-- Visibility --}}
+
+                                    @if ($project->visibility === 'private')
+                                        <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="currentColor"
+                                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.48 0-8-3.52-8-8s3.52-8 8-8 8 3.52 8 8-3.52 8-8 8zm-2-11.54V7c0-.55-.45-1-1-1s-1 .45-1 1v2.92c-.83.23-1.53.87-1.8 1.7l-1.65 4.43c-.28.74.12 1.54.91 1.54h12.08c.79 0 1.19-.8.91-1.54l-1.65-4.43c-.27-.83-.97-1.47-1.8-1.7V7c0-.55-.45-1-1-1s-1 .45-1 1v2.46c-.61-.35-1.31-.54-2-.54s-1.39.19-2 .54z" />
+                                        </svg>
+                                        <span class="text-red-600 text-sm font-semibold">Private</span>
+                                    @else
+                                        <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="currentColor"
+                                                d="M12 4c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 19.52 2 14 6.48 4 12 4zm0 18c4.48 0 8-3.52 8-8s-3.52-8-8-8-8 3.52-8 8 3.52 8 8 8zm-2-11v2H8v-2h2zm4 0v2h-2v-2h2zm-4 4v2H8v-2h2zm4 0v2h-2v-2h2zm-2 4c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                                        </svg>
+                                        <span class="text-green-600 text-sm font-semibold">Public</span>
+                                    @endif
+                                </div>
                             </div>
                         @endforeach
 
@@ -153,8 +175,9 @@
                                         </h1>
                                     </div>
 
-                                    <p class="text-2xl text-red-500 mt-2">Posted <span
-                                            x-text="currentProject?.created_at"></span></p>
+                                    <p class="text-2xl text-red-500 mt-2">Posted
+                                        <span>{{ $project->created_at->diffForHumans() }}</span>
+                                    </p>
                                     <div class="mt-4 flex space-x-4">
                                         {{-- @can('edit project') --}}
                                         <a href="{{ route('projects.edit', $project->id) }}"

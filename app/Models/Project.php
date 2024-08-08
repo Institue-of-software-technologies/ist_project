@@ -11,9 +11,20 @@ class Project extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-    'title', 'problem_statement', 'solution_proposed', 'description', 'flowchart_diagram',
-    'database_diagram', 'powerpoint', 'demo_url', 'video_url', 'tools_used',
-    'programming_language', 'github_repository', 'visibility',
+        'title',
+        'problem_statement',
+        'solution_proposed',
+        'description',
+        'flowchart_diagram',
+        'database_diagram',
+        'powerpoint',
+        'demo_url',
+        'video_url',
+        'tools_used',
+        'programming_language',
+        'github_repository',
+        'visibility',
+        'user_id'
     ];
 
     protected $dates = ['deleted_at'];

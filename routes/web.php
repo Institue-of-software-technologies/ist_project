@@ -9,58 +9,41 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\AlumniProfileController;
 use App\Http\Controllers\JobApplicationController;
-use App\Http\Controllers\MessagesController;
+
 
 Route::get('/', function () {
     return view('login');
 });
+// activate account route
+Route::get('activate-account/{token}', [UserController::class, 'activateAccount'])->name('activate-account');
+Route::post('activate-account/{token}', [UserController::class, 'setPassword'])->name('set-password');
 
-// application submission
-Route::post('/applications/{id}/send-email', [JobApplicationController::class, 'sendEmail'])->name('applications.sendEmail');
-Route::patch('/jobs/{id}/restore', [JobController::class, 'restore'])->name('role-permissions.job.restore');
-Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
-
-// Job applications
+// ensure profile is created
+Route::middleware(['auth', 'check.alumni.profile'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
+});
+// Alumni and super-user Job applications and routes
+Route::get('/alumni/jobs/{job}', [JobController::class, 'view'])->middleware('track.job.view')->name('alumni.job.viewjob');
 Route::post('/job-applications', [JobApplicationController::class, 'store'])->name('job-applications.store');
 Route::get('/job-applications/index', [JobApplicationController::class, 'index'])->name('job-applications.index');
 Route::get('/job-applications/{id}', [JobApplicationController::class, 'show'])->name('job-application.show');
 Route::get('/job-application/list', [JobApplicationController::class, 'listApplicant'])->name('job-application.list');
 Route::get('/job-application/{applicationId}', [JobApplicationController::class, 'showApplication'])->name('job-application.application');
 Route::get('/job-application/{id}/applist', [JobApplicationController::class, 'showApplicationList'])->name('job-application.applist');
+Route::get('/jobs/search', [JobController::class, 'search'])->name('jobs.search');
 
-Route::get('activate-account/{token}', [UserController::class, 'activateAccount'])->name('activate-account');
-Route::post('activate-account/{token}', [UserController::class, 'setPassword'])->name('set-password');
-
-Route::middleware(['auth', 'check.alumni.profile'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
-    Route::get('/alumni/jobs', [JobController::class, 'alumniIndex'])->name('alumni.job.index');
-    // other alumni routes...
-});
-// Alumni routes
-Route::get('/alumni/jobs/{job}', [JobController::class, 'view'])->middleware('track.job.view')->name('alumni.job.viewjob');
+// application submission
+Route::post('/applications/{id}/send-email', [JobApplicationController::class, 'sendEmail'])->name('applications.sendEmail');
 
 // Projects
 Route::resource('projects', ProjectController::class);
-// Route::get('/project', [ProjectController::class, 'show'])->name('project.index');
-// Route::get('/projects/{alumniId}/projectlist', [ProjectController::class, 'index'])->name('project.projectlist');
-// Route to list all projects for a specific alumni
-
-
 Route::get('/project/index', [ProjectController::class, 'index'])->name('project.index');
-
-
+Route::get('alumni/{alumni}/projects', [ProjectController::class, 'viewAlumniProjects'])->name('alumni.projects.index');
 Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
 Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
-// Route::delete('projects/{projectId}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-// Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
-// Route::put('projects/{id}/update', [ProjectController::class, 'update'])->name('projects.update');
-
-// Employer projects displaying
-Route::get('/alumni', [ProjectController::class, 'listAlumni'])->name('alumni.index');
-Route::get('/alumni/{alumni}/index', [ProjectController::class, 'viewAlumniProjects'])->name('alumni.projects.index');
-Route::get('/projects/{project}', [ProjectController::class, 'showProject'])->name('alumni.projects.show');
 
 // Profile routes
 Route::get('/alumni/profile/view', [AlumniProfileController::class, 'index'])->name('alumni.profile.view');
@@ -84,12 +67,19 @@ Route::post('/import-users', [UserController::class, 'import'])->name('import.us
 Route::middleware(['role:super-user|admin|employer'])->group(function () {
     Route::resource('permissions', PermissionController::class);
     Route::get('permissions/{permissionId}/delete', [PermissionController::class, 'destroy']);
+    // roles
     Route::resource('roles', RoleController::class);
     Route::get('roles/{roleId}/delete', [RoleController::class, 'destroy']);
     Route::get('roles/{roleId}/give-permissions', [RoleController::class, 'addPermissionToRole']);
     Route::put('roles/{roleId}/give-permissions', [RoleController::class, 'givePermissionToRole']);
+    // users
+    Route::get('/users/index', [UserController::class, 'index'])->name('role-permission.user.index');
+    Route::post('/users/{userId}/deactivate', [UserController::class, 'deactivate'])->name('role-permission.user.deactivate');
+    Route::post('/users/{userId}/activate', [UserController::class, 'activate'])->name('role-permission.user.activate');
     Route::resource('users', UserController::class);
     Route::get('users/{userId}/delete', [UserController::class, 'destroy']);
+    // jobs
+    Route::patch('/jobs/{id}/restore', [JobController::class, 'restore'])->name('role-permissions.job.restore');
     Route::resource('jobs', JobController::class);
     Route::get('/jobs', [JobController::class, 'index'])->name('role-permission.job.index');
     Route::get('jobs/{jobId}/delete', [JobController::class, 'destroy'])->name('role-permission.job.destroy');
