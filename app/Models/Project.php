@@ -24,7 +24,7 @@ class Project extends Model
         'programming_language',
         'github_repository',
         'visibility',
-        'user_id'
+        // 'user_id'
     ];
 
     protected $dates = ['deleted_at'];
