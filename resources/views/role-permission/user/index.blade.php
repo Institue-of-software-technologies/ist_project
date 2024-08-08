@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="container mx-auto mt-2 px-4">
-        <div class="row">
-            <div class="col-md-12">
+        <div class="flex flex-col">
+            <div class="w-full">
                 @if (session('status'))
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
                         role="alert">
@@ -33,45 +33,56 @@
                     <div class="mb-4">
                         <label for="file" class="block text-sm font-medium text-gray-700">Upload Multiple
                             Users</label>
-                        <input type="file" name="file" id="file" class="mt-1 block w-72 border shadow-lg ">
+                        <input type="file" name="file" id="file"
+                            class="mt-1 block w-full sm:w-72 border shadow-lg ">
                     </div>
                     <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><i
-                            class="fas fa-upload"></i> Upload</button>
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full sm:w-auto">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
                 </form>
+
                 <div class="card mt-3 bg-white shadow-md rounded-lg overflow-hidden">
-
                     <div class="card-header bg-gray-100 p-4 border-b border-gray-200">
-
                         <h4 class="text-lg font-semibold flex justify-between items-center">
                             Users
                             @can('create user')
                                 <a href="{{ url('users/create') }}"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i
-                                        class="fas fa-add"></i> Add User</a>
+                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                    <i class="fas fa-add"></i> Add User
+                                </a>
                             @endcan
                         </h4>
                     </div>
                     <div class="p-4">
-                        <div class="overflow-x-auto mt-4">
+                        <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Id</th>
+                                            Id
+                                        </th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Name</th>
+                                            Name
+                                        </th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Email</th>
+                                            Email
+                                        </th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Roles</th>
+                                            Roles
+                                        </th>
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Action</th>
+                                            Status
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Action
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -84,20 +95,59 @@
                                                 @if (!empty($user->getRoleNames()))
                                                     @foreach ($user->getRoleNames() as $rolename)
                                                         <span
-                                                            class="bg-red-600 text-white text-xs font-bold mr-2 px-2.5 py-0.5 rounded">{{ $rolename }}</span>
+                                                            class="bg-red-600 text-white text-xs font-bold mr-2 px-2.5 py-0.5 rounded">
+                                                            {{ $rolename }}
+                                                        </span>
                                                     @endforeach
+                                                @endif
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                @if ($user->deactivated_at)
+                                                    <span
+                                                        class="bg-yellow-500 text-white text-xs font-bold px-2.5 py-0.5 rounded">
+                                                        Deactivated
+                                                    </span>
+                                                @else
+                                                    <span
+                                                        class="bg-green-500 text-white text-xs font-bold px-2.5 py-0.5 rounded">
+                                                        Active
+                                                    </span>
                                                 @endif
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap flex items-center space-x-2">
                                                 @can('edit user')
                                                     <a href="{{ url('users/' . $user->id . '/edit') }}"
-                                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"><i
-                                                            class="fas fa-edit"></i></a>
+                                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
                                                 @endcan
-                                                @can('delete user')
+                                                {{-- @can('delete user')
                                                     <a href="{{ url('users/' . $user->id . '/delete') }}"
                                                         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i
                                                             class="fas fa-trash"></i></a>
+                                                @endcan --}}
+                                                @can('activateDeactivateUser')
+                                                    @if ($user->deactivated_at)
+                                                        <form
+                                                            action="{{ route('role-permission.user.activate', $user->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                                <i class="fas fa-check"></i> Activate
+                                                            </button>
+                                                        </form>
+                                                    @else
+                                                        <form
+                                                            action="{{ route('role-permission.user.deactivate', $user->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                                                <i class="fas fa-ban"></i> Deactivate
+                                                            </button>
+                                                        </form>
+                                                    @endif
                                                 @endcan
                                             </td>
                                         </tr>
@@ -107,7 +157,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

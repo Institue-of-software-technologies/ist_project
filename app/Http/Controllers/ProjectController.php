@@ -23,29 +23,16 @@ class ProjectController extends Controller implements HasMiddleware
         ];
     }
 
-    public function viewAlumniProjects($alumniId)
+    public function viewAlumniProjects($alumni)
     {
         // Find the alumni user by their ID and only load public projects
         $alumni = User::role('alumni')->with([
             'projects' => function ($query) {
                 $query->where('visibility', 'public');
             }
-        ])->findOrFail($alumniId);
+        ])->findOrFail($alumni);
 
         return view('alumni.projects.index', compact('alumni'));
-    }
-
-
-    public function showProject($projectId)
-    {
-        $project = Project::with('user')->findOrFail($projectId);
-        return view('alumni.projects.show', compact('project'));
-    }
-
-    public function listAlumni()
-    {
-        $alumnis = User::role('alumni')->get();
-        return view('alumni.index', compact('alumnis'));
     }
 
     public function index()
