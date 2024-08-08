@@ -29,12 +29,26 @@
                     </p>
                     <p class="text-xl text-gray-600 text-center">Name: {{ $application->user->name }}</p>
                     <p class="text-lg text-gray-600 text-center">Experience: {{ $application->experience }} years</p>
+
+                    @if ($application->reviewed)
+                        <p class="text-green-600 font-bold text-center">Reviewed</p>
+                    @else
+                        <form
+                            action="{{ route('job-application.mark-as-reviewed', ['applicationId' => $application->id]) }}"
+                            method="POST">
+                            @csrf
+                            <button type="submit" class="bg-yellow-500 text-white text-center rounded-xl p-2 mt-3">Mark
+                                as Reviewed</button>
+                        </form>
+                    @endif
+
                     <div class="mt-3">
                         <a href="{{ route('job-application.application', ['applicationId' => $application->id]) }}"
                             class="bg-blue-600 text-white text-center rounded-xl p-2">View Application</a>
                     </div>
                 </div>
             @endforeach
+
         </div>
     </div>
 </x-app-layout>

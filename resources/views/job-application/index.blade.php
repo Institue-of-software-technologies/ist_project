@@ -10,25 +10,38 @@
                     Jobs</a>
             </div>
         @else
+            <h1 class="text-3xl text-center font-bold">Job Applications</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @foreach ($applications as $application)
+                    <div
+                        class="bg-white border border-lg border-gray-300 hover:border-gray-500 rounded-lg overflow-hidden mt-4 p-4 transition duration-1000 ease-out transform hover:-translate-y-2">
+                        <h5 class="text-3xl font-bold text-center">{{ $application->job->title }}</h5>
+                        <p class="text-2xl text-gray-600 text-center">Company: {{ $application->job->company_name }}
+                            <img src="{{ asset('storage/' . $application->job->company_logo) }}" alt="Company Logo"
+                                class="w-32 h-28 md:w-32 md:h-28 lg:w-52 lg:h-36 rounded-xl mx-auto">
+                        </p>
+                        <p class="text-xl text-gray-600 text-center">Name: {{ $application->user->name }}</p>
 
-        <h1 class="text-3xl text-center font-bold">Job Applications</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            @foreach ($applications as $application)
-                <div
-                    class="bg-white border border-lg border-gray-300 hover:border-gray-500 rounded-lg overflow-hidden mt-4 p-4 transition duration-1000 ease-out transform hover:-translate-y-2">
-                    <h5 class="text-3xl font-bold text-center">{{ $application->job->title }}</h5>
-                    <p class="text-2xl text-gray-600 text-center">Company: {{ $application->job->company_name }}
-                        <img src="{{ asset('storage/' . $application->job->company_logo) }}" alt="Company Logo"
-                            class="w-32 h-28 md:w-32 md:h-28 lg:w-52 lg:h-36 rounded-xl mx-auto">
-                    </p>
-                    <p class="text-xl text-gray-600 text-center">Name: {{ $application->user->name }}</p>
-                    <div class="mt-3">
-                        <a href="{{ route('job-application.show', $application->id) }}"
-                            class="bg-blue-600 text-white text-center rounded-xl p-2">View Application</a>
+                        {{-- Display the application status --}}
+                        <p class="text-lg text-gray-800 text-center font-semibold mt-2">
+                            Status:
+                            <span
+                                class="
+        @if ($application->reviewed == 1) text-green-600
+        @else 
+            text-yellow-600 @endif">
+                                {{ $application->reviewed == 1 ? 'Reviewed!!Check your email for the feedback' : 'Pending Review' }}
+                            </span>
+                        </p>
+
+
+                        <div class="mt-3">
+                            <a href="{{ route('job-application.show', $application->id) }}"
+                                class="bg-blue-600 text-white text-center rounded-xl p-2">View Application</a>
+                        </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
         @endif
     </div>
 </x-app-layout>

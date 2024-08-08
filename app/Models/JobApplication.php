@@ -21,6 +21,7 @@ class JobApplication extends Model
         'education',
         'address',
         'phone',
+        'reviewed'
     ];
 
     public function job()
