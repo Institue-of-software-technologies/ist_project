@@ -14,14 +14,28 @@
                     <h3 class="text-3xl font-semibold text-gray-800">Alumni List</h3>
                     <p class="mt-2 text-lg text-gray-900">Click on an alumni to view their Applications:</p>
 
-                    <ul class="mt-4 space-y-4">
+                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         @foreach ($alumnis as $alumni)
-                            <div class="transition duration-1000 ease-out transform hover:-translate-y-2">
-                                <a href="{{ route('job-application.applist', ['id' => $alumni->id])  }}"
-                                    class="text-2xl text-red-600">{{ $alumni->name }}</a>
+                            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300 ease-out relative">
+                                <div class="flex flex-col items-center">
+                                    <h4 class="text-2xl text-gray-800 font-semibold">{{ $alumni->name }}</h4>
+                                    
+                                    <div class="mt-2">
+                                        <span class="bg-red-500 text-white rounded-full px-2 py-1 text-xl font-bold shadow">
+                                            {{ $alumni->applications_count }}
+                                        </span>
+                                        <p class="text-lg text-gray-600 mt-2">Applications</p>
+                                    </div>
+                                    
+                                    <a href="{{ route('job-application.applist', ['id' => $alumni->id]) }}"
+                                        class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 ease-in-out">
+                                        View Applications
+                                    </a>
+                                </div>
                             </div>
                         @endforeach
-                    </ul>
+                    </div>
+
                 </div>
             </div>
         </div>

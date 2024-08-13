@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Congratulations on Your Application!</title>
+    <title>Regarding Your Job Application</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,7 +20,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            color: #2ecc71;
+            color: #e74c3c;
         }
         p {
             margin: 0 0 10px;
@@ -37,9 +37,10 @@
 <body>
     <div class="container">
         <h1>Dear {{ $application->user->name }},</h1>
-        <p>Congratulations! We are excited to inform you that we have successfully received your application for the position of {{ $application->job->title }} at {{ $application->job->company_name }}.</p>
-        <p>Our team is currently reviewing your application and will be in touch with you shortly regarding the next steps.</p>
-        <p>Thank you for your interest in joining our team. We appreciate the time and effort you put into your application.</p>
+        <p>Thank you for applying for the position of {{ $application->job->title }} at {{ $application->job->company_name }}.</p>
+        <p>After careful consideration, we regret to inform you that we have decided not to move forward with your application at this time.</p>
+        <p>We want to express our appreciation for the time and effort you invested in your application. We encourage you to apply for future openings that match your qualifications.</p>
+        <p>We wish you the best of luck in your job search and future endeavors.</p>
         <p class="footer">Best regards,</p>
         <p class="footer">The {{ $application->job->company_name }} Team</p>
     </div>

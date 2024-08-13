@@ -38,6 +38,7 @@ Route::post('/applications/{applicationId}/mark-as-reviewed', [JobApplicationCon
 
 // application submission
 Route::post('/applications/{id}/send-email', [JobApplicationController::class, 'sendEmail'])->name('applications.sendEmail');
+Route::post('/applications/{id}/send-mail', [JobApplicationController::class, 'reject'])->name('applications.reject');
 
 // Projects
 Route::resource('projects', ProjectController::class);
