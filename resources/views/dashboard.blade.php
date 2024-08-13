@@ -159,10 +159,19 @@
                 <!-- Additional sections for Alumni -->
                 <div class="p-6 bg-white sm:px-20">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                                <!-- Jobs Management -->
+                        <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800">Jobs Opportunities</h3>
+                            <p class="mt-2 text-gray-600">View alumni profiles to collaborate</p>
+                            <a href="{{ url('/profiles/index') }}"
+                                class="inline-flex items-center px-6 py-3 mt-16 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
+                                Go to Alumni Profiles
+                            </a>
+                        </div>
                         <!-- Jobs Management -->
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Jobs Opportunities</h3>
-                            <p class="mt-2 text-gray-600">View and apply for job opportunities posted by the admin.</p>
+                            <p class="mt-2 text-gray-600">View and apply for job opportunities posted.</p>
                             <a href="{{ url('alumni/jobs') }}"
                                 class="inline-flex items-center px-6 py-3 mt-16 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
                                 Go to Jobs
@@ -194,7 +203,7 @@
 
                         <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800">Your Appplications</h3>
-                            <p class="mt-2 text-gray-600">View your own applications you applied in different companies.</p>
+                            <p class="mt-2 text-gray-600">View your own applications you applied.</p>
                             <a href="{{ route('job-applications.index') }}"
                                 class="inline-flex items-center px-6 py-3 mt-16 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
                                 View application

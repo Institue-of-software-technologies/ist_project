@@ -2,11 +2,13 @@
 
 use Illuminate\Http\Request;
 use App\Http\Middleware\IsAdmin;
+use PHPUnit\Event\Code\Throwable;
 use Illuminate\Foundation\Application;
+use Illuminate\Cache\RateLimiting\Limit;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Broadcasting\BroadcastException;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -24,22 +26,30 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        // Throttling for specific exceptions
+        $exceptions->throttle(function (Throwable $e) {
+            if ($e instanceof BroadcastException) {
+                return Limit::perMinute(300)->by($e->getMessage());
+            }
+        });
+
+        // General response handling for other status codes
         $exceptions->respond(function (Response $response) {
-            if ($response->getStatusCode() === 503) {
-                return response()->view('errors.503');
+            switch ($response->getStatusCode()) {
+                case 503:
+                    return response()->view('errors.503');
+                case 500:
+                    return response()->view('errors.500');
+                case 404:
+                    return response()->view('errors.404');
+                case 403:
+                    return response()->view('errors.403');
+                case 400:
+                    return response()->view('errors.400');
+                case 429: // Handle Too Many Requests
+                    return response()->view('errors.429', [], 429);
+                default:
+                    return $response;
             }
-            if ($response->getStatusCode() === 500) {
-                return response()->view('errors.500');
-            }
-            if ($response->getStatusCode() === 404) {
-                return response()->view('errors.404');
-            }
-            if ($response->getStatusCode() === 403) {
-                return response()->view('errors.403');
-            }
-            if ($response->getStatusCode() === 400) {
-                return response()->view('errors.400');
-            }
-            return $response;
         });
     })->create();

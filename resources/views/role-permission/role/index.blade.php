@@ -20,7 +20,6 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                                     </tr>
@@ -28,7 +27,6 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach ($roles as $role)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $role->id }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $role->name }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap flex space-x-2">
                                                 <a href="{{ url('roles/'.$role->id.'/give-permissions') }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">

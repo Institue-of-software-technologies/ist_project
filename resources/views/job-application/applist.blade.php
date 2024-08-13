@@ -2,14 +2,11 @@
 
 <x-app-layout>
     <div class="container mx-auto mt-2 px-4">
-        @if (session('status'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
         <div class="text-center">
             <h3 class="text-xl font-semibold text-gray-900">{{ $user->name }}'s Applications</h3>
             <p class="mt-2 text-lg text-gray-800">List of applications made by {{ $user->name }}:</p>
+            <a class="bg-red-500 hover:bg-red-700 text-white font-bold my-auto px-4 rounded float-right"
+                href="{{ url('/job-application/list') }}">Back</a>
         </div>
         @if ($applications->isEmpty())
             <div

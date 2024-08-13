@@ -59,10 +59,7 @@
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th
-                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Id
-                                        </th>
+
                                         <th
                                             class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Name
@@ -88,7 +85,6 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach ($users as $user)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap">{{ $user->id }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -121,11 +117,7 @@
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                 @endcan
-                                                {{-- @can('delete user')
-                                                    <a href="{{ url('users/' . $user->id . '/delete') }}"
-                                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i
-                                                            class="fas fa-trash"></i></a>
-                                                @endcan --}}
+
                                                 @can('activateDeactivateUser')
                                                     @if ($user->deactivated_at)
                                                         <form
@@ -137,6 +129,11 @@
                                                                 <i class="fas fa-check"></i> Activate
                                                             </button>
                                                         </form>
+                                                        @can('delete user')
+                                                            <a href="{{ url('users/' . $user->id . '/delete') }}"
+                                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i
+                                                                    class="fas fa-trash"></i></a>
+                                                        @endcan
                                                     @else
                                                         <form
                                                             action="{{ route('role-permission.user.deactivate', $user->id) }}"

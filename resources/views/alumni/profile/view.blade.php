@@ -13,8 +13,7 @@
                     @if ($profile->profile_photo)
                         <div class="absolute top-32 left-28 transform -translate-x-1/2 -translate-y-1/2">
                             <img src="{{ asset('storage/' . $profile->profile_photo) }}" alt="{{ $profile->full_name }}"
-                                class="w-36 h-36 rounded-full shadow-lg shadow-gray-300 border-4 border-gray-500">
-
+                                class="w-48 h-48 rounded-full shadow-xl border-8 border-gray-500 object-cover">
                         </div>
                     @endif
             </div>
@@ -22,7 +21,7 @@
                 <a href="{{ url('alumni/profile/' . $profile->id . '/edit') }}"
                     class=" text-xl font-bold rounded-full transition duration-300"><i class="fas fa-edit m-2"></i></a>
             </div>
-            <div class="text-left m-5">
+            <div class="text-left mt-7 m-5">
                 <p class="font-black text-3xl ">{{ $profile->full_name }}</p>
                 <div class="grid sm:grid-cols-1 lg:grid-cols-2">
                     <h2>Lives In <i class="fas fa-map-marker-alt"></i> {{ $profile->location }}</h2>
@@ -60,14 +59,15 @@
         <div class="max-w-2xl lg:max-w-4xl mx-auto mt-3 bg-white rounded-lg overflow-hidden p-5">
             <h1 style="font-weight: bolder" class="text-4xl  text-center">{{ __('Education ') }}</h1>
             <h1 class="text-2xl"><i class="fas fa-graduation-cap"></i> {{ $profile->degree }}</h1>
-            <h1 class="font-bold">{{ __('Graduation Year ') }}</h1><h4 class="text-gray-500"> {{ $profile->graduation_year }}</>
-            <h1 class="text-lg"><i class="fas fa-lightbulb"></i> {{ $profile->skills }}</h1>
-            <hr>
-            <hr>
-            <hr>
-            <hr>
-            <p>
-            <h1 class="text-gray-900 font-bold">{{ __('Extra Course ') }}</h1> {{ $profile->extra_course }}</p>
+            <h1 class="font-bold">{{ __('Graduation Year ') }}</h1>
+            <h4 class="text-gray-500"> {{ $profile->graduation_year }}</>
+                <h1 class="text-lg"><i class="fas fa-lightbulb"></i> {{ $profile->skills }}</h1>
+                <hr>
+                <hr>
+                <hr>
+                <hr>
+                <p>
+                <h1 class="text-gray-900 font-bold">{{ __('Extra Course ') }}</h1> {{ $profile->extra_course }}</p>
         </div>
 
         {{-- skills --}}
@@ -84,13 +84,16 @@
             <h1 class="text-4xl font-black text-center">{{ __('Work Space ') }}</h1>
 
             <h1 class="text-gray-900 font-bold">{{ __('Current Job Title ') }}
-            <h4 class="text-gray-400">{{ $profile->current_job_title }} </h4></h1> 
-            
+                <h4 class="text-gray-400">{{ $profile->current_job_title }} </h4>
+            </h1>
+
             <h1 class="text-gray-900 font-bold">{{ __('Current Employer ') }}
-            <h4 class="text-gray-400">{{ $profile->current_employer }}</h4></h1> 
+                <h4 class="text-gray-400">{{ $profile->current_employer }}</h4>
+            </h1>
 
             <h1 class=" font-bold">{{ __('Skills') }} <i class="fas fa-cogs text-gray-600 mr-2"></i>
-            <h4 class="text-gray-400">{{ $profile->skills }}</h4></h1> 
+                <h4 class="text-gray-400">{{ $profile->skills }}</h4>
+            </h1>
         </div>
     </div>
 </x-app-layout>

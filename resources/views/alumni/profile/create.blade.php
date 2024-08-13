@@ -152,13 +152,11 @@
                         @enderror
                     </div>
 
-                    <h3 class="text-lg text-red-500 font-bold">{{ __('Skills should start with a capital letter') }}
-                    </h3>
                     <div class="mb-4">
                         <label for="skills"
                             class="required block text-sm font-medium text-gray-700">{{ __('Skills') }}</label>
                         <h3 class="text-lg text-red-500 font-bold">
-                            {{ __('the skill should start with a capital letter') }}</h3>
+                            {{ __('The skill should start with a capital letter') }}</h3>
                         <input id="skills" type="text" placeholder="Enter Your Skills" name="skills"
                             value="{{ old('skills') }}" autocomplete="skills"
                             class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('skills') border-red-500 @enderror">

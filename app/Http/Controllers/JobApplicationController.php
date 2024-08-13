@@ -30,14 +30,36 @@ class JobApplicationController extends Controller implements HasMiddleware
                 ->subject('Regarding Your Job Application');
         });
 
-        return redirect()->back()->with('success', 'Message sent successfully!');
+        return redirect()->back()->with('success', 'Application approved successfully!');
+    }
+
+    public function reject($id)
+    {
+        $application = JobApplication::findOrFail($id);
+        $user = $application->user;
+
+        Mail::send('emails.rejectMessage', ['application' => $application], function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject('Regarding Your Job Application');
+        });
+        return redirect()->back()->with('success', 'Application rejected successfully!');
     }
     public function listApplicant()
     {
         // Fetch all users with the 'alumni' role
-        $alumnis = User::role('alumni')->get();
+        $alumnis = User::role('alumni')->with('alumniProfile')->get();
+
+        // Dynamically calculate the count of unreviewed applications for each alumni
+        foreach ($alumnis as $alumni) {
+            $alumni->applications_count = $alumni->jobapplications()->where('reviewed', false)->count();
+        }
+
         return view('job-application.list', compact('alumnis'));
     }
+
+
+
+
 
     public function showApplicationList($id)
     {
@@ -102,14 +124,24 @@ class JobApplicationController extends Controller implements HasMiddleware
             'phone' => $request->phone,
         ]);
 
-        return redirect()->route('alumni.job.index')->with('success', 'Aplication submitted successfully');
+        return redirect()->route('alumni.job.index')->with('success', 'Application submitted successfully');
     }
+    // public function markAsReviewed($applicationId)
+    // {
+    //     $application = JobApplication::findOrFail($applicationId);
+    //     $application->update(['reviewed' => true]);
+
+    //     return redirect()->back()->with('success', 'Application marked as reviewed.');
+    // }
     public function markAsReviewed($applicationId)
     {
+        // Find the application and mark it as reviewed
         $application = JobApplication::findOrFail($applicationId);
         $application->update(['reviewed' => true]);
 
+        // Redirect back with a success message
         return redirect()->back()->with('success', 'Application marked as reviewed.');
     }
+
 
 }
