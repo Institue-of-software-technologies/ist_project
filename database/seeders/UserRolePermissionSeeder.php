@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserRolePermissionSeeder extends Seeder
 {
@@ -15,34 +16,31 @@ class UserRolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create General Permissions
-        // Permission::create(['name' => 'view dashboard']);
-        // Permission::create(['name' => 'view analytics']);
-
-        // Create Superuser Permissions
         Permission::create(['name' => 'view role']);
         Permission::create(['name' => 'create role']);
-        Permission::create(['name' => 'update role']);
+        Permission::create(['name' => 'edit role']);
         Permission::create(['name' => 'delete role']);
         Permission::create(['name' => 'view permission']);
         Permission::create(['name' => 'create permission']);
-        Permission::create(['name' => 'update permission']);
+        Permission::create(['name' => 'edit permission']);
         Permission::create(['name' => 'delete permission']);
         Permission::create(['name' => 'view user']);
         Permission::create(['name' => 'create user']);
-        Permission::create(['name' => 'update user']);
+        Permission::create(['name' => 'edit user']);
         Permission::create(['name' => 'delete user']);
         Permission::create(['name' => 'view applications']);
+        Permission::create(['name' => 'addPermissionToRole']);
+        Permission::create(['name' => 'givePermissionToRole']);
 
         // Create Admin Permissions
         Permission::create(['name' => 'view job']);
         Permission::create(['name' => 'create job']);
-        Permission::create(['name' => 'update job']);
+        Permission::create(['name' => 'edit job']);
         Permission::create(['name' => 'delete job']);
         Permission::create(['name' => 'view alumni job']);
 
         // Create Employer Permissions
-        Permission::create(['name' => 'create job']);
+        // Permission::create(['name' => 'create job']);
 
         // Create Alumni Permissions
         Permission::create(['name' => 'create profile']);
@@ -55,85 +53,68 @@ class UserRolePermissionSeeder extends Seeder
         Permission::create(['name' => 'edit profile']);
         Permission::create(['name' => 'view own applications']);
 
+
         // Create Roles
-        $superAdminRole = Role::create(['name' => 'super-admin']);
+        $superAdminRole = Role::create(['name' => 'super-user']); //as super-admin
         $adminRole = Role::create(['name' => 'admin']);
         $alumniRole = Role::create(['name' => 'alumni']);
-        $employerRole = Role::create(['name' => 'employer']);
+        // $userRole = Role::create(['name' => 'user']);
 
-        // Assign all permissions to super-admin role
-        $superAdminRole->givePermissionTo(Permission::all());
+        // Lets give all permission to super-admin role.
+        $allPermissionNames = Permission::pluck('name')->toArray();
 
-        // Assign specific permissions to admin role
-        $adminRole->givePermissionTo([
-            'view role',
-            'create role',
-            'update role',
-            'view permission',
-            'create permission',
-            'view user',
-            'create user',
-            'update user',
-            'view job',
-            'create job',
-            'update job'
-        ]);
+        $superAdminRole->givePermissionTo($allPermissionNames);
 
-        // Assign specific permissions to employer role
-        $employerRole->givePermissionTo(['create job posting']);
+        // Let's give few permissions to admin role.
+        $adminRole->givePermissionTo(['create role', 'view role', 'edit role']);
+        $adminRole->givePermissionTo(['create permission', 'view permission']);
+        $adminRole->givePermissionTo(['create user', 'view user', 'edit user']);
+        $adminRole->givePermissionTo(['create job', 'view job', 'edit job']);
 
-        // Assign specific permissions to alumni role
         $alumniRole->givePermissionTo([
-            'create portfolio',
-            'publish projects',
-            'edit projects',
-            'delete projects',
+            'create profile',
+            'publish project',
+            'edit project',
+            'delete project',
             'view job postings',
             'apply for jobs',
-            'view own profile',
+            'view profile',
             'edit profile',
             'view own applications'
         ]);
 
-        // Create and assign roles to users
+        // Let's Create User and assign Role to it.
+
         $superAdminUser = User::firstOrCreate([
             'email' => 'kabogp@gmail.com',
         ], [
-            'name' => 'James',
+            'name' => 'Super Admin',
             'email' => 'kabogp@gmail.com',
-            'password' => Hash::make('@Kabzngarang254
-'),
+            'password' => Hash::make('12345678'),
         ]);
+
         $superAdminUser->assignRole($superAdminRole);
 
+
         $adminUser = User::firstOrCreate([
-            'email' => 'jknkabogo@gmail.com'
+            'email' => 'admin@gmail.com'
         ], [
             'name' => 'Admin',
-            'email' => 'jknkabogo@gmail.com',
-            'password' => Hash::make('@Kabzngarang254
-'),
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('12345678'),
         ]);
+
         $adminUser->assignRole($adminRole);
 
-        $employerUser = User::firstOrCreate([
-            'email' => 'jknkabz@gmail.com',
-        ], [
-            'name' => 'Employer',
-            'email' => 'jknkabz@gmail.com',
-            'password' => Hash::make('@Kabzngarang254
-'),
-        ]);
-        $employerUser->assignRole($employerRole);
 
         $alumniUser = User::firstOrCreate([
             'email' => 'etest7725@gmail.com',
         ], [
-            'name' => 'Alumni',
+            'name' => 'Staff',
             'email' => 'etest7725@gmail.com',
-            'password' => Hash::make('@Kabzngarang254
-'),
+            'password' => Hash::make('12345678'),
         ]);
+
         $alumniUser->assignRole($alumniRole);
     }
 }
