@@ -29,8 +29,8 @@ class UserRolePermissionSeeder extends Seeder
         Permission::create(['name' => 'edit user']);
         Permission::create(['name' => 'delete user']);
         Permission::create(['name' => 'view applications']);
-        Permission::create(['name' => 'addPermissionToRole']);
-        Permission::create(['name' => 'givePermissionToRole']);
+        Permission::create(['name' => 'activatedDeactivateUser']);
+
 
         // Create Admin Permissions
         Permission::create(['name' => 'view job']);
@@ -38,20 +38,26 @@ class UserRolePermissionSeeder extends Seeder
         Permission::create(['name' => 'edit job']);
         Permission::create(['name' => 'delete job']);
         Permission::create(['name' => 'view alumni job']);
+        Permission::create(['name' => 'restore job']);
 
         // Create Employer Permissions
         // Permission::create(['name' => 'create job']);
 
         // Create Alumni Permissions
         Permission::create(['name' => 'create profile']);
+        Permission::create(['name' => 'view project']);
         Permission::create(['name' => 'publish project']);
         Permission::create(['name' => 'edit project']);
         Permission::create(['name' => 'delete project']);
         Permission::create(['name' => 'view job postings']);
-        Permission::create(['name' => 'apply for jobs']);
+        Permission::create(['name' => 'apply job']);
         Permission::create(['name' => 'view profile']);
         Permission::create(['name' => 'edit profile']);
         Permission::create(['name' => 'view own applications']);
+        Permission::create(['name' => 'view alumni projects']);
+        Permission::create(['name' => 'view alumni profile']);
+        Permission::create(['name' => 'view notification']);
+
 
 
         // Create Roles
