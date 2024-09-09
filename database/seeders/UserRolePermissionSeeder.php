@@ -83,7 +83,7 @@ class UserRolePermissionSeeder extends Seeder
             'edit project',
             'delete project',
             'view job postings',
-            'apply for jobs',
+            'apply jobs',
             'view profile',
             'edit profile',
             'view own applications'
