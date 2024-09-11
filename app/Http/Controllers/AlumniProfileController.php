@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\AlumniProfile;
 use Illuminate\Support\Facades\Auth;
@@ -48,8 +49,21 @@ class AlumniProfileController extends Controller implements HasMiddleware
 
     public function create()
     {
-        return view('alumni.profile.create');
+        $alumni = Auth::user();  
+    
+       
+        $name = $alumni->name;
+        $last_name = $alumni->last_name;
+        $email = $alumni->email;
+
+        return view('alumni.profile.create', [
+            'name' => $name,
+            'last_name' => $last_name,
+            'email' => $email
+        ]);
     }
+    
+    
 
     public function store(Request $request)
     {
