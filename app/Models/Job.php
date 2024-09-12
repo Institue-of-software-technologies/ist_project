@@ -23,7 +23,6 @@ class Job extends Model
         'job_type', 
         'experience_level', 
         'education_level', 
-        'skills',
         'deleted_at',
         'company_logo',
     ];
@@ -80,6 +79,25 @@ class Job extends Model
             return ($this->applicationCount() / $totalViews) * 100;
         } else {
             return 0;
+        }
+    }
+
+    // skill matching
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'job_skills', 'job_id', 'skill_id');
+    }
+
+    public function syncSkills($skills)
+    {
+        if (is_null($skills)) {
+            $skills = [];
+        }
+        
+        $this->skills()->detach();
+        foreach ($skills as $skill) {
+            $existingSkill = Skill::firstOrCreate(['name' => $skill]);
+            $this->skills()->attach($existingSkill->id);
         }
     }
 }

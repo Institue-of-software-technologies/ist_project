@@ -76,7 +76,11 @@
                         @error('email')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
+<<<<<<< Updated upstream
                     </div>
+=======
+                    </div> 
+>>>>>>> Stashed changes
 
                     <div class="mb-4">
                         <label for="profile_photo"
@@ -123,6 +127,23 @@
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
+                    <div class="mb-4">
+                        <x-input-label for="skills" :value="__('Skills')" />
+                        <div class="flex flex-wrap">
+                            @foreach ($skills as $skill)
+                                <div class="w-1/2 md:w-1/3 xl:w-1/4 p-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="skills[]" value="{{ $skill->name }}" 
+                                        @if($user->skills->contains($skill->id)) checked @endif />
+                                        <span class="ml-2">{{ $skill->name }}</span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        @error('skills')
+                            <span class="text-xs text-red-600">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
 
                 {{-- Job Specifications --}}
@@ -148,19 +169,6 @@
                             autocomplete="current_employer"
                             class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('current_employer') border-red-500 @enderror">
                         @error('current_employer')
-                            <span class="text-sm text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="skills"
-                            class="required block text-sm font-medium text-gray-700">{{ __('Skills') }}</label>
-                        <h3 class="text-lg text-red-500 font-bold">
-                            {{ __('The skill should start with a capital letter') }}</h3>
-                        <input id="skills" type="text" placeholder="Enter Your Skills" name="skills"
-                            value="{{ old('skills') }}" autocomplete="skills"
-                            class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('skills') border-red-500 @enderror">
-                        @error('skills')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
                     </div>

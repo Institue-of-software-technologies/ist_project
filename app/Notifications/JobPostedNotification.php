@@ -3,23 +3,28 @@
 namespace App\Notifications;
 
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class JobPostedNotification extends Notification 
+class JobPostedNotification extends Notification
 {
     use Queueable;
 
+    public $job;
+    public $user;
 
-    protected $job;
     /**
      * Create a new notification instance.
+     *
+     * @param  \App\Job  $job
      */
-    public function __construct( Job $job)
+    public function __construct(Job $job, User $user)
     {
         $this->job = $job;
+        $this->user = $user;
     }
 
     /**
@@ -41,6 +46,17 @@ class JobPostedNotification extends Notification
                     ->line('A new Job matching your skills has posted Please Login to view the job. ' .$this->job->title)
                     ->action('Login', url('login'))
                     ->line('Thank you for using our application!');
+    }
+
+    public function toDatabase(object $notifiable): array
+    {
+        return [
+            'job_title' => $this->job->title,
+            'job_description' => $this->job->description,
+            'job_url' => url('jobs/'.$this->job->id.'/show'),
+            'notifiable_type' => get_class($this->user),
+            'notifiable_id' => $notifiable->id,
+        ];
     }
 
     /**
