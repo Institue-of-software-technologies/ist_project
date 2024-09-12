@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< Updated upstream
-=======
-use App\Models\User;
 use App\Models\Skill;
->>>>>>> Stashed changes
 use Illuminate\Http\Request;
 use App\Models\AlumniProfile;
 use Illuminate\Support\Facades\Auth;
@@ -58,10 +54,6 @@ class AlumniProfileController extends Controller implements HasMiddleware
 
     public function create()
     {
-<<<<<<< Updated upstream
-        return view('alumni.profile.create');
-    }
-=======
         $user = Auth::user();
         $skills = Skill::all();
         $name = $user->name;
@@ -82,7 +74,6 @@ class AlumniProfileController extends Controller implements HasMiddleware
 
 
     
->>>>>>> Stashed changes
 
     public function store(Request $request)
     {
