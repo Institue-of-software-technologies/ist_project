@@ -3,14 +3,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use App\Models\User;
+use App\Models\Skill;
+use App\Events\JobCreated;
 use Illuminate\Http\Request;
 use App\Models\AlumniProfile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\JobPostedNotification;
 use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
 class JobController extends Controller implements HasMiddleware
 {
@@ -59,9 +61,16 @@ class JobController extends Controller implements HasMiddleware
         return view('role-permission.job.index', compact('jobs', 'trashedJobs'));
     }
 
-    public function create()
+    public function create(Job $job)
     {
-        return view('role-permission.job.create');
+        $skills = Skill::all();
+        $jobSkills = $job->skills->pluck('name', 'name')->all();
+        
+        return view('role-permission.job.create', [
+            'job' => $job,
+            'skills' => $skills,
+            'jobSkills' => $jobSkills
+        ]);
     }
 
     public function alumniIndex()
@@ -69,12 +78,12 @@ class JobController extends Controller implements HasMiddleware
         $user = Auth::user();
         $profile = AlumniProfile::where('user_id', $user->id)->first();
 
-        $skills = explode(',', $profile->skills);
-        $jobs = Job::where(function ($query) use ($skills) {
-            foreach ($skills as $skill) {
-                $query->orWhere('skills', 'LIKE', "%{$skill}%");
-            }
-        })->get();
+        // $skills = explode(',', $profile->skills);
+        // $jobs = Job::where(function ($query) use ($skills) {
+        //     foreach ($skills as $skill) {
+        //         $query->orWhere('skills', 'LIKE', "%{$skill}%");
+        //     }
+        // })->get();
 
         return view('alumni.job.index', compact('jobs'));
     }
@@ -90,7 +99,6 @@ class JobController extends Controller implements HasMiddleware
             'job_type' => 'required|in:full-time,part-time,contract',
             'experience_level' => 'required',
             'education_level' => 'required',
-            'skills' => 'required',
             'company_logo' => 'nullable|file|mimes:jpg,jpeg,png,avif',
         ]);
 
@@ -102,8 +110,12 @@ class JobController extends Controller implements HasMiddleware
         $job->user_id = auth()->id();
         $job->save();
 
+        $skillId = $request->skills;
+        $job->syncSkills($skillId);
+
+        event(new JobCreated($job));
         // Notify alumni with matching skills
-        $this->notifyMatchingAlumni($job);
+        // $this->notifyMatchingAlumni($job);
 
         return redirect()->route('role-permission.job.index')->with('success', 'Job Created Successfully');
     }
@@ -111,7 +123,14 @@ class JobController extends Controller implements HasMiddleware
     public function edit($id)
     {
         $job = Job::findOrFail($id);
-        return view('role-permission.job.edit', compact('job'));
+        $skills = Skill::all();
+        $jobSkills = $job->skills->pluck('name', 'name')->all();
+
+        return view('role-permission.job.edit', [
+            'job' => $job,
+            'skills' => $skills,
+            'jobSkills' => $jobSkills
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -127,11 +146,8 @@ class JobController extends Controller implements HasMiddleware
             'job_type' => 'required|in:full-time,part-time,contract',
             'experience_level' => 'required',
             'education_level' => 'required',
-            'skills' => 'required',
             'company_logo' => 'nullable|file|mimes:jpg,jpeg,png,avif',
         ]);
-
-
 
         if ($request->hasFile('company_logo')) {
             $data['company_logo'] = $request->file('company_logo')->store('company_logo', 'public');
@@ -140,6 +156,7 @@ class JobController extends Controller implements HasMiddleware
         }
 
         $job->update($data);
+        $job->syncSkills($request->skills);
 
         return redirect()->route('role-permission.job.index')->with('success', 'Job Updated Successfully');
     }

@@ -90,13 +90,22 @@
                                     class="form-control mt-1 block w-full border border-gray-400 p-2 rounded focus:border-red-500 focus:ring-red-500"
                                     required>
                             </div>
-                            <div>
-                                <label for="skills" class="block required text-gray-800 font-semibold">Skills</label>
-                                <h3 class="text-lg text-red-500 font-bold">
-                                    {{ __('the skill should start with a capital letter') }}</h3>
-                                <textarea name="skills"
-                                    class="form-control mt-1 block w-full border border-gray-400 p-2 rounded focus:border-red-500 focus:ring-red-500"
-                                    required></textarea>
+                            <div class="mb-4">
+                                <x-input-label for="skills" :value="__('Skills')" />
+                                <div class="flex flex-wrap">
+                                    @foreach ($skills as $skill)
+                                        <div class="w-1/2 md:w-1/3 xl:w-1/4 p-2">
+                                            <label class="flex items-center">
+                                                <input type="checkbox" name="skills[]" value="{{ $skill->name }}" 
+                                                @if($job->skills->contains($skill->id)) checked @endif />
+                                                <span class="ml-2">{{ $skill->name }}</span>
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @error('skills')
+                                    <span class="text-xs text-red-600">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         <button type="button"

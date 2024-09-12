@@ -34,22 +34,22 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         // General response handling for other status codes
-        $exceptions->respond(function (Response $response) {
-            switch ($response->getStatusCode()) {
-                case 503:
-                    return response()->view('errors.503');
-                case 500:
-                    return response()->view('errors.500');
-                case 404:
-                    return response()->view('errors.404');
-                case 403:
-                    return response()->view('errors.403');
-                case 400:
-                    return response()->view('errors.400');
-                case 429: // Handle Too Many Requests
-                    return response()->view('errors.429', [], 429);
-                default:
-                    return $response;
-            }
-        });
+        // $exceptions->respond(function (Response $response) {
+        //     switch ($response->getStatusCode()) {
+        //         case 503:
+        //             return response()->view('errors.503');
+        //         case 500:
+        //             return response()->view('errors.500');
+        //         case 404:
+        //             return response()->view('errors.404');
+        //         case 403:
+        //             return response()->view('errors.403');
+        //         case 400:
+        //             return response()->view('errors.400');
+        //         case 429: // Handle Too Many Requests
+        //             return response()->view('errors.429', [], 429);
+        //         default:
+        //             return $response;
+        //     }
+        // });
     })->create();

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Skill;
 use Illuminate\Support\Str;
 use App\Imports\UsersImport;
 use Illuminate\Http\Request;
@@ -136,10 +137,15 @@ class UserController extends Controller implements HasMiddleware
     {
         $roles = Role::pluck('name', 'name')->all();
         $userRoles = $user->roles->pluck('name', 'name')->all();
+        $skills = Skill::all();
+        $userSkills = $user->skills->pluck('name', 'name')->all();
+
         return view('role-permission.user.edit', [
             'user' => $user,
             'roles' => $roles,
-            'userRoles' => $userRoles
+            'userRoles' => $userRoles,
+            'skills' => $skills,
+            'userSkills' => $userSkills
         ]);
     }
 
@@ -174,6 +180,7 @@ class UserController extends Controller implements HasMiddleware
 
         $user->update($data);
         $user->syncRoles($request->roles);
+        $user->syncSkills($request->skills);
 
         return redirect()->route('role-permission.user.index')->with('success', 'User Updated Successfully with roles');
     }
