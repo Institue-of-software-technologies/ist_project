@@ -9,7 +9,7 @@
                         role="alert">
                         {{ session('status') }}
                     </div>
-                @endif  
+                @endif
                 @if ($errors->any())
                     <ul class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative mb-4">
                         @foreach ($errors->all() as $error)
@@ -54,8 +54,16 @@
 
                             <!-- Password -->
                             <div class="mt-4">
+                                <!-- Password Requirements Box -->
+                                <div class="bg-red-100 border border-red-400 text-gray-900 px-4 py-3 rounded mb-4">
+                                    <h3 class="font-semibold">Your password must contain the following:</h3>
+                                    <ul class="list-disc list-inside">
+                                        <li>Upper & Lowercase letters</li>
+                                        <li>Numbers</li>
+                                        <li>Special Characters</li>
+                                    </ul>
+                                </div>
                                 <x-input-label for="password" :value="__('Password')" />
-
                                 <x-text-input id="password" class="block mt-1 w-full" type="password" name="password"
                                     required autocomplete="new-password" />
 
@@ -70,6 +78,15 @@
                                     name="password_confirmation" required autocomplete="new-password" />
 
                                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                            </div>
+
+                            <!-- Show Password Checkbox -->
+                            <div class="mt-4">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="showPasswords"
+                                        class="form-checkbox h-5 w-5 text-red-600">
+                                    <span class="ml-2 text-gray-700">Show Password</span>
+                                </label>
                             </div>
 
                             <div class="mb-4">
@@ -94,5 +111,13 @@
         </div>
     </div>
 
-
+    <script>
+        document.getElementById('showPasswords').addEventListener('change', function() {
+            const passwordField = document.getElementById('password');
+            const confirmPasswordField = document.getElementById('password_confirmation');
+            const type = this.checked ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            confirmPasswordField.setAttribute('type', type);
+        });
+    </script>
 </x-app-layout>

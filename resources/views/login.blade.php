@@ -1,22 +1,9 @@
 <x-guest-layout>
     <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    {{-- @if (session('status'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif --}}
+    <x-auth-session-status class="mb-4" :status="session('success')" />
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-
-        {{-- @if (session('status'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif --}}
-
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />

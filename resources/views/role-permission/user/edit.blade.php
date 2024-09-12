@@ -32,11 +32,11 @@
                             <label for="email" class="block text-gray-700">Email</label>
                             <input type="text" name="email" readonly value="{{ $user->email }}" class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50" />
                         </div>
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label for="password" class="block text-gray-700">Password</label>
                             <input type="text" name="password" class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50" />
                             @error('password') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
+                        </div> --}}
                         <div class="mb-4">
                             <label for="roles" class="block text-gray-700">Roles</label>
                             <select name="roles[]" class="form-control mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50" multiple>

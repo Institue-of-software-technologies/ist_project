@@ -23,7 +23,7 @@ class UserController extends Controller implements HasMiddleware
             new Middleware('permission:delete user', only: ['destroy']),
             new Middleware('permission:edit user', only: ['update', 'edit']),
             new Middleware('permission:create user', only: ['create', 'store']),
-            new Middleware('permission:activateDeactivateUser', only: ['activate' ,'deactivate'])
+            new Middleware('permission:activateDeactivateUser', only: ['activate', 'deactivate'])
         ];
     }
 
@@ -73,6 +73,7 @@ class UserController extends Controller implements HasMiddleware
                 'regex:/[A-Z]/',
                 'regex:/[a-z]/',
                 'regex:/[0-9]/',
+                'regex:/[\W]/',
                 'confirmed',
             ],
         ]);
@@ -109,12 +110,15 @@ class UserController extends Controller implements HasMiddleware
                     'confirmed',
                     'min:8',
                     'max:20',
-                    'regex:/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/'
+                    'regex:/[A-Z]/',
+                    'regex:/[a-z]/',
+                    'regex:/[0-9]/',
+                    'regex:/[\W]/',
                 ],
                 'roles' => 'required'
             ],
             [
-                'password.regex' => 'The password must be between 8 and 20 characters long and include at least one uppercase letter and one special character.'
+                'password' => 'The password field format is invalid.'
             ]
         );
 

@@ -15,7 +15,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
     use HasRoles;
-    use SoftDeletes;
+
 
     // public function hasRole($role)
     // {
