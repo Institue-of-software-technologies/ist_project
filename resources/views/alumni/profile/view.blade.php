@@ -61,7 +61,7 @@
                 <div class="max-w-2xl lg:max-w-4xl mx-auto mt-3 bg-white rounded-lg overflow-hidden p-5">
                     <h1 style="font-weight: bolder" class="text-4xl text-center">{{ __('Skills ') }}</h1>
                     <ul class="list-disc ml-5">
-                        @forelse($profile->skills as $skill)
+                        @forelse($skills as $skill)
                             <li class="text-lg"><i class="fas fa-lightbulb"></i> {{ $skill->name }}</li>
                         @empty
                             <li class="text-gray-500">{{ __('No skills added.') }}</li>
