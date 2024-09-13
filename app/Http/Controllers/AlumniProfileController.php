@@ -72,12 +72,6 @@ class AlumniProfileController extends Controller implements HasMiddleware
             'user' => $user,
         ]);
     }
-    
-    
-    
-
-
-    
 
     public function store(Request $request)
     {

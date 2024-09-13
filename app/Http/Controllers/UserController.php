@@ -102,6 +102,7 @@ class UserController extends Controller implements HasMiddleware
         $request->validate(
             [
                 'name' => 'required|string|max:255',
+                'lname' => 'required|string|max:255',
                 'email' => 'required|email|max:255|unique:users,email',
                 'password' => [
                     'required',
@@ -120,6 +121,7 @@ class UserController extends Controller implements HasMiddleware
 
         $user = User::create([
             'name' => $request->name,
+            'last_name' => $request->lname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'activation_token' => Str::random(60),
