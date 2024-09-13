@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\User;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 use App\Models\AlumniProfile;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -50,7 +53,8 @@ class AlumniProfileController extends Controller implements HasMiddleware
         $skills = $alumni->skills;
     
         return view('alumni.profile.view', compact('profile', 'skills'));
-    }    
+    }
+       
 
     public function create()
     {
@@ -106,50 +110,47 @@ class AlumniProfileController extends Controller implements HasMiddleware
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = Auth::user();
         $profile = AlumniProfile::where('user_id', Auth::id())->findOrFail($id);
-        // $skills = Skill::all();
-        // $userSkills = $user->skills->pluck('name', 'name')->all();
-        // $profile = $user->alumniProfile; // Get the alumni profile
-        $skills = $user->skills; // Get the skills
+        $userSkills = $user->skills->pluck('name', 'name')->all();
+        $skills = Skill::all();
         
-        return view('alumni.profile.edit', [
-            'user' => $user,
-            'profile' => $profile,
-            'skills' => $skills
-        ]);
+        return view('alumni.profile.edit', compact('profile', 'skills', 'userSkills', 'user'));
     }
 
     public function update(Request $request, $id)
     {
+        // Get the user so that it is able to sync the skills
+        $user = Auth::user();
+
+        // Find the profile associated with the current user and the provided ID
         $profile = AlumniProfile::where('user_id', Auth::id())->findOrFail($id);
-
-        $request->validate
-        ([
-                'full_name' => 'required',
-                'email' => 'nullable|email|max:30|unique:alumni_profiles,email,' . $profile->id,
-                'degree' => 'nullable|string',
-                'graduation_year' => 'required|integer',
-                'extra_course' => 'nullable|string',
-                'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
-                'current_job_title' => 'nullable|string',
-                'current_employer' => 'nullable|string',
-                'location' => 'nullable|string',
-                'phone' => 'nullable|string',
-                'linkedin_profile' => 'nullable|url',
-                'social_media_links' => 'nullable|string',
-            ]);
-
+    
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255|unique:alumni_profiles,email,' . $profile->id,
+            'degree' => 'nullable|string|max:255',
+            'graduation_year' => 'required|integer',
+            'extra_course' => 'nullable|string|max:255',
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10048',
+            'current_job_title' => 'nullable|string|max:255',
+            'current_employer' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'linkedin_profile' => 'nullable|url|max:255',
+            'social_media_links' => 'nullable|string|max:255',
+        ]);
+    
         if ($request->hasFile('profile_photo')) {
             $profilePhotoPath = $request->file('profile_photo')->store('profile_photos', 'public');
             $profile->profile_photo = $profilePhotoPath;
         }
-
+    
         $profile->update($request->except('profile_photo'));
 
-        $profile->syncSkills($request->skills);
-
-        return redirect()->route('alumni.profile.view', $profile->id)->with('success', 'Profile updated Successfully');
+        // Store the selected skills
+        $user->syncSkills($request->skills);
+    
+        return redirect()->route('alumni.profile.view', $profile->id)->with('success', 'Profile updated successfully');
     }
-
 }

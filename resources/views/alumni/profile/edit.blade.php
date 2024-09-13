@@ -89,6 +89,7 @@
                                     class="mt-1 block w-full">
                             </div>
 
+                            <!-- Skills -->
                             <div class="mb-4">
                                 <x-input-label for="skills" :value="__('Skills')" />
                                 <div class="flex flex-wrap">
