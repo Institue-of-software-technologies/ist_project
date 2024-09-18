@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ToolsController;
+use App\Http\Controllers\SkillsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PermissionController;
@@ -86,6 +88,17 @@ Route::middleware(['role:super-user|admin|employer'])->group(function () {
     Route::get('/jobs', [JobController::class, 'index'])->name('role-permission.job.index');
     Route::get('jobs/{jobId}/delete', [JobController::class, 'destroy'])->name('role-permission.job.destroy');
     Route::get('jobs/{job}', [JobController::class, 'show'])->name('role-permission.job.show');
+    // skills
+    Route::get('skills/trash', [SkillsController::class, 'trash']);
+    Route::resource('skills', SkillsController::class);
+    Route::get('skills/{skillId}/delete', [SkillsController::class, 'destroy']);
+    Route::get('skills/{skillId}/restore', [SkillsController::class, 'restore']);
+    Route::get('skills/{skillId}/forceDelete', [SkillsController::class, 'forceDelete']);
+    //tools
+    Route::resource('tools', ToolsController::class);
+    Route::get('tools/{toolsId}/delete', [ToolsController::class, 'destroy']);
+    Route::get('tools/{toolsId}/restore', [ToolsController::class, 'restore']);
+    Route::get('tools/{toolsId}/forceDelete', [ToolsController::class, 'forceDelete']);
 });
 
 // Profile management
@@ -94,5 +107,6 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__ . '/auth.php';

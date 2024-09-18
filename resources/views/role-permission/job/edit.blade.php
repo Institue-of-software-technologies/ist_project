@@ -50,8 +50,21 @@
                         <input type="text" name="education_level" class="form-input w-full" value="{{ $job->education_level }}" required>
                     </div>
                     <div class="mb-4">
-                        <label for="skills" class="block text-gray-700 font-bold mb-2">Skills</label>
-                        <textarea name="skills" class="form-textarea w-full" rows="3" required>{{ $job->skills }}</textarea>
+                        <x-input-label for="skills" :value="__('Skills')" />
+                        <div class="flex flex-wrap">
+                            @foreach ($skills as $skill)
+                                <div class="w-1/2 md:w-1/3 xl:w-1/4 p-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="skills[]" value="{{ $skill->name }}" 
+                                        @if($job->skills->contains($skill->id)) checked @endif />
+                                        <span class="ml-2">{{ $skill->name }}</span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        @error('skills')
+                            <span class="text-xs text-red-600">{{ $message }}</span>
+                        @enderror
                     </div>
                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-edit"></i> Update Job</button>
                 </form>

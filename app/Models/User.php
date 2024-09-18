@@ -15,7 +15,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
     use HasRoles;
-    use SoftDeletes;
+
 
     // public function hasRole($role)
     // {
@@ -31,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $fillable = [
         'name',
+        'last_name',
         'email',
         'password',
         'activation_token',
@@ -83,6 +84,25 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getProfilePhotoUrlAttribute()
     {
         return $this->profile_photo ? asset('storage/' . $this->profile_photo) : asset('default-profile-photo.png');
+    }
+
+    // skill matching
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class, 'user_skills', 'user_id', 'skill_id');
+    }
+
+    public function syncSkills($skills)
+    {
+        if (is_null($skills)) {
+            $skills = [];
+        }
+        
+        $this->skills()->detach();
+        foreach ($skills as $skill) {
+            $existingSkill = Skill::firstOrCreate(['name' => $skill]);
+            $this->skills()->attach($existingSkill->id);
+        }
     }
 
 }

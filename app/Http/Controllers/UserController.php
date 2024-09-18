@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Skill;
 use Illuminate\Support\Str;
 use App\Imports\UsersImport;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class UserController extends Controller implements HasMiddleware
             new Middleware('permission:delete user', only: ['destroy']),
             new Middleware('permission:edit user', only: ['update', 'edit']),
             new Middleware('permission:create user', only: ['create', 'store']),
-            new Middleware('permission:activateDeactivateUser', only: ['activate' ,'deactivate'])
+            new Middleware('permission:activateDeactivateUser', only: ['activate', 'deactivate'])
         ];
     }
 
@@ -73,6 +74,7 @@ class UserController extends Controller implements HasMiddleware
                 'regex:/[A-Z]/',
                 'regex:/[a-z]/',
                 'regex:/[0-9]/',
+                'regex:/[\W]/',
                 'confirmed',
             ],
         ]);
@@ -101,6 +103,7 @@ class UserController extends Controller implements HasMiddleware
         $request->validate(
             [
                 'name' => 'required|string|max:255',
+                'lname' => 'required|string|max:255',
                 'email' => 'required|email|max:255|unique:users,email',
                 'password' => [
                     'required',
@@ -108,17 +111,21 @@ class UserController extends Controller implements HasMiddleware
                     'confirmed',
                     'min:8',
                     'max:20',
-                    'regex:/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/'
+                    'regex:/[A-Z]/',
+                    'regex:/[a-z]/',
+                    'regex:/[0-9]/',
+                    'regex:/[\W]/',
                 ],
                 'roles' => 'required'
             ],
             [
-                'password.regex' => 'The password must be between 8 and 20 characters long and include at least one uppercase letter and one special character.'
+                'password' => 'The password field format is invalid.'
             ]
         );
 
         $user = User::create([
             'name' => $request->name,
+            'last_name' => $request->lname,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'activation_token' => Str::random(60),
@@ -134,10 +141,15 @@ class UserController extends Controller implements HasMiddleware
     {
         $roles = Role::pluck('name', 'name')->all();
         $userRoles = $user->roles->pluck('name', 'name')->all();
+        $skills = Skill::all();
+        $userSkills = $user->skills->pluck('name', 'name')->all();
+
         return view('role-permission.user.edit', [
             'user' => $user,
             'roles' => $roles,
-            'userRoles' => $userRoles
+            'userRoles' => $userRoles,
+            'skills' => $skills,
+            'userSkills' => $userSkills
         ]);
     }
 
@@ -172,6 +184,7 @@ class UserController extends Controller implements HasMiddleware
 
         $user->update($data);
         $user->syncRoles($request->roles);
+        $user->syncSkills($request->skills);
 
         return redirect()->route('role-permission.user.index')->with('success', 'User Updated Successfully with roles');
     }
