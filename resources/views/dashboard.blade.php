@@ -87,6 +87,16 @@
                                     Go to Skills
                                 </a>
                             </div>
+
+                            <!-- tools Management -->
+                            <div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+                                <h3 class="text-lg font-semibold text-gray-800">Manage Tools</h3>
+                                <p class="mt-2 text-gray-600">Manage available tools for alumni.</p>
+                                <a href="{{ url('tools') }}"
+                                    class="inline-flex items-center px-6 py-3 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition ease-in-out duration-150">
+                                    Go to tools
+                                </a>
+                            </div>
                         </div>
                     </div>
 
