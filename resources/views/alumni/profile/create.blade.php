@@ -78,7 +78,7 @@
                         <label for="email"
                             class="required block text-sm font-medium text-gray-700">{{ __('Email Address') }}</label>
                         <input id="email" type="email" placeholder="Enter Your Email" name="email"
-                            readonly value="{{ $email}}"
+                            value="{{ $email}}"
                             class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm required-input @error('email') border-red-500 @enderror">
                         @error('email')
                             <span class="text-sm text-red-500">{{ $message }}</span>

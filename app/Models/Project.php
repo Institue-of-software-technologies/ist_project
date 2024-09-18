@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Database\Seeders\skills;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Project extends Model
 {
@@ -20,8 +21,6 @@ class Project extends Model
         'powerpoint',
         'demo_url',
         'video_url',
-        'tools_used',
-        'programming_language',
         'github_repository',
         'visibility',
         // 'user_id'
@@ -32,6 +31,16 @@ class Project extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function tools()
+    {
+        return $this->belongsToMany(Tool::class, 'project_tools', 'project_id', 'tool_id');
+    }
+
+    public function skills()
+    {
+        return $this->belongsToMany(skills::class);
     }
 
 }

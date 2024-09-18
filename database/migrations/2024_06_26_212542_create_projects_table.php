@@ -23,8 +23,6 @@ return new class extends Migration
             $table->string('powerpoint')->nullable();
             $table->string('demo_url');
             $table->string('video_url');
-            $table->string('tools_used');
-            $table->string('programming_language');
             $table->string('github_repository');
             $table->softDeletes();
             $table->enum('visibility', ['public', 'private']);
